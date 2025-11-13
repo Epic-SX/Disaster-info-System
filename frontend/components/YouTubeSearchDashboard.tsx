@@ -99,23 +99,22 @@ const YouTubeSearchDashboard: React.FC = () => {
 
   const loadInitialData = async () => {
     try {
-      // Load live streams
-      const liveResponse = await apiClient.get<SearchResult>(API_ENDPOINTS.youtube.liveStreams);
-      if (liveResponse.videos) {
-        setLiveStreams(liveResponse.videos);
-      }
-
-      // Load disaster channels
-      const channelResponse = await apiClient.get<SearchResult>(`${API_ENDPOINTS.youtube.channels}?limit=10`);
-      if (channelResponse.channels) {
-        setChannels(channelResponse.channels);
-      }
-
-      // Load trending topics
-      const trendingResponse = await apiClient.get<{trending_topics: TrendingTopic[]}>(API_ENDPOINTS.youtube.trending);
-      if (trendingResponse.trending_topics) {
-        setTrendingTopics(trendingResponse.trending_topics);
-      }
+      // Disabled API calls to avoid searching for YouTube videos
+      // Data will remain empty or can be populated with default/hardcoded values
+      
+      // Original implementation (commented out):
+      // const liveResponse = await apiClient.get<SearchResult>(API_ENDPOINTS.youtube.liveStreams);
+      // if (liveResponse.videos) {
+      //   setLiveStreams(liveResponse.videos);
+      // }
+      // const channelResponse = await apiClient.get<SearchResult>(`${API_ENDPOINTS.youtube.channels}?limit=10`);
+      // if (channelResponse.channels) {
+      //   setChannels(channelResponse.channels);
+      // }
+      // const trendingResponse = await apiClient.get<{trending_topics: TrendingTopic[]}>(API_ENDPOINTS.youtube.trending);
+      // if (trendingResponse.trending_topics) {
+      //   setTrendingTopics(trendingResponse.trending_topics);
+      // }
     } catch (err) {
       console.error('Error loading initial data:', err);
       setError('初期データの読み込みに失敗しました');
@@ -129,18 +128,21 @@ const YouTubeSearchDashboard: React.FC = () => {
     setError('');
     
     try {
-      const params = new URLSearchParams({
-        query: searchQuery,
-        limit: '20',
-        search_type: searchType,
-        include_shorts: includeShorts.toString()
-      });
+      // Disabled YouTube search to avoid API calls
+      setError('YouTube検索は現在無効になっています');
+      setSearchResults(null);
       
-      if (timeFilter && timeFilter !== 'all') params.append('time_filter', timeFilter);
-      if (qualityFilter && qualityFilter !== 'all') params.append('quality_filter', qualityFilter);
-      
-      const response = await apiClient.get<SearchResult>(`${API_ENDPOINTS.youtube.search}?${params}`);
-      setSearchResults(response);
+      // Original implementation (commented out):
+      // const params = new URLSearchParams({
+      //   query: searchQuery,
+      //   limit: '20',
+      //   search_type: searchType,
+      //   include_shorts: includeShorts.toString()
+      // });
+      // if (timeFilter && timeFilter !== 'all') params.append('time_filter', timeFilter);
+      // if (qualityFilter && qualityFilter !== 'all') params.append('quality_filter', qualityFilter);
+      // const response = await apiClient.get<SearchResult>(`${API_ENDPOINTS.youtube.search}?${params}`);
+      // setSearchResults(response);
     } catch (err) {
       console.error('Search error:', err);
       setError('検索に失敗しました');
@@ -154,25 +156,25 @@ const YouTubeSearchDashboard: React.FC = () => {
     setError('');
     
     try {
-      const params = new URLSearchParams({
-        limit: '30',
-        search_type: searchType,
-        include_shorts: includeShorts.toString(),
-        include_channels: 'true'
-      });
+      // Disabled advanced YouTube search to avoid API calls
+      setError('YouTube検索は現在無効になっています');
       
-      if (searchQuery) params.append('query', searchQuery);
-      if (timeFilter && timeFilter !== 'all') params.append('time_filter', timeFilter);
-      if (qualityFilter && qualityFilter !== 'all') params.append('quality_filter', qualityFilter);
-      if (location) params.append('location', location);
-      
-      const response = await apiClient.get<any>(`${API_ENDPOINTS.youtube.advanced}?${params}`);
-      
-      // Set different data based on advanced search response
-      if (response.videos) setSearchResults({ ...response, videos: response.videos });
-      if (response.channels) setChannels(response.channels);
-      if (response.live_streams) setLiveStreams(response.live_streams);
-      if (response.trending_topics) setTrendingTopics(response.trending_topics);
+      // Original implementation (commented out):
+      // const params = new URLSearchParams({
+      //   limit: '30',
+      //   search_type: searchType,
+      //   include_shorts: includeShorts.toString(),
+      //   include_channels: 'true'
+      // });
+      // if (searchQuery) params.append('query', searchQuery);
+      // if (timeFilter && timeFilter !== 'all') params.append('time_filter', timeFilter);
+      // if (qualityFilter && qualityFilter !== 'all') params.append('quality_filter', qualityFilter);
+      // if (location) params.append('location', location);
+      // const response = await apiClient.get<any>(`${API_ENDPOINTS.youtube.advanced}?${params}`);
+      // if (response.videos) setSearchResults({ ...response, videos: response.videos });
+      // if (response.channels) setChannels(response.channels);
+      // if (response.live_streams) setLiveStreams(response.live_streams);
+      // if (response.trending_topics) setTrendingTopics(response.trending_topics);
       
     } catch (err) {
       console.error('Advanced search error:', err);

@@ -45,42 +45,46 @@ export function YouTubePlayer({
   const [isLoading, setIsLoading] = useState(true);
 
   const checkIfLive = useCallback(async () => {
-    try {
-      // YouTube Data API で配信状況を確認
-      const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
-      if (!API_KEY) return;
-
-      const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=liveStreamingDetails&key=${API_KEY}`
-      );
-      const data = await response.json();
-      
-      if (data.items && data.items[0]?.liveStreamingDetails) {
-        setIsLive(true);
-      }
-    } catch (error) {
-      console.error('ライブ状況の確認に失敗:', error);
-    }
+    // Disabled YouTube API call to avoid searching for video metadata
+    // Just assume all videos are live by default
+    setIsLive(true);
+    
+    // Original implementation (commented out):
+    // try {
+    //   const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
+    //   if (!API_KEY) return;
+    //   const response = await fetch(
+    //     `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=liveStreamingDetails&key=${API_KEY}`
+    //   );
+    //   const data = await response.json();
+    //   if (data.items && data.items[0]?.liveStreamingDetails) {
+    //     setIsLive(true);
+    //   }
+    // } catch (error) {
+    //   console.error('ライブ状況の確認に失敗:', error);
+    // }
   }, [videoId]);
 
   const updateViewerCount = useCallback(async () => {
-    try {
-      const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
-      if (!API_KEY) return;
-
-      const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=liveStreamingDetails,statistics&key=${API_KEY}`
-      );
-      const data = await response.json();
-      
-      if (data.items && data.items[0]) {
-        const concurrent = data.items[0].liveStreamingDetails?.concurrentViewers;
-        const views = data.items[0].statistics?.viewCount;
-        setViewerCount(parseInt(concurrent || views || '0'));
-      }
-    } catch (error) {
-      console.error('視聴者数の取得に失敗:', error);
-    }
+    // Disabled YouTube API call to avoid searching for video metadata
+    // Viewer count will remain at 0 or can be set to a default value
+    
+    // Original implementation (commented out):
+    // try {
+    //   const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
+    //   if (!API_KEY) return;
+    //   const response = await fetch(
+    //     `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=liveStreamingDetails,statistics&key=${API_KEY}`
+    //   );
+    //   const data = await response.json();
+    //   if (data.items && data.items[0]) {
+    //     const concurrent = data.items[0].liveStreamingDetails?.concurrentViewers;
+    //     const views = data.items[0].statistics?.viewCount;
+    //     setViewerCount(parseInt(concurrent || views || '0'));
+    //   }
+    // } catch (error) {
+    //   console.error('視聴者数の取得に失敗:', error);
+    // }
   }, [videoId]);
 
   const onPlayerReady = useCallback((event: any) => {
@@ -597,17 +601,14 @@ export function YouTubePlayerSimple({
 }
 
 // Alternative YouTube Player component for cases where IFrame API is blocked
-interface YouTubeEmbedPlayerProps {
-  videoId: string;
-  autoplay?: boolean;
-  muted?: boolean;
-}
-
 export function YouTubeEmbedPlayer({ 
   videoId, 
+  title,
   autoplay = false, 
-  muted = true 
-}: YouTubeEmbedPlayerProps) {
+  muted = true,
+  controls = true,
+  className = ""
+}: YouTubePlayerProps) {
   const [error, setError] = useState<string | null>(null);
   const [embedUrl, setEmbedUrl] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
@@ -620,14 +621,16 @@ export function YouTubeEmbedPlayer({
     }
 
     try {
-      // Use regular YouTube domain instead of youtube-nocookie.com for better reliability
+      // Use regular YouTube domain for embedding
       const params = new URLSearchParams({
-        ...(autoplay && { autoplay: '1' }),
-        ...(muted && { mute: '1' }),
-        controls: '1',
+        autoplay: autoplay ? '1' : '0',
+        mute: muted ? '1' : '0',
+        controls: controls ? '1' : '0',
         rel: '0',
         modestbranding: '1',
-        iv_load_policy: '3'
+        iv_load_policy: '3',
+        enablejsapi: '1',
+        origin: typeof window !== 'undefined' ? window.location.origin : ''
       });
 
       const url = `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
@@ -639,7 +642,7 @@ export function YouTubeEmbedPlayer({
     }
     
     setIsLoading(false);
-  }, [videoId, autoplay, muted]);
+  }, [videoId, autoplay, muted, controls]);
 
   const handleIframeLoad = () => {
     setIsLoading(false);
@@ -652,43 +655,66 @@ export function YouTubeEmbedPlayer({
 
   if (error) {
     return (
-      <Card className="aspect-video bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-        <div className="text-center text-gray-500 dark:text-gray-400 p-4">
-          <AlertCircle className="w-8 h-8 mx-auto mb-2" />
-          <p className="text-sm">動画の読み込みに失敗しました</p>
-          <p className="text-xs mt-1">{error}</p>
-          <button 
-            onClick={() => window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank')}
-            className="mt-2 text-blue-500 hover:text-blue-700 text-xs underline"
-          >
-            YouTubeで視聴する
-          </button>
-        </div>
+      <Card className={`bg-white/10 backdrop-blur-md border-white/20 ${className}`}>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-white flex items-center gap-2 text-sm">
+            <Camera className="h-4 w-4 text-red-500" />
+            {title}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-4">
+          <div className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center">
+            <div className="text-center text-white p-4">
+              <AlertCircle className="w-8 h-8 mx-auto mb-2 text-red-400" />
+              <p className="text-sm">動画の読み込みに失敗しました</p>
+              <p className="text-xs mt-1 text-gray-400">{error}</p>
+              <button 
+                onClick={() => window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank')}
+                className="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-xs transition-colors"
+              >
+                YouTubeで視聴する
+              </button>
+            </div>
+          </div>
+        </CardContent>
       </Card>
     );
   }
 
   return (
-    <Card className="overflow-hidden relative">
-      {isLoading && (
-        <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800 flex items-center justify-center z-10">
-          <div className="text-center text-gray-500 dark:text-gray-400">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-500 mx-auto mb-2"></div>
-            <p className="text-sm">動画を読み込み中...</p>
-          </div>
+    <Card className={`bg-white/10 backdrop-blur-md border-white/20 ${className}`}>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-white flex items-center gap-2 text-sm">
+          <Camera className="h-4 w-4 text-green-500" />
+          {title}
+          <Badge className="bg-red-500 text-white text-xs ml-2 animate-pulse">
+            LIVE
+          </Badge>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="p-4">
+        <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden">
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center z-10">
+              <div className="text-center text-white">
+                <div className="animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent mx-auto mb-2"></div>
+                <p className="text-sm">動画を読み込み中...</p>
+              </div>
+            </div>
+          )}
+          {embedUrl && (
+            <iframe
+              src={embedUrl}
+              className="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              onLoad={handleIframeLoad}
+              onError={handleIframeError}
+              title={title || "YouTube Video Player"}
+            />
+          )}
         </div>
-      )}
-      {embedUrl && (
-        <iframe
-          src={embedUrl}
-          className="w-full aspect-video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          onLoad={handleIframeLoad}
-          onError={handleIframeError}
-          title="YouTube Video Player"
-        />
-      )}
+      </CardContent>
     </Card>
   );
 }

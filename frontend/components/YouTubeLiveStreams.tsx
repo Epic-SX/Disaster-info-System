@@ -69,9 +69,9 @@ const DEFAULT_STREAMS: LiveStream[] = [
 ];
 
 export function YouTubeLiveStreams() {
-  const [selectedStream, setSelectedStream] = useState<string>('');
-  const [liveStreams, setLiveStreams] = useState<LiveStream[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [selectedStream, setSelectedStream] = useState<string>(DEFAULT_STREAMS[0].videoId);
+  const [liveStreams, setLiveStreams] = useState<LiveStream[]>(DEFAULT_STREAMS);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [muted, setMuted] = useState(false);
 
@@ -80,53 +80,25 @@ export function YouTubeLiveStreams() {
     setError('');
 
     try {
-      // Fetch live streams from backend
-      const response = await apiClient.get<{streams?: BackendLiveStream[], videos?: BackendLiveStream[]}>(API_ENDPOINTS.youtube.liveStreams);
+      // Use default streams directly without searching YouTube
+      // Commented out backend API call to avoid searching for videos
+      // const response = await apiClient.get<{streams?: BackendLiveStream[], videos?: BackendLiveStream[]}>(API_ENDPOINTS.youtube.liveStreams);
       
-      if (response.streams || response.videos) {
-        const streams = response.streams || response.videos || [];
-        const convertedStreams: LiveStream[] = streams.map((stream, index) => ({
-          id: stream.video_id || `stream-${index}`,
-          videoId: stream.video_id,
-          title: stream.title,
-          channel: stream.channel,
-          description: stream.description || '',
-          category: determineCategoryFromTitle(stream.title, stream.channel),
-          isLive: stream.video_type === 'live' || stream.duration === 'LIVE',
-          thumbnail: stream.thumbnail,
-          link: stream.link,
-          verified_channel: stream.verified_channel
-        }));
-
-        if (convertedStreams.length > 0) {
-          setLiveStreams(convertedStreams);
-          if (!selectedStream) {
-            setSelectedStream(convertedStreams[0].videoId);
-          }
-        } else {
-          // Use default streams if no backend streams available
-          setLiveStreams(DEFAULT_STREAMS);
-          setSelectedStream(DEFAULT_STREAMS[0].videoId);
-        }
-      } else {
-        // Use default streams as fallback
-        setLiveStreams(DEFAULT_STREAMS);
-        setSelectedStream(DEFAULT_STREAMS[0].videoId);
-      }
+      setLiveStreams(DEFAULT_STREAMS);
     } catch (err) {
       console.error('Error loading live streams:', err);
       setError('ライブ配信の読み込みに失敗しました');
-      // Use default streams as fallback
       setLiveStreams(DEFAULT_STREAMS);
-      setSelectedStream(DEFAULT_STREAMS[0].videoId);
     } finally {
       setLoading(false);
     }
-  }, [selectedStream]);
+  }, []);
 
   useEffect(() => {
-    loadLiveStreams();
-  }, [loadLiveStreams]);
+    // Initialize with default streams on mount
+    setLiveStreams(DEFAULT_STREAMS);
+    setSelectedStream(DEFAULT_STREAMS[0].videoId);
+  }, []);
 
   const determineCategoryFromTitle = (title: string, channel: string): LiveStream['category'] => {
     const titleLower = title.toLowerCase();

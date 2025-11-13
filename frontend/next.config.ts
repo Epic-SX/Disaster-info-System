@@ -88,7 +88,30 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; frame-ancestors 'self'; default-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.gstatic.com;",
+          },
+        ],
+      },
     ];
+  },
+  
+  // Allow YouTube domains for images and content
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'i.ytimg.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+      },
+    ],
   },
 };
 
