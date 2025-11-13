@@ -8014,3 +8014,422 @@ INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
 INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
 INFO:main:Returning 1 real tsunami alerts
 INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Retrieved 1828 wind observations from AMeDAS JSON file
+INFO:main:Returning wind data for 1828 stations from AMeDAS JSON export
+INFO:     83.234.227.67:0 - "GET /api/weather/wind HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:main:WebSocket client disconnected (normal)
+INFO:main:WebSocket connection cleaned up. Remaining connections: 0
+INFO:     connection closed
+INFO:     Waiting for application shutdown.
+INFO:main:Shutting down Disaster Information System backend...
+INFO:main:Periodic updates task cancelled
+INFO:p2p_earthquake_service:WebSocket監視停止要求
+INFO:p2p_earthquake_service:WebSocket監視終了
+INFO:p2p_earthquake_service:P2P地震情報サービスクリーンアップ完了
+INFO:main:✓ P2P earthquake service cleaned up
+INFO:youtube_chat_service:🛑 Stopping chat monitoring...
+INFO:youtube_chat_service:✅ Chat monitoring stopped
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2993213]
+INFO:social_media_automation:Recurring scheduler task cancelled
+INFO:__mp_main__:=== Environment Settings Loaded ===
+INFO:__mp_main__:DEBUG: True
+INFO:__mp_main__:PORT: 8000
+INFO:__mp_main__:HOST: 0.0.0.0
+INFO:__mp_main__:LOG_LEVEL: INFO
+INFO:__mp_main__:DATABASE_URL: sqlite:///./disaster_info.db
+INFO:__mp_main__:OPENAI_API_KEY: ***
+INFO:__mp_main__:YOUTUBE_API_KEY: ***
+INFO:__mp_main__:SERPAPI_API_KEY: ***
+INFO:__mp_main__:EARTHQUAKE_MAGNITUDE_THRESHOLD: 5.0
+INFO:__mp_main__:TSUNAMI_HEIGHT_THRESHOLD: 1.0
+INFO:__mp_main__:WIND_SPEED_THRESHOLD: 60
+INFO:__mp_main__:=====================================
+INFO:main:=== Environment Settings Loaded ===
+INFO:main:DEBUG: True
+INFO:main:PORT: 8000
+INFO:main:HOST: 0.0.0.0
+INFO:main:LOG_LEVEL: INFO
+INFO:main:DATABASE_URL: sqlite:///./disaster_info.db
+INFO:main:OPENAI_API_KEY: ***
+INFO:main:YOUTUBE_API_KEY: ***
+INFO:main:SERPAPI_API_KEY: ***
+INFO:main:EARTHQUAKE_MAGNITUDE_THRESHOLD: 5.0
+INFO:main:TSUNAMI_HEIGHT_THRESHOLD: 1.0
+INFO:main:WIND_SPEED_THRESHOLD: 60
+INFO:main:=====================================
+INFO:     Started server process [2994795]
+INFO:     Waiting for application startup.
+INFO:main:Starting Disaster Information System backend...
+INFO:main:✓ YouTube search service initialized successfully
+INFO:main:✓ Disaster API service initialized successfully
+INFO:main:✓ Disaster API service initialized (HTTP mode)
+INFO:p2p_earthquake_service:P2P地震情報サービス初期化 - 本番環境
+INFO:p2p_earthquake_service:P2P地震情報サービス初期化完了
+INFO:p2p_earthquake_service:コールバック登録: 情報コード 551
+INFO:p2p_earthquake_service:コールバック登録: 情報コード 552
+INFO:p2p_earthquake_service:コールバック登録: 情報コード 556
+INFO:main:✓ P2P地震情報サービス初期化完了 (WebSocket監視開始)
+INFO:main:Initializing chat analyzer with video_id: development_mode
+INFO:googleapiclient.discovery_cache:file_cache is only supported with oauth2client<4.0.0
+INFO:youtube_chat_service:✓ YouTube API service initialized with service account credentials
+INFO:youtube_chat_service:✓ Database initialized successfully
+INFO:youtube_chat_service:✓ Loaded 4 auto response rules
+WARNING:youtube_chat_service:⚠️ OpenAI API not configured - AI responses disabled
+INFO:main:YouTubeChatAnalyzer instance created successfully
+INFO:main:YouTube chat analyzer initialized in development mode (no real monitoring)
+INFO:main:✓ Chat analyzer initialization completed successfully
+INFO:social_media_automation:✓ AI service initialized for content generation
+INFO:social_media_automation:✓ Loaded channel: Disaster Information LINE (line)
+INFO:social_media_automation:✓ Loaded channel: Emergency Broadcast YouTube (youtube_live)
+INFO:social_media_automation:✓ Loaded channel: Disaster Updates TikTok (tiktok)
+INFO:social_media_automation:✓ Loaded channel: Emergency Yahoo! (yahoo)
+INFO:social_media_automation:✓ Social Media Automation Service initialized
+INFO:social_media_automation:✓ Social media recurring scheduler started
+INFO:main:✓ Social media automation service initialized successfully
+ERROR:main:Failed to start AMeDAS scheduler: get_scheduler() got an unexpected keyword argument 'db_path'
+INFO:main:✓ Global periodic updates task started
+INFO:p2p_earthquake_service:WebSocket監視開始
+INFO:main:Starting global periodic updates task
+INFO:     Application startup complete.
+INFO:     ('83.234.227.67', 0) - "WebSocket /ws" [accepted]
+INFO:main:WebSocket client connected. Total connections: 1
+INFO:     connection open
+INFO:main:Loaded coordinates for 1245 AMeDAS stations
+INFO:main:Retrieved 1828 wind observations from AMeDAS JSON file
+INFO:httpx:HTTP Request: GET https://www3.nhk.or.jp/news/json16/ "HTTP/1.1 301 Moved Permanently"
+INFO:p2p_earthquake_service:WebSocket接続成功: wss://api.p2pquake.net/v2/ws
+INFO:httpx:HTTP Request: GET https://www.jma.go.jp/bosai/warning/data/warning_info.json "HTTP/1.1 404 Not Found"
+ERROR:main:Error sending initial news data: Object of type datetime is not JSON serializable
+ERROR:main:Error sending initial camera feeds data: Object of type datetime is not JSON serializable
+INFO:httpx:HTTP Request: GET https://www3.nhk.or.jp/news/json16/ "HTTP/1.1 301 Moved Permanently"
+INFO:httpx:HTTP Request: GET https://www.jma.go.jp/bosai/warning/data/warning_info.json "HTTP/1.1 404 Not Found"
+INFO:main:Removed 1 disconnected WebSocket clients. Active connections: 0
+INFO:main:Retrieved 1828 wind observations from AMeDAS JSON file
+INFO:main:Returning wind data for 1828 stations from AMeDAS JSON export
+INFO:     83.234.227.67:0 - "GET /api/weather/wind HTTP/1.1" 200 OK
+INFO:p2p_earthquake_service:WebSocketデータ受信: コード 555, ID None
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:WebSocket client disconnected (normal)
+INFO:main:WebSocket connection cleaned up. Remaining connections: 0
+INFO:     connection closed
+INFO:main:Returning coordinates for 1245 stations
+INFO:     83.234.227.67:0 - "GET /api/weather/amedas/station-coordinates HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Retrieved 1828 wind observations from AMeDAS JSON file
+INFO:main:Returning wind data for 1828 stations from AMeDAS JSON export
+INFO:     83.234.227.67:0 - "GET /api/weather/wind HTTP/1.1" 200 OK
+INFO:main:Returning coordinates for 1245 stations
+INFO:     83.234.227.67:0 - "GET /api/weather/amedas/station-coordinates HTTP/1.1" 200 OK
+INFO:main:Retrieved 1828 wind observations from AMeDAS JSON file
+INFO:main:Returning wind data for 1828 stations from AMeDAS JSON export
+INFO:     83.234.227.67:0 - "GET /api/weather/wind HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:     ('83.234.227.67', 0) - "WebSocket /ws" [accepted]
+INFO:main:WebSocket client connected. Total connections: 1
+INFO:     connection open
+INFO:main:Retrieved 1828 wind observations from AMeDAS JSON file
+INFO:httpx:HTTP Request: GET https://www3.nhk.or.jp/news/json16/ "HTTP/1.1 301 Moved Permanently"
+INFO:httpx:HTTP Request: GET https://www.jma.go.jp/bosai/warning/data/warning_info.json "HTTP/1.1 404 Not Found"
+ERROR:main:Error sending initial news data: Object of type datetime is not JSON serializable
+ERROR:main:Error sending initial camera feeds data: Object of type datetime is not JSON serializable
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Retrieved 1828 wind observations from AMeDAS JSON file
+INFO:main:Returning wind data for 1828 stations from AMeDAS JSON export
+INFO:     83.234.227.67:0 - "GET /api/weather/wind HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET https://www3.nhk.or.jp/news/json16/ "HTTP/1.1 301 Moved Permanently"
+INFO:httpx:HTTP Request: GET https://www.jma.go.jp/bosai/warning/data/warning_info.json "HTTP/1.1 404 Not Found"
+INFO:main:Removed 1 disconnected WebSocket clients. Active connections: 0
+WARNING:  StatReload detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:main:WebSocket client disconnected (normal)
+INFO:main:WebSocket connection cleaned up. Remaining connections: 0
+INFO:     connection closed
+INFO:     Waiting for application shutdown.
+INFO:main:Shutting down Disaster Information System backend...
+INFO:main:Periodic updates task cancelled
+INFO:p2p_earthquake_service:WebSocket監視停止要求
+INFO:p2p_earthquake_service:WebSocket監視終了
+INFO:p2p_earthquake_service:P2P地震情報サービスクリーンアップ完了
+INFO:main:✓ P2P earthquake service cleaned up
+INFO:youtube_chat_service:🛑 Stopping chat monitoring...
+INFO:youtube_chat_service:✅ Chat monitoring stopped
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2994795]
+INFO:social_media_automation:Recurring scheduler task cancelled
+INFO:__mp_main__:=== Environment Settings Loaded ===
+INFO:__mp_main__:DEBUG: True
+INFO:__mp_main__:PORT: 8000
+INFO:__mp_main__:HOST: 0.0.0.0
+INFO:__mp_main__:LOG_LEVEL: INFO
+INFO:__mp_main__:DATABASE_URL: sqlite:///./disaster_info.db
+INFO:__mp_main__:OPENAI_API_KEY: ***
+INFO:__mp_main__:YOUTUBE_API_KEY: ***
+INFO:__mp_main__:SERPAPI_API_KEY: ***
+INFO:__mp_main__:EARTHQUAKE_MAGNITUDE_THRESHOLD: 5.0
+INFO:__mp_main__:TSUNAMI_HEIGHT_THRESHOLD: 1.0
+INFO:__mp_main__:WIND_SPEED_THRESHOLD: 60
+INFO:__mp_main__:=====================================
+INFO:main:=== Environment Settings Loaded ===
+INFO:main:DEBUG: True
+INFO:main:PORT: 8000
+INFO:main:HOST: 0.0.0.0
+INFO:main:LOG_LEVEL: INFO
+INFO:main:DATABASE_URL: sqlite:///./disaster_info.db
+INFO:main:OPENAI_API_KEY: ***
+INFO:main:YOUTUBE_API_KEY: ***
+INFO:main:SERPAPI_API_KEY: ***
+INFO:main:EARTHQUAKE_MAGNITUDE_THRESHOLD: 5.0
+INFO:main:TSUNAMI_HEIGHT_THRESHOLD: 1.0
+INFO:main:WIND_SPEED_THRESHOLD: 60
+INFO:main:=====================================
+INFO:     Started server process [2995001]
+INFO:     Waiting for application startup.
+INFO:main:Starting Disaster Information System backend...
+INFO:main:✓ YouTube search service initialized successfully
+INFO:main:✓ Disaster API service initialized successfully
+INFO:main:✓ Disaster API service initialized (HTTP mode)
+INFO:p2p_earthquake_service:P2P地震情報サービス初期化 - 本番環境
+INFO:p2p_earthquake_service:P2P地震情報サービス初期化完了
+INFO:p2p_earthquake_service:コールバック登録: 情報コード 551
+INFO:p2p_earthquake_service:コールバック登録: 情報コード 552
+INFO:p2p_earthquake_service:コールバック登録: 情報コード 556
+INFO:main:✓ P2P地震情報サービス初期化完了 (WebSocket監視開始)
+INFO:main:Initializing chat analyzer with video_id: development_mode
+INFO:googleapiclient.discovery_cache:file_cache is only supported with oauth2client<4.0.0
+INFO:youtube_chat_service:✓ YouTube API service initialized with service account credentials
+INFO:youtube_chat_service:✓ Database initialized successfully
+INFO:youtube_chat_service:✓ Loaded 4 auto response rules
+WARNING:youtube_chat_service:⚠️ OpenAI API not configured - AI responses disabled
+INFO:main:YouTubeChatAnalyzer instance created successfully
+INFO:main:YouTube chat analyzer initialized in development mode (no real monitoring)
+INFO:main:✓ Chat analyzer initialization completed successfully
+INFO:social_media_automation:✓ AI service initialized for content generation
+INFO:social_media_automation:✓ Loaded channel: Disaster Information LINE (line)
+INFO:social_media_automation:✓ Loaded channel: Emergency Broadcast YouTube (youtube_live)
+INFO:social_media_automation:✓ Loaded channel: Disaster Updates TikTok (tiktok)
+INFO:social_media_automation:✓ Loaded channel: Emergency Yahoo! (yahoo)
+INFO:social_media_automation:✓ Social Media Automation Service initialized
+INFO:social_media_automation:✓ Social media recurring scheduler started
+INFO:main:✓ Social media automation service initialized successfully
+ERROR:main:Failed to start AMeDAS scheduler: get_scheduler() got an unexpected keyword argument 'db_path'
+INFO:main:✓ Global periodic updates task started
+INFO:p2p_earthquake_service:WebSocket監視開始
+INFO:main:Starting global periodic updates task
+INFO:     Application startup complete.
+INFO:p2p_earthquake_service:WebSocket接続成功: wss://api.p2pquake.net/v2/ws
+INFO:     ('83.234.227.67', 0) - "WebSocket /ws" [accepted]
+INFO:main:WebSocket client connected. Total connections: 1
+INFO:     connection open
+INFO:main:Loaded coordinates for 1245 AMeDAS stations
+INFO:main:Retrieved 1828 wind observations from AMeDAS JSON file
+INFO:httpx:HTTP Request: GET https://www3.nhk.or.jp/news/json16/ "HTTP/1.1 301 Moved Permanently"
+INFO:httpx:HTTP Request: GET https://www.jma.go.jp/bosai/warning/data/warning_info.json "HTTP/1.1 404 Not Found"
+ERROR:main:Error sending initial news data: Object of type datetime is not JSON serializable
+ERROR:main:Error sending initial camera feeds data: Object of type datetime is not JSON serializable
+INFO:httpx:HTTP Request: GET https://www3.nhk.or.jp/news/json16/ "HTTP/1.1 301 Moved Permanently"
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET https://www.jma.go.jp/bosai/warning/data/warning_info.json "HTTP/1.1 404 Not Found"
+INFO:main:Removed 1 disconnected WebSocket clients. Active connections: 0
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:main:WebSocket client disconnected (normal)
+INFO:main:WebSocket connection cleaned up. Remaining connections: 0
+INFO:     connection closed
+INFO:     Waiting for application shutdown.
+INFO:main:Shutting down Disaster Information System backend...
+INFO:main:Periodic updates task cancelled
+INFO:p2p_earthquake_service:WebSocket監視停止要求
+INFO:p2p_earthquake_service:WebSocket監視終了
+INFO:p2p_earthquake_service:P2P地震情報サービスクリーンアップ完了
+INFO:main:✓ P2P earthquake service cleaned up
+INFO:youtube_chat_service:🛑 Stopping chat monitoring...
+INFO:youtube_chat_service:✅ Chat monitoring stopped
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2995001]
+INFO:social_media_automation:Recurring scheduler task cancelled
+INFO:__mp_main__:=== Environment Settings Loaded ===
+INFO:__mp_main__:DEBUG: True
+INFO:__mp_main__:PORT: 8000
+INFO:__mp_main__:HOST: 0.0.0.0
+INFO:__mp_main__:LOG_LEVEL: INFO
+INFO:__mp_main__:DATABASE_URL: sqlite:///./disaster_info.db
+INFO:__mp_main__:OPENAI_API_KEY: ***
+INFO:__mp_main__:YOUTUBE_API_KEY: ***
+INFO:__mp_main__:SERPAPI_API_KEY: ***
+INFO:__mp_main__:EARTHQUAKE_MAGNITUDE_THRESHOLD: 5.0
+INFO:__mp_main__:TSUNAMI_HEIGHT_THRESHOLD: 1.0
+INFO:__mp_main__:WIND_SPEED_THRESHOLD: 60
+INFO:__mp_main__:=====================================
+INFO:main:=== Environment Settings Loaded ===
+INFO:main:DEBUG: True
+INFO:main:PORT: 8000
+INFO:main:HOST: 0.0.0.0
+INFO:main:LOG_LEVEL: INFO
+INFO:main:DATABASE_URL: sqlite:///./disaster_info.db
+INFO:main:OPENAI_API_KEY: ***
+INFO:main:YOUTUBE_API_KEY: ***
+INFO:main:SERPAPI_API_KEY: ***
+INFO:main:EARTHQUAKE_MAGNITUDE_THRESHOLD: 5.0
+INFO:main:TSUNAMI_HEIGHT_THRESHOLD: 1.0
+INFO:main:WIND_SPEED_THRESHOLD: 60
+INFO:main:=====================================
+INFO:     Started server process [2995021]
+INFO:     Waiting for application startup.
+INFO:main:Starting Disaster Information System backend...
+INFO:main:✓ YouTube search service initialized successfully
+INFO:main:✓ Disaster API service initialized successfully
+INFO:main:✓ Disaster API service initialized (HTTP mode)
+INFO:p2p_earthquake_service:P2P地震情報サービス初期化 - 本番環境
+INFO:p2p_earthquake_service:P2P地震情報サービス初期化完了
+INFO:p2p_earthquake_service:コールバック登録: 情報コード 551
+INFO:p2p_earthquake_service:コールバック登録: 情報コード 552
+INFO:p2p_earthquake_service:コールバック登録: 情報コード 556
+INFO:main:✓ P2P地震情報サービス初期化完了 (WebSocket監視開始)
+INFO:main:Initializing chat analyzer with video_id: development_mode
+INFO:googleapiclient.discovery_cache:file_cache is only supported with oauth2client<4.0.0
+INFO:youtube_chat_service:✓ YouTube API service initialized with service account credentials
+INFO:youtube_chat_service:✓ Database initialized successfully
+INFO:youtube_chat_service:✓ Loaded 4 auto response rules
+WARNING:youtube_chat_service:⚠️ OpenAI API not configured - AI responses disabled
+INFO:main:YouTubeChatAnalyzer instance created successfully
+INFO:main:YouTube chat analyzer initialized in development mode (no real monitoring)
+INFO:main:✓ Chat analyzer initialization completed successfully
+INFO:social_media_automation:✓ AI service initialized for content generation
+INFO:social_media_automation:✓ Loaded channel: Disaster Information LINE (line)
+INFO:social_media_automation:✓ Loaded channel: Emergency Broadcast YouTube (youtube_live)
+INFO:social_media_automation:✓ Loaded channel: Disaster Updates TikTok (tiktok)
+INFO:social_media_automation:✓ Loaded channel: Emergency Yahoo! (yahoo)
+INFO:social_media_automation:✓ Social Media Automation Service initialized
+INFO:social_media_automation:✓ Social media recurring scheduler started
+INFO:main:✓ Social media automation service initialized successfully
+ERROR:main:Failed to start AMeDAS scheduler: get_scheduler() got an unexpected keyword argument 'db_path'
+INFO:main:✓ Global periodic updates task started
+INFO:p2p_earthquake_service:WebSocket監視開始
+INFO:main:Starting global periodic updates task
+INFO:     Application startup complete.
+INFO:p2p_earthquake_service:WebSocket接続成功: wss://api.p2pquake.net/v2/ws
+INFO:     ('83.234.227.67', 0) - "WebSocket /ws" [accepted]
+INFO:main:WebSocket client connected. Total connections: 1
+INFO:     connection open
+INFO:main:Loaded coordinates for 1245 AMeDAS stations
+INFO:main:Retrieved 1828 wind observations from AMeDAS JSON file
+INFO:httpx:HTTP Request: GET https://www3.nhk.or.jp/news/json16/ "HTTP/1.1 301 Moved Permanently"
+INFO:httpx:HTTP Request: GET https://www.jma.go.jp/bosai/warning/data/warning_info.json "HTTP/1.1 404 Not Found"
+ERROR:main:Error sending initial news data: Object of type datetime is not JSON serializable
+ERROR:main:Error sending initial camera feeds data: Object of type datetime is not JSON serializable
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET https://www3.nhk.or.jp/news/json16/ "HTTP/1.1 301 Moved Permanently"
+INFO:httpx:HTTP Request: GET https://www.jma.go.jp/bosai/warning/data/warning_info.json "HTTP/1.1 404 Not Found"
+INFO:main:Removed 1 disconnected WebSocket clients. Active connections: 0
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Retrieved 1828 wind observations from AMeDAS JSON file
+INFO:main:Returning wind data for 1828 stations from AMeDAS JSON export
+INFO:     83.234.227.67:0 - "GET /api/weather/wind HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:p2p_earthquake_service:WebSocketデータ受信: コード 555, ID None
+INFO:main:Returning 10 real earthquake records from {'P2P地震情報'}
+INFO:     83.234.227.67:0 - "GET /api/earthquake/recent HTTP/1.1" 200 OK
+INFO:main:Returning 1 real tsunami alerts
+INFO:     83.234.227.67:0 - "GET /api/tsunami/alerts HTTP/1.1" 200 OK
+INFO:main:WebSocket client disconnected (normal)
+INFO:main:WebSocket connection cleaned up. Remaining connections: 0
+INFO:     connection closed

@@ -142,13 +142,13 @@ const AMeDASInteractiveMapWithJapan: React.FC = () => {
     }
   }
 
-  // Get arrow color based on wind speed in km/h - white for normal, colors for alerts
+  // Get arrow color based on wind speed - white for normal, colors for alerts
   const getArrowColor = (speed: string): string => {
     const speedNum = parseFloat(speed.replace(/[^\d.]/g, ''))
-    if (speedNum >= 54) return '#ef4444' // Red - Strong wind (15+ m/s)
-    if (speedNum >= 36) return '#f97316' // Orange - Strong wind warning (10-15 m/s)
-    if (speedNum >= 25.2) return '#60a5fa' // Light blue - Notable wind (7-10 m/s)
-    return '#ffffff' // White - Normal wind (0-7 m/s)
+    if (speedNum >= 15) return '#ef4444' // Red - Strong wind
+    if (speedNum >= 10) return '#f97316' // Orange - Moderate wind
+    if (speedNum >= 7) return '#60a5fa' // Light blue - Notable wind
+    return '#ffffff' // White - Normal wind
   }
 
   // Fetch wind data
@@ -307,19 +307,19 @@ const AMeDASInteractiveMapWithJapan: React.FC = () => {
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 rounded border border-gray-400" style={{ backgroundColor: '#ffffff' }}></div>
-                    <span>0-25 km/h (0-7 m/s): 通常</span>
+                    <span>0-7 m/s: 通常</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 rounded" style={{ backgroundColor: '#60a5fa' }}></div>
-                    <span>25-36 km/h (7-10 m/s): やや強い</span>
+                    <span>7-10 m/s: やや強い</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 rounded" style={{ backgroundColor: '#f97316' }}></div>
-                    <span>36-54 km/h (10-15 m/s): 強風注意</span>
+                    <span>10-15 m/s: 強風注意</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 rounded animate-pulse" style={{ backgroundColor: '#ef4444' }}></div>
-                    <span>54+ km/h (15+ m/s): 警戒</span>
+                    <span>15+ m/s: 警戒</span>
                   </div>
                 </div>
               </div>
@@ -400,7 +400,7 @@ const AMeDASInteractiveMapWithJapan: React.FC = () => {
                   </div>
                 )}
 
-                {parseFloat(selectedStation.speed.replace(/[^\d.]/g, '')) >= 54 && (
+                {parseFloat(selectedStation.speed.replace(/[^\d.]/g, '')) > 15 && (
                   <div className="bg-red-600 text-white p-3 rounded-lg text-center text-sm font-bold animate-pulse">
                     ⚠️ 強風注意
                   </div>
@@ -432,11 +432,11 @@ const AMeDASInteractiveMapWithJapan: React.FC = () => {
             <div className="text-2xl font-bold text-white">
               {windData.length > 0 ? Math.max(...windData.map(d => parseFloat(d.speed.replace(/[^\d.]/g, '')) || 0)).toFixed(1) : '0'}
             </div>
-            <div className="text-green-100 text-sm">最大風速 (km/h)</div>
+            <div className="text-green-100 text-sm">最大風速 (m/s)</div>
           </div>
           <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-lg p-4 text-center">
             <div className="text-2xl font-bold text-white">
-              {windData.filter(d => parseFloat(d.speed.replace(/[^\d.]/g, '')) >= 54).length}
+              {windData.filter(d => parseFloat(d.speed.replace(/[^\d.]/g, '')) > 15).length}
             </div>
             <div className="text-orange-100 text-sm">強風警戒地点</div>
           </div>

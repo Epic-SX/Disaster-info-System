@@ -683,26 +683,21 @@ async def get_wind_data_from_json():
             wind_speed_str = obs.get('wind_speed')
             if wind_speed_str and wind_speed_str != '---':
                 try:
-                    # Convert wind speed from m/s to km/h
+                    # Keep wind speed in m/s (no conversion)
                     wind_speed_ms = float(wind_speed_str)
-                    wind_speed_kmh = wind_speed_ms * 3.6
                     
-                    # Determine status based on wind speed (km/h)
-                    # Thresholds: 0-25.2 km/h (0-7 m/s): calm/normal
-                    #             25.2-36 km/h (7-10 m/s): moderate
-                    #             36-54 km/h (10-15 m/s): warning
-                    #             54+ km/h (15+ m/s): danger
-                    if wind_speed_kmh >= 54:  # 15+ m/s
+                    # Determine status based on wind speed (m/s)
+                    if wind_speed_ms > 15:
                         status = "danger"
-                    elif wind_speed_kmh >= 36:  # 10-15 m/s
+                    elif wind_speed_ms > 10:
                         status = "warning"
-                    elif wind_speed_kmh >= 25.2:  # 7-10 m/s
-                        status = "moderate"
-                    else:  # 0-7 m/s
+                    elif wind_speed_ms < 3:
+                        status = "calm"
+                    else:
                         status = "normal"
                     
                     # Calculate gusts (estimated as 1.5x average wind speed)
-                    gusts_kmh = wind_speed_kmh * 1.5
+                    gusts_ms = wind_speed_ms * 1.5
                     
                     # Parse temperature
                     temp_str = obs.get('temperature', '---')
@@ -723,9 +718,9 @@ async def get_wind_data_from_json():
                     # Build wind data object
                     wind_point = {
                         "location": location_name,
-                        "speed": f"{wind_speed_kmh:.1f} km/h",
+                        "speed": f"{wind_speed_ms:.1f} m/s",
                         "direction": obs.get('wind_direction', 'N/A'),
-                        "gusts": f"{gusts_kmh:.1f} km/h",
+                        "gusts": f"{gusts_ms:.1f} m/s",
                         "status": status,
                         "timestamp": obs.get('observation_time', ''),
                         "temperature": temp_display,
