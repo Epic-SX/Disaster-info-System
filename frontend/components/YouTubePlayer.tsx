@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -44,22 +44,107 @@ export function YouTubePlayer({
   const [apiLoadError, setApiLoadError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    // YouTube IFrame Player API の読み込み with error handling
-    if (!window.YT) {
-      loadYouTubeAPI();
-    } else {
-      initializePlayer();
-    }
+  const checkIfLive = useCallback(async () => {
+    try {
+      // YouTube Data API で配信状況を確認
+      const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
+      if (!API_KEY) return;
 
-    return () => {
-      if (player && player.destroy) {
-        player.destroy();
+      const response = await fetch(
+        `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=liveStreamingDetails&key=${API_KEY}`
+      );
+      const data = await response.json();
+      
+      if (data.items && data.items[0]?.liveStreamingDetails) {
+        setIsLive(true);
       }
-    };
+    } catch (error) {
+      console.error('ライブ状況の確認に失敗:', error);
+    }
   }, [videoId]);
 
-  const loadYouTubeAPI = async () => {
+  const updateViewerCount = useCallback(async () => {
+    try {
+      const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
+      if (!API_KEY) return;
+
+      const response = await fetch(
+        `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=liveStreamingDetails,statistics&key=${API_KEY}`
+      );
+      const data = await response.json();
+      
+      if (data.items && data.items[0]) {
+        const concurrent = data.items[0].liveStreamingDetails?.concurrentViewers;
+        const views = data.items[0].statistics?.viewCount;
+        setViewerCount(parseInt(concurrent || views || '0'));
+      }
+    } catch (error) {
+      console.error('視聴者数の取得に失敗:', error);
+    }
+  }, [videoId]);
+
+  const onPlayerReady = useCallback((event: any) => {
+    console.log('YouTube Player Ready');
+    
+    // ライブストリームの情報を取得
+    checkIfLive();
+    updateViewerCount();
+    
+    // 定期的に視聴者数を更新
+    setInterval(updateViewerCount, 30000);
+  }, [checkIfLive, updateViewerCount]);
+
+  const onPlayerStateChange = useCallback((event: any) => {
+    if (event.data === window.YT.PlayerState.PLAYING) {
+      setIsPlaying(true);
+    } else if (event.data === window.YT.PlayerState.PAUSED) {
+      setIsPlaying(false);
+    }
+  }, []);
+
+  const onPlayerError = useCallback((event: any) => {
+    console.error('YouTube Player Error:', event.data);
+  }, []);
+
+  const initializePlayer = useCallback(() => {
+    if (!playerRef.current) return;
+
+    try {
+      const newPlayer = new window.YT.Player(playerRef.current, {
+        videoId: videoId,
+        width: '100%',
+        height: '100%',
+        playerVars: {
+          autoplay: autoplay ? 1 : 0,
+          mute: muted ? 1 : 0,
+          controls: controls ? 1 : 0,
+          loop: loop ? 1 : 0,
+          playlist: loop ? videoId : undefined,
+          rel: 0,
+          showinfo: 0,
+          modestbranding: 1,
+          fs: 1,
+          cc_load_policy: 0,
+          iv_load_policy: 3,
+          autohide: 0
+        },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange,
+          onError: onPlayerError
+        }
+      });
+
+      setPlayer(newPlayer);
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Player initialization failed:', error);
+      setApiLoadError(true);
+      setIsLoading(false);
+    }
+  }, [videoId, autoplay, muted, controls, loop, onPlayerReady, onPlayerStateChange, onPlayerError]);
+
+  const loadYouTubeAPI = useCallback(async () => {
     try {
       setIsLoading(true);
       setApiLoadError(false);
@@ -104,107 +189,22 @@ export function YouTubePlayer({
       setApiLoadError(true);
       setIsLoading(false);
     }
-  };
+  }, [initializePlayer]);
 
-  const initializePlayer = () => {
-    if (!playerRef.current) return;
-
-    try {
-      const newPlayer = new window.YT.Player(playerRef.current, {
-        videoId: videoId,
-        width: '100%',
-        height: '100%',
-        playerVars: {
-          autoplay: autoplay ? 1 : 0,
-          mute: muted ? 1 : 0,
-          controls: controls ? 1 : 0,
-          loop: loop ? 1 : 0,
-          playlist: loop ? videoId : undefined,
-          rel: 0,
-          showinfo: 0,
-          modestbranding: 1,
-          fs: 1,
-          cc_load_policy: 0,
-          iv_load_policy: 3,
-          autohide: 0
-        },
-        events: {
-          onReady: onPlayerReady,
-          onStateChange: onPlayerStateChange,
-          onError: onPlayerError
-        }
-      });
-
-      setPlayer(newPlayer);
-      setIsLoading(false);
-    } catch (error) {
-      console.error('Player initialization failed:', error);
-      setApiLoadError(true);
-      setIsLoading(false);
+  useEffect(() => {
+    // YouTube IFrame Player API の読み込み with error handling
+    if (!window.YT) {
+      loadYouTubeAPI();
+    } else {
+      initializePlayer();
     }
-  };
 
-  const onPlayerReady = (event: any) => {
-    console.log('YouTube Player Ready');
-    
-    // ライブストリームの情報を取得
-    checkIfLive();
-    updateViewerCount();
-    
-    // 定期的に視聴者数を更新
-    setInterval(updateViewerCount, 30000);
-  };
-
-  const onPlayerStateChange = (event: any) => {
-    if (event.data === window.YT.PlayerState.PLAYING) {
-      setIsPlaying(true);
-    } else if (event.data === window.YT.PlayerState.PAUSED) {
-      setIsPlaying(false);
-    }
-  };
-
-  const onPlayerError = (event: any) => {
-    console.error('YouTube Player Error:', event.data);
-  };
-
-  const checkIfLive = async () => {
-    try {
-      // YouTube Data API で配信状況を確認
-      const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
-      if (!API_KEY) return;
-
-      const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=liveStreamingDetails&key=${API_KEY}`
-      );
-      const data = await response.json();
-      
-      if (data.items && data.items[0]?.liveStreamingDetails) {
-        setIsLive(true);
+    return () => {
+      if (player && player.destroy) {
+        player.destroy();
       }
-    } catch (error) {
-      console.error('ライブ状況の確認に失敗:', error);
-    }
-  };
-
-  const updateViewerCount = async () => {
-    try {
-      const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
-      if (!API_KEY) return;
-
-      const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=liveStreamingDetails,statistics&key=${API_KEY}`
-      );
-      const data = await response.json();
-      
-      if (data.items && data.items[0]) {
-        const concurrent = data.items[0].liveStreamingDetails?.concurrentViewers;
-        const views = data.items[0].statistics?.viewCount;
-        setViewerCount(parseInt(concurrent || views || '0'));
-      }
-    } catch (error) {
-      console.error('視聴者数の取得に失敗:', error);
-    }
-  };
+    };
+  }, [videoId, loadYouTubeAPI, initializePlayer, player]);
 
   const togglePlayPause = () => {
     if (!player) return;
@@ -678,15 +678,17 @@ export function YouTubeEmbedPlayer({
           </div>
         </div>
       )}
-      <iframe
-        src={embedUrl}
-        className="w-full aspect-video"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        onLoad={handleIframeLoad}
-        onError={handleIframeError}
-        title="YouTube Video Player"
-      />
+      {embedUrl && (
+        <iframe
+          src={embedUrl}
+          className="w-full aspect-video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          onLoad={handleIframeLoad}
+          onError={handleIframeError}
+          title="YouTube Video Player"
+        />
+      )}
     </Card>
   );
 }

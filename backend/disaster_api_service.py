@@ -85,6 +85,27 @@ class P2PEarthquakeAPI:
     def __init__(self):
         self.base_url = os.getenv('P2P_EARTHQUAKE_API', 'https://api.p2pquake.net/v2')
         
+    def _parse_p2p_datetime(self, time_str: str) -> datetime:
+        """Parse P2P API datetime format (e.g., '2025/11/12 21:29:38.23')"""
+        try:
+            # P2P API format: YYYY/MM/DD HH:MM:SS.mmm
+            # Replace slashes with dashes for ISO format
+            time_str = time_str.replace('/', '-')
+            
+            # Handle varying decimal places in seconds
+            if '.' in time_str:
+                # Ensure exactly 6 decimal places for microseconds
+                parts = time_str.split('.')
+                if len(parts) == 2:
+                    # Pad or truncate to 6 digits
+                    decimal_part = parts[1][:6].ljust(6, '0')
+                    time_str = f"{parts[0]}.{decimal_part}"
+            
+            return datetime.fromisoformat(time_str)
+        except Exception as e:
+            logger.warning(f"Error parsing P2P datetime '{time_str}': {e}, using current time")
+            return datetime.now()
+        
     async def get_latest_earthquakes(self, limit: int = 10) -> List[EarthquakeInfo]:
         """Get latest earthquake information from P2P"""
         try:
@@ -112,7 +133,7 @@ class P2PEarthquakeAPI:
                                     latitude=float(hypocenter.get('latitude', 0)),
                                     longitude=float(hypocenter.get('longitude', 0)),
                                     location=hypocenter.get('name', ''),
-                                    timestamp=datetime.fromisoformat(item.get('time', '').replace('Z', '+00:00')),
+                                    timestamp=self._parse_p2p_datetime(item.get('time', '')),
                                     intensity=earthquake_data.get('maxScale', ''),
                                     tsunami_warning=earthquake_data.get('domesticTsunami', '') != 'None',
                                     source='P2P地震情報'
@@ -156,7 +177,7 @@ class P2PEarthquakeAPI:
                                         height_prediction=float(area.get('category', {}).get('height', 0)),
                                         arrival_time=None,  # Not provided in this API
                                         alert_level=self._convert_tsunami_grade(area.get('grade', '')),
-                                        timestamp=datetime.fromisoformat(item.get('time', '').replace('Z', '+00:00')),
+                                        timestamp=self._parse_p2p_datetime(item.get('time', '')),
                                         source='P2P地震情報'
                                     )
                                     tsunami_alerts.append(tsunami)

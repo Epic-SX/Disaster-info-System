@@ -1,0 +1,1356 @@
+==================================================================
+AMeDAS Scraper Run - Thu Nov 13 19:00:01 JST 2025
+==================================================================
+2025-11-13 19:00:02,010 - __main__ - INFO - Scraping 北海道 (010000)...
+2025-11-13 19:00:02,010 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:00:03,573 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:03,894 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:03,951 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:00:04,581 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:00:04,581 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=010000
+2025-11-13 19:00:07,738 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:00:10,801 - __main__ - ERROR - Error clicking 全域 button: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=142.0.7444.59)
+Stacktrace:
+#0 0x64d87bce932a <unknown>
+#1 0x64d87b735e4b <unknown>
+#2 0x64d87b71c83e <unknown>
+#3 0x64d87b744b3a <unknown>
+#4 0x64d87b7b6e4f <unknown>
+#5 0x64d87b7d4802 <unknown>
+#6 0x64d87b77ac1a <unknown>
+#7 0x64d87b77b921 <unknown>
+#8 0x64d87bcb0239 <unknown>
+#9 0x64d87bcb31e8 <unknown>
+#10 0x64d87bc994c9 <unknown>
+#11 0x64d87bcb3db5 <unknown>
+#12 0x64d87bc80e93 <unknown>
+#13 0x64d87bcd6098 <unknown>
+#14 0x64d87bcd6273 <unknown>
+#15 0x64d87bce82c3 <unknown>
+#16 0x70793809caa4 <unknown>
+#17 0x707938129c6c <unknown>
+
+2025-11-13 19:00:10,802 - __main__ - ERROR - Failed to click 全域 button
+2025-11-13 19:00:10,865 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:00:12,865 - __main__ - INFO - Scraping 青森県 (020000)...
+2025-11-13 19:00:12,865 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:00:13,384 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:13,441 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:13,499 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:00:15,247 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x57751760232a <unknown>
+#1 0x57751704ee4b <unknown>
+#2 0x57751708fde2 <unknown>
+#3 0x57751708b233 <unknown>
+#4 0x577517085375 <unknown>
+#5 0x5775170d6016 <unknown>
+#6 0x5775170d5736 <unknown>
+#7 0x577517093c1a <unknown>
+#8 0x577517094921 <unknown>
+#9 0x5775175c9239 <unknown>
+#10 0x5775175cc1e8 <unknown>
+#11 0x5775175b24c9 <unknown>
+#12 0x5775175ccdb5 <unknown>
+#13 0x577517599e93 <unknown>
+#14 0x5775175ef098 <unknown>
+#15 0x5775175ef273 <unknown>
+#16 0x5775176012c3 <unknown>
+#17 0x7ebb9b69caa4 <unknown>
+#18 0x7ebb9b729c6c <unknown>
+
+2025-11-13 19:00:17,247 - __main__ - INFO - Scraping 岩手県 (030000)...
+2025-11-13 19:00:17,248 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:00:18,090 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:18,151 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:18,208 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:00:19,612 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x625faaa2f32a <unknown>
+#1 0x625faa47be4b <unknown>
+#2 0x625faa4bcde2 <unknown>
+#3 0x625faa4b8233 <unknown>
+#4 0x625faa4b2375 <unknown>
+#5 0x625faa503016 <unknown>
+#6 0x625faa502736 <unknown>
+#7 0x625faa4c0c1a <unknown>
+#8 0x625faa4c1921 <unknown>
+#9 0x625faa9f6239 <unknown>
+#10 0x625faa9f91e8 <unknown>
+#11 0x625faa9df4c9 <unknown>
+#12 0x625faa9f9db5 <unknown>
+#13 0x625faa9c6e93 <unknown>
+#14 0x625faaa1c098 <unknown>
+#15 0x625faaa1c273 <unknown>
+#16 0x625faaa2e2c3 <unknown>
+#17 0x7b291869caa4 <unknown>
+#18 0x7b2918729c6c <unknown>
+
+2025-11-13 19:00:21,612 - __main__ - INFO - Scraping 宮城県 (040000)...
+2025-11-13 19:00:21,613 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:00:22,617 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:22,696 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:22,750 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:00:23,963 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x5bf4ff4a632a <unknown>
+#1 0x5bf4feef2e4b <unknown>
+#2 0x5bf4fef33de2 <unknown>
+#3 0x5bf4fef2f233 <unknown>
+#4 0x5bf4fef29375 <unknown>
+#5 0x5bf4fef7a016 <unknown>
+#6 0x5bf4fef79736 <unknown>
+#7 0x5bf4fef37c1a <unknown>
+#8 0x5bf4fef38921 <unknown>
+#9 0x5bf4ff46d239 <unknown>
+#10 0x5bf4ff4701e8 <unknown>
+#11 0x5bf4ff4564c9 <unknown>
+#12 0x5bf4ff470db5 <unknown>
+#13 0x5bf4ff43de93 <unknown>
+#14 0x5bf4ff493098 <unknown>
+#15 0x5bf4ff493273 <unknown>
+#16 0x5bf4ff4a52c3 <unknown>
+#17 0x72a9b209caa4 <unknown>
+#18 0x72a9b2129c6c <unknown>
+
+2025-11-13 19:00:25,964 - __main__ - INFO - Scraping 秋田県 (050000)...
+2025-11-13 19:00:25,964 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:00:26,556 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:26,618 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:26,677 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:00:27,902 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x60d2e3fa032a <unknown>
+#1 0x60d2e39ece4b <unknown>
+#2 0x60d2e3a2dde2 <unknown>
+#3 0x60d2e3a29233 <unknown>
+#4 0x60d2e3a23375 <unknown>
+#5 0x60d2e3a74016 <unknown>
+#6 0x60d2e3a73736 <unknown>
+#7 0x60d2e3a31c1a <unknown>
+#8 0x60d2e3a32921 <unknown>
+#9 0x60d2e3f67239 <unknown>
+#10 0x60d2e3f6a1e8 <unknown>
+#11 0x60d2e3f504c9 <unknown>
+#12 0x60d2e3f6adb5 <unknown>
+#13 0x60d2e3f37e93 <unknown>
+#14 0x60d2e3f8d098 <unknown>
+#15 0x60d2e3f8d273 <unknown>
+#16 0x60d2e3f9f2c3 <unknown>
+#17 0x79f62da9caa4 <unknown>
+#18 0x79f62db29c6c <unknown>
+
+2025-11-13 19:00:29,902 - __main__ - INFO - Scraping 山形県 (060000)...
+2025-11-13 19:00:29,904 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:00:31,273 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:31,336 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:31,405 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:00:31,983 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:00:31,983 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=060000
+2025-11-13 19:00:35,405 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:00:38,589 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:00:53,742 - __main__ - WARNING - Method 1 failed: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=142.0.7444.59); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+#0 0x5929f02f032a <unknown>
+#1 0x5929efd3ce4b <unknown>
+#2 0x5929efd43d06 <unknown>
+#3 0x5929efd467bc <unknown>
+#4 0x5929efddce6e <unknown>
+#5 0x5929efddbdf7 <unknown>
+#6 0x5929efd81c1a <unknown>
+#7 0x5929efd82921 <unknown>
+#8 0x5929f02b7239 <unknown>
+#9 0x5929f02ba1e8 <unknown>
+#10 0x5929f02a04c9 <unknown>
+#11 0x5929f02badb5 <unknown>
+#12 0x5929f0287e93 <unknown>
+#13 0x5929f02dd098 <unknown>
+#14 0x5929f02dd273 <unknown>
+#15 0x5929f02ef2c3 <unknown>
+#16 0x7310ffa9caa4 <unknown>
+#17 0x7310ffb29c6c <unknown>
+
+2025-11-13 19:00:53,742 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:00:53,757 - __main__ - ERROR - Method 2 failed: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=142.0.7444.59); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+#0 0x5929f02f032a <unknown>
+#1 0x5929efd3ce4b <unknown>
+#2 0x5929efd43d06 <unknown>
+#3 0x5929efd467bc <unknown>
+#4 0x5929efddce6e <unknown>
+#5 0x5929efddbdf7 <unknown>
+#6 0x5929efd81c1a <unknown>
+#7 0x5929efd82921 <unknown>
+#8 0x5929f02b7239 <unknown>
+#9 0x5929f02ba1e8 <unknown>
+#10 0x5929f02a04c9 <unknown>
+#11 0x5929f02badb5 <unknown>
+#12 0x5929f0287e93 <unknown>
+#13 0x5929f02dd098 <unknown>
+#14 0x5929f02dd273 <unknown>
+#15 0x5929f02ef2c3 <unknown>
+#16 0x7310ffa9caa4 <unknown>
+#17 0x7310ffb29c6c <unknown>
+
+2025-11-13 19:00:53,757 - __main__ - ERROR - Failed to click 全域 button
+2025-11-13 19:00:53,819 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:00:55,822 - __main__ - INFO - Scraping 福島県 (070000)...
+2025-11-13 19:00:55,822 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:00:57,456 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:57,519 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:00:57,574 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:00:58,334 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:00:58,334 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=070000
+2025-11-13 19:01:02,049 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:01:05,111 - __main__ - ERROR - Error clicking 全域 button: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=142.0.7444.59)
+Stacktrace:
+#0 0x5de5674a632a <unknown>
+#1 0x5de566ef2e4b <unknown>
+#2 0x5de566ed983e <unknown>
+#3 0x5de566f01b3a <unknown>
+#4 0x5de566f73e4f <unknown>
+#5 0x5de566f91802 <unknown>
+#6 0x5de566f37c1a <unknown>
+#7 0x5de566f38921 <unknown>
+#8 0x5de56746d239 <unknown>
+#9 0x5de5674701e8 <unknown>
+#10 0x5de5674564c9 <unknown>
+#11 0x5de567470db5 <unknown>
+#12 0x5de56743de93 <unknown>
+#13 0x5de567493098 <unknown>
+#14 0x5de567493273 <unknown>
+#15 0x5de5674a52c3 <unknown>
+#16 0x7d4956c9caa4 <unknown>
+#17 0x7d4956d29c6c <unknown>
+
+2025-11-13 19:01:05,111 - __main__ - ERROR - Failed to click 全域 button
+2025-11-13 19:01:05,117 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:01:07,117 - __main__ - INFO - Scraping 茨城県 (080000)...
+2025-11-13 19:01:07,118 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:01:07,720 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:01:07,777 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:01:07,836 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:01:08,843 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:01:08,843 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=080000
+2025-11-13 19:01:12,914 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:01:16,003 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:01:32,310 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:01:32,310 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:01:33,925 - __main__ - ERROR - Method 2 failed: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=142.0.7444.59); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+#0 0x64f81872432a <unknown>
+#1 0x64f818170e4b <unknown>
+#2 0x64f818177d06 <unknown>
+#3 0x64f81817a7bc <unknown>
+#4 0x64f818210e6e <unknown>
+#5 0x64f81820fdf7 <unknown>
+#6 0x64f8181b5c1a <unknown>
+#7 0x64f8181b6921 <unknown>
+#8 0x64f8186eb239 <unknown>
+#9 0x64f8186ee1e8 <unknown>
+#10 0x64f8186d44c9 <unknown>
+#11 0x64f8186eedb5 <unknown>
+#12 0x64f8186bbe93 <unknown>
+#13 0x64f818711098 <unknown>
+#14 0x64f818711273 <unknown>
+#15 0x64f8187232c3 <unknown>
+#16 0x7d360629caa4 <unknown>
+#17 0x7d3606329c6c <unknown>
+
+2025-11-13 19:01:33,925 - __main__ - ERROR - Failed to click 全域 button
+2025-11-13 19:01:34,001 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:01:36,002 - __main__ - INFO - Scraping 栃木県 (090000)...
+2025-11-13 19:01:36,002 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:01:37,890 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:01:37,971 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:01:38,029 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:01:38,751 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:01:38,752 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=090000
+2025-11-13 19:01:42,808 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:01:45,877 - __main__ - ERROR - Error clicking 全域 button: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=142.0.7444.59)
+Stacktrace:
+#0 0x5713799dc32a <unknown>
+#1 0x571379428e4b <unknown>
+#2 0x57137940f83e <unknown>
+#3 0x571379437b3a <unknown>
+#4 0x5713794a9e4f <unknown>
+#5 0x5713794c7802 <unknown>
+#6 0x57137946dc1a <unknown>
+#7 0x57137946e921 <unknown>
+#8 0x5713799a3239 <unknown>
+#9 0x5713799a61e8 <unknown>
+#10 0x57137998c4c9 <unknown>
+#11 0x5713799a6db5 <unknown>
+#12 0x571379973e93 <unknown>
+#13 0x5713799c9098 <unknown>
+#14 0x5713799c9273 <unknown>
+#15 0x5713799db2c3 <unknown>
+#16 0x75b8c1e9caa4 <unknown>
+#17 0x75b8c1f29c6c <unknown>
+
+2025-11-13 19:01:45,877 - __main__ - ERROR - Failed to click 全域 button
+2025-11-13 19:01:45,883 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:01:47,883 - __main__ - INFO - Scraping 群馬県 (100000)...
+2025-11-13 19:01:47,883 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:01:49,328 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:01:49,390 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:01:49,444 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:01:49,991 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:01:49,991 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=100000
+2025-11-13 19:01:53,005 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:01:56,021 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:02:12,301 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:02:12,302 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:02:13,407 - __main__ - ERROR - Method 2 failed: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=142.0.7444.59); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+#0 0x6008bae0232a <unknown>
+#1 0x6008ba84ee4b <unknown>
+#2 0x6008ba855d06 <unknown>
+#3 0x6008ba8587bc <unknown>
+#4 0x6008ba8eee6e <unknown>
+#5 0x6008ba8eddf7 <unknown>
+#6 0x6008ba893c1a <unknown>
+#7 0x6008ba894921 <unknown>
+#8 0x6008badc9239 <unknown>
+#9 0x6008badcc1e8 <unknown>
+#10 0x6008badb24c9 <unknown>
+#11 0x6008badccdb5 <unknown>
+#12 0x6008bad99e93 <unknown>
+#13 0x6008badef098 <unknown>
+#14 0x6008badef273 <unknown>
+#15 0x6008bae012c3 <unknown>
+#16 0x711a9229caa4 <unknown>
+#17 0x711a92329c6c <unknown>
+
+2025-11-13 19:02:13,407 - __main__ - ERROR - Failed to click 全域 button
+2025-11-13 19:02:13,471 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:02:15,472 - __main__ - INFO - Scraping 埼玉県 (110000)...
+2025-11-13 19:02:15,472 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:02:17,006 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:02:17,073 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:02:17,128 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:02:17,791 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:02:17,791 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=110000
+2025-11-13 19:02:21,052 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:02:24,112 - __main__ - ERROR - Error clicking 全域 button: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=142.0.7444.59)
+Stacktrace:
+#0 0x58bf3eb7032a <unknown>
+#1 0x58bf3e5bce4b <unknown>
+#2 0x58bf3e5a383e <unknown>
+#3 0x58bf3e5cbb3a <unknown>
+#4 0x58bf3e63de4f <unknown>
+#5 0x58bf3e65b802 <unknown>
+#6 0x58bf3e601c1a <unknown>
+#7 0x58bf3e602921 <unknown>
+#8 0x58bf3eb37239 <unknown>
+#9 0x58bf3eb3a1e8 <unknown>
+#10 0x58bf3eb204c9 <unknown>
+#11 0x58bf3eb3adb5 <unknown>
+#12 0x58bf3eb07e93 <unknown>
+#13 0x58bf3eb5d098 <unknown>
+#14 0x58bf3eb5d273 <unknown>
+#15 0x58bf3eb6f2c3 <unknown>
+#16 0x7e5ee5c9caa4 <unknown>
+#17 0x7e5ee5d29c6c <unknown>
+
+2025-11-13 19:02:24,113 - __main__ - ERROR - Failed to click 全域 button
+2025-11-13 19:02:24,116 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:02:26,116 - __main__ - INFO - Scraping 千葉県 (120000)...
+2025-11-13 19:02:26,117 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:02:26,800 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:02:26,856 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:02:26,916 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:02:27,444 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:02:27,444 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=120000
+2025-11-13 19:02:30,504 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:02:33,516 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:02:50,540 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:02:50,540 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:02:50,560 - __main__ - ERROR - Method 2 failed: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=142.0.7444.59); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+#0 0x64bd65c7732a <unknown>
+#1 0x64bd656c3e4b <unknown>
+#2 0x64bd656cad06 <unknown>
+#3 0x64bd656cd7bc <unknown>
+#4 0x64bd65763e6e <unknown>
+#5 0x64bd65762df7 <unknown>
+#6 0x64bd65708c1a <unknown>
+#7 0x64bd65709921 <unknown>
+#8 0x64bd65c3e239 <unknown>
+#9 0x64bd65c411e8 <unknown>
+#10 0x64bd65c274c9 <unknown>
+#11 0x64bd65c41db5 <unknown>
+#12 0x64bd65c0ee93 <unknown>
+#13 0x64bd65c64098 <unknown>
+#14 0x64bd65c64273 <unknown>
+#15 0x64bd65c762c3 <unknown>
+#16 0x7d1ae6c9caa4 <unknown>
+#17 0x7d1ae6d29c6c <unknown>
+
+2025-11-13 19:02:50,560 - __main__ - ERROR - Failed to click 全域 button
+2025-11-13 19:02:50,635 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:02:52,636 - __main__ - INFO - Scraping 東京都 (130000)...
+2025-11-13 19:02:52,636 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:02:54,236 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:02:54,306 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:02:54,363 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:02:55,016 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:02:55,016 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=130000
+2025-11-13 19:02:59,144 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:03:02,202 - __main__ - ERROR - Error clicking 全域 button: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=142.0.7444.59)
+Stacktrace:
+#0 0x602ef751632a <unknown>
+#1 0x602ef6f62e4b <unknown>
+#2 0x602ef6f4983e <unknown>
+#3 0x602ef6f71b3a <unknown>
+#4 0x602ef6fe3e4f <unknown>
+#5 0x602ef7001802 <unknown>
+#6 0x602ef6fa7c1a <unknown>
+#7 0x602ef6fa8921 <unknown>
+#8 0x602ef74dd239 <unknown>
+#9 0x602ef74e01e8 <unknown>
+#10 0x602ef74c64c9 <unknown>
+#11 0x602ef74e0db5 <unknown>
+#12 0x602ef74ade93 <unknown>
+#13 0x602ef7503098 <unknown>
+#14 0x602ef7503273 <unknown>
+#15 0x602ef75152c3 <unknown>
+#16 0x7358b189caa4 <unknown>
+#17 0x7358b1929c6c <unknown>
+
+2025-11-13 19:03:02,202 - __main__ - ERROR - Failed to click 全域 button
+2025-11-13 19:03:02,207 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:03:04,207 - __main__ - INFO - Scraping 神奈川県 (140000)...
+2025-11-13 19:03:04,208 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:03:04,742 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:04,797 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:04,859 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:03:06,520 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x6445cecad32a <unknown>
+#1 0x6445ce6f9e4b <unknown>
+#2 0x6445ce73ade2 <unknown>
+#3 0x6445ce736233 <unknown>
+#4 0x6445ce730375 <unknown>
+#5 0x6445ce781016 <unknown>
+#6 0x6445ce780736 <unknown>
+#7 0x6445ce73ec1a <unknown>
+#8 0x6445ce73f921 <unknown>
+#9 0x6445cec74239 <unknown>
+#10 0x6445cec771e8 <unknown>
+#11 0x6445cec5d4c9 <unknown>
+#12 0x6445cec77db5 <unknown>
+#13 0x6445cec44e93 <unknown>
+#14 0x6445cec9a098 <unknown>
+#15 0x6445cec9a273 <unknown>
+#16 0x6445cecac2c3 <unknown>
+#17 0x7a0990c9caa4 <unknown>
+#18 0x7a0990d29c6c <unknown>
+
+2025-11-13 19:03:08,521 - __main__ - INFO - Scraping 新潟県 (150000)...
+2025-11-13 19:03:08,521 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:03:09,377 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:09,447 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:09,505 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:03:10,781 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x5d332773532a <unknown>
+#1 0x5d3327181e4b <unknown>
+#2 0x5d33271c2de2 <unknown>
+#3 0x5d33271be233 <unknown>
+#4 0x5d33271b8375 <unknown>
+#5 0x5d3327209016 <unknown>
+#6 0x5d3327208736 <unknown>
+#7 0x5d33271c6c1a <unknown>
+#8 0x5d33271c7921 <unknown>
+#9 0x5d33276fc239 <unknown>
+#10 0x5d33276ff1e8 <unknown>
+#11 0x5d33276e54c9 <unknown>
+#12 0x5d33276ffdb5 <unknown>
+#13 0x5d33276cce93 <unknown>
+#14 0x5d3327722098 <unknown>
+#15 0x5d3327722273 <unknown>
+#16 0x5d33277342c3 <unknown>
+#17 0x73f299e9caa4 <unknown>
+#18 0x73f299f29c6c <unknown>
+
+2025-11-13 19:03:12,782 - __main__ - INFO - Scraping 富山県 (160000)...
+2025-11-13 19:03:12,782 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:03:13,349 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:13,418 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:13,474 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:03:14,664 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x61013022132a <unknown>
+#1 0x61012fc6de4b <unknown>
+#2 0x61012fcaede2 <unknown>
+#3 0x61012fcaa233 <unknown>
+#4 0x61012fca4375 <unknown>
+#5 0x61012fcf5016 <unknown>
+#6 0x61012fcf4736 <unknown>
+#7 0x61012fcb2c1a <unknown>
+#8 0x61012fcb3921 <unknown>
+#9 0x6101301e8239 <unknown>
+#10 0x6101301eb1e8 <unknown>
+#11 0x6101301d14c9 <unknown>
+#12 0x6101301ebdb5 <unknown>
+#13 0x6101301b8e93 <unknown>
+#14 0x61013020e098 <unknown>
+#15 0x61013020e273 <unknown>
+#16 0x6101302202c3 <unknown>
+#17 0x7f458aa9caa4 <unknown>
+#18 0x7f458ab29c6c <unknown>
+
+2025-11-13 19:03:16,665 - __main__ - INFO - Scraping 石川県 (170000)...
+2025-11-13 19:03:16,665 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:03:17,229 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:17,288 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:17,348 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:03:18,583 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x57766310232a <unknown>
+#1 0x577662b4ee4b <unknown>
+#2 0x577662b8fde2 <unknown>
+#3 0x577662b8b233 <unknown>
+#4 0x577662b85375 <unknown>
+#5 0x577662bd6016 <unknown>
+#6 0x577662bd5736 <unknown>
+#7 0x577662b93c1a <unknown>
+#8 0x577662b94921 <unknown>
+#9 0x5776630c9239 <unknown>
+#10 0x5776630cc1e8 <unknown>
+#11 0x5776630b24c9 <unknown>
+#12 0x5776630ccdb5 <unknown>
+#13 0x577663099e93 <unknown>
+#14 0x5776630ef098 <unknown>
+#15 0x5776630ef273 <unknown>
+#16 0x5776631012c3 <unknown>
+#17 0x7c2300a9caa4 <unknown>
+#18 0x7c2300b29c6c <unknown>
+
+2025-11-13 19:03:20,584 - __main__ - INFO - Scraping 福井県 (180000)...
+2025-11-13 19:03:20,584 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:03:21,107 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:21,168 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:21,226 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:03:22,365 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x6041b41f632a <unknown>
+#1 0x6041b3c42e4b <unknown>
+#2 0x6041b3c83de2 <unknown>
+#3 0x6041b3c7f233 <unknown>
+#4 0x6041b3c79375 <unknown>
+#5 0x6041b3cca016 <unknown>
+#6 0x6041b3cc9736 <unknown>
+#7 0x6041b3c87c1a <unknown>
+#8 0x6041b3c88921 <unknown>
+#9 0x6041b41bd239 <unknown>
+#10 0x6041b41c01e8 <unknown>
+#11 0x6041b41a64c9 <unknown>
+#12 0x6041b41c0db5 <unknown>
+#13 0x6041b418de93 <unknown>
+#14 0x6041b41e3098 <unknown>
+#15 0x6041b41e3273 <unknown>
+#16 0x6041b41f52c3 <unknown>
+#17 0x7f957989caa4 <unknown>
+#18 0x7f9579929c6c <unknown>
+
+2025-11-13 19:03:24,366 - __main__ - INFO - Scraping 山梨県 (190000)...
+2025-11-13 19:03:24,367 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:03:24,903 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:24,961 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:25,021 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:03:26,226 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x55a67242032a <unknown>
+#1 0x55a671e6ce4b <unknown>
+#2 0x55a671eadde2 <unknown>
+#3 0x55a671ea9233 <unknown>
+#4 0x55a671ea3375 <unknown>
+#5 0x55a671ef4016 <unknown>
+#6 0x55a671ef3736 <unknown>
+#7 0x55a671eb1c1a <unknown>
+#8 0x55a671eb2921 <unknown>
+#9 0x55a6723e7239 <unknown>
+#10 0x55a6723ea1e8 <unknown>
+#11 0x55a6723d04c9 <unknown>
+#12 0x55a6723eadb5 <unknown>
+#13 0x55a6723b7e93 <unknown>
+#14 0x55a67240d098 <unknown>
+#15 0x55a67240d273 <unknown>
+#16 0x55a67241f2c3 <unknown>
+#17 0x736c1ca9caa4 <unknown>
+#18 0x736c1cb29c6c <unknown>
+
+2025-11-13 19:03:28,226 - __main__ - INFO - Scraping 長野県 (200000)...
+2025-11-13 19:03:28,226 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:03:28,764 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:28,820 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:28,879 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:03:30,107 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x643e87a7132a <unknown>
+#1 0x643e874bde4b <unknown>
+#2 0x643e874fede2 <unknown>
+#3 0x643e874fa233 <unknown>
+#4 0x643e874f4375 <unknown>
+#5 0x643e87545016 <unknown>
+#6 0x643e87544736 <unknown>
+#7 0x643e87502c1a <unknown>
+#8 0x643e87503921 <unknown>
+#9 0x643e87a38239 <unknown>
+#10 0x643e87a3b1e8 <unknown>
+#11 0x643e87a214c9 <unknown>
+#12 0x643e87a3bdb5 <unknown>
+#13 0x643e87a08e93 <unknown>
+#14 0x643e87a5e098 <unknown>
+#15 0x643e87a5e273 <unknown>
+#16 0x643e87a702c3 <unknown>
+#17 0x775b5629caa4 <unknown>
+#18 0x775b56329c6c <unknown>
+
+2025-11-13 19:03:32,107 - __main__ - INFO - Scraping 岐阜県 (210000)...
+2025-11-13 19:03:32,107 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:03:32,857 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:32,918 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:32,971 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:03:34,183 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x5e3920a6a32a <unknown>
+#1 0x5e39204b6e4b <unknown>
+#2 0x5e39204f7de2 <unknown>
+#3 0x5e39204f3233 <unknown>
+#4 0x5e39204ed375 <unknown>
+#5 0x5e392053e016 <unknown>
+#6 0x5e392053d736 <unknown>
+#7 0x5e39204fbc1a <unknown>
+#8 0x5e39204fc921 <unknown>
+#9 0x5e3920a31239 <unknown>
+#10 0x5e3920a341e8 <unknown>
+#11 0x5e3920a1a4c9 <unknown>
+#12 0x5e3920a34db5 <unknown>
+#13 0x5e3920a01e93 <unknown>
+#14 0x5e3920a57098 <unknown>
+#15 0x5e3920a57273 <unknown>
+#16 0x5e3920a692c3 <unknown>
+#17 0x78641c89caa4 <unknown>
+#18 0x78641c929c6c <unknown>
+
+2025-11-13 19:03:36,184 - __main__ - INFO - Scraping 静岡県 (220000)...
+2025-11-13 19:03:36,184 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:03:36,702 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:36,762 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:36,817 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:03:38,008 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x62073f51432a <unknown>
+#1 0x62073ef60e4b <unknown>
+#2 0x62073efa1de2 <unknown>
+#3 0x62073ef9d233 <unknown>
+#4 0x62073ef97375 <unknown>
+#5 0x62073efe8016 <unknown>
+#6 0x62073efe7736 <unknown>
+#7 0x62073efa5c1a <unknown>
+#8 0x62073efa6921 <unknown>
+#9 0x62073f4db239 <unknown>
+#10 0x62073f4de1e8 <unknown>
+#11 0x62073f4c44c9 <unknown>
+#12 0x62073f4dedb5 <unknown>
+#13 0x62073f4abe93 <unknown>
+#14 0x62073f501098 <unknown>
+#15 0x62073f501273 <unknown>
+#16 0x62073f5132c3 <unknown>
+#17 0x7a4f61a9caa4 <unknown>
+#18 0x7a4f61b29c6c <unknown>
+
+2025-11-13 19:03:40,009 - __main__ - INFO - Scraping 愛知県 (230000)...
+2025-11-13 19:03:40,009 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:03:40,578 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:40,641 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:40,695 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:03:41,819 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x5e4ca7d3032a <unknown>
+#1 0x5e4ca777ce4b <unknown>
+#2 0x5e4ca77bdde2 <unknown>
+#3 0x5e4ca77b9233 <unknown>
+#4 0x5e4ca77b3375 <unknown>
+#5 0x5e4ca7804016 <unknown>
+#6 0x5e4ca7803736 <unknown>
+#7 0x5e4ca77c1c1a <unknown>
+#8 0x5e4ca77c2921 <unknown>
+#9 0x5e4ca7cf7239 <unknown>
+#10 0x5e4ca7cfa1e8 <unknown>
+#11 0x5e4ca7ce04c9 <unknown>
+#12 0x5e4ca7cfadb5 <unknown>
+#13 0x5e4ca7cc7e93 <unknown>
+#14 0x5e4ca7d1d098 <unknown>
+#15 0x5e4ca7d1d273 <unknown>
+#16 0x5e4ca7d2f2c3 <unknown>
+#17 0x7dd52449caa4 <unknown>
+#18 0x7dd524529c6c <unknown>
+
+2025-11-13 19:03:43,819 - __main__ - INFO - Scraping 三重県 (240000)...
+2025-11-13 19:03:43,820 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:03:44,348 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:44,410 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:44,465 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:03:45,604 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x634f6a4f432a <unknown>
+#1 0x634f69f40e4b <unknown>
+#2 0x634f69f81de2 <unknown>
+#3 0x634f69f7d233 <unknown>
+#4 0x634f69f77375 <unknown>
+#5 0x634f69fc8016 <unknown>
+#6 0x634f69fc7736 <unknown>
+#7 0x634f69f85c1a <unknown>
+#8 0x634f69f86921 <unknown>
+#9 0x634f6a4bb239 <unknown>
+#10 0x634f6a4be1e8 <unknown>
+#11 0x634f6a4a44c9 <unknown>
+#12 0x634f6a4bedb5 <unknown>
+#13 0x634f6a48be93 <unknown>
+#14 0x634f6a4e1098 <unknown>
+#15 0x634f6a4e1273 <unknown>
+#16 0x634f6a4f32c3 <unknown>
+#17 0x7cc535c9caa4 <unknown>
+#18 0x7cc535d29c6c <unknown>
+
+2025-11-13 19:03:47,605 - __main__ - INFO - Scraping 滋賀県 (250000)...
+2025-11-13 19:03:47,605 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:03:48,131 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:48,188 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:03:48,241 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:03:49,425 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:03:49,425 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=250000
+2025-11-13 19:03:52,835 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:03:55,909 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:04:12,253 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:04:12,253 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:04:12,402 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:04:16,402 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:04:16,403 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:04:21,516 - __main__ - INFO - Found 2 data blocks
+2025-11-13 19:04:21,518 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:04:21,519 - __main__ - INFO - Parsed 0 regions with total 0 observations
+2025-11-13 19:04:21,579 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:04:23,579 - __main__ - INFO - Scraping 京都府 (260000)...
+2025-11-13 19:04:23,579 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:04:24,901 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:04:24,980 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:04:25,034 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:04:26,336 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:04:26,336 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=260000
+2025-11-13 19:04:29,649 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:04:32,716 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:04:49,137 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:04:49,138 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:04:50,922 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:04:54,922 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:04:54,922 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:05:00,026 - __main__ - INFO - Found 2 data blocks
+2025-11-13 19:05:00,027 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:05:00,028 - __main__ - INFO - Parsed 0 regions with total 0 observations
+2025-11-13 19:05:00,096 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:05:02,096 - __main__ - INFO - Scraping 大阪府 (270000)...
+2025-11-13 19:05:02,097 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:05:03,401 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:05:03,473 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:05:03,537 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:05:04,653 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:05:04,653 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=270000
+2025-11-13 19:05:08,021 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:05:11,133 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:05:27,515 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:05:27,515 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:05:29,183 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:05:33,183 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:05:33,183 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:05:38,292 - __main__ - INFO - Found 2 data blocks
+2025-11-13 19:05:38,293 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:05:38,293 - __main__ - INFO - Parsed 0 regions with total 0 observations
+2025-11-13 19:05:38,356 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:05:40,357 - __main__ - INFO - Scraping 兵庫県 (280000)...
+2025-11-13 19:05:40,357 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:05:41,510 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:05:41,602 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:05:41,656 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:05:42,266 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:05:42,266 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=280000
+2025-11-13 19:05:43,298 - __main__ - ERROR - Error navigating to prefecture page: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: Unable to receive message from renderer
+  (Session info: chrome=142.0.7444.59)
+Stacktrace:
+#0 0x56bed724b32a <unknown>
+#1 0x56bed6c97e4b <unknown>
+#2 0x56bed6c7fe0d <unknown>
+#3 0x56bed6c7faf0 <unknown>
+#4 0x56bed6c7d8ff <unknown>
+#5 0x56bed6c7e27f <unknown>
+#6 0x56bed6c8cca3 <unknown>
+#7 0x56bed6ca6601 <unknown>
+#8 0x56bed6cace0b <unknown>
+#9 0x56bed6c7e9bd <unknown>
+#10 0x56bed6ca5e35 <unknown>
+#11 0x56bed6d37170 <unknown>
+#12 0x56bed6cdcc1a <unknown>
+#13 0x56bed6cdd921 <unknown>
+#14 0x56bed7212239 <unknown>
+#15 0x56bed72151e8 <unknown>
+#16 0x56bed71fb4c9 <unknown>
+#17 0x56bed7215db5 <unknown>
+#18 0x56bed71e2e93 <unknown>
+#19 0x56bed7238098 <unknown>
+#20 0x56bed7238273 <unknown>
+#21 0x56bed724a2c3 <unknown>
+#22 0x7d50d3a9caa4 <unknown>
+#23 0x7d50d3b29c6c <unknown>
+
+2025-11-13 19:05:43,299 - __main__ - ERROR - Failed to navigate to prefecture page
+2025-11-13 19:05:43,305 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:05:45,306 - __main__ - INFO - Scraping 奈良県 (290000)...
+2025-11-13 19:05:45,306 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:05:46,235 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:05:46,301 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:05:46,357 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:05:47,761 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:05:47,761 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=290000
+2025-11-13 19:05:50,981 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:05:54,055 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:06:10,265 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:06:10,265 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:06:11,923 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:06:15,923 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:06:15,924 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:06:21,038 - __main__ - INFO - Found 2 data blocks
+2025-11-13 19:06:21,038 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:06:21,039 - __main__ - INFO - Parsed 0 regions with total 0 observations
+2025-11-13 19:06:21,124 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:06:23,124 - __main__ - INFO - Scraping 和歌山県 (300000)...
+2025-11-13 19:06:23,124 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:06:24,459 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:06:24,535 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:06:24,590 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:06:26,103 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:06:26,103 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=300000
+2025-11-13 19:06:29,472 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:06:32,623 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:06:48,901 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:06:48,901 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:06:50,503 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:06:54,503 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:06:54,503 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:06:59,673 - __main__ - INFO - Found 2 data blocks
+2025-11-13 19:06:59,674 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:06:59,674 - __main__ - INFO - Parsed 0 regions with total 0 observations
+2025-11-13 19:06:59,739 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:07:01,739 - __main__ - INFO - Scraping 鳥取県 (310000)...
+2025-11-13 19:07:01,739 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:07:03,162 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:07:03,234 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:07:03,307 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:07:04,511 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:07:04,512 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=310000
+2025-11-13 19:07:08,185 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:07:11,264 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:07:27,507 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:07:27,508 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:07:28,999 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:07:32,999 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:07:33,000 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:07:38,148 - __main__ - INFO - Found 2 data blocks
+2025-11-13 19:07:38,150 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:07:38,150 - __main__ - INFO - Parsed 0 regions with total 0 observations
+2025-11-13 19:07:38,218 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:07:40,220 - __main__ - INFO - Scraping 島根県 (320000)...
+2025-11-13 19:07:40,220 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:07:41,485 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:07:41,561 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:07:41,614 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:07:43,295 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:07:43,296 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=320000
+2025-11-13 19:07:47,093 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:07:50,198 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:08:06,530 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:08:06,531 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:08:07,019 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:08:11,019 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:08:11,020 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:08:16,206 - __main__ - INFO - Found 2 data blocks
+2025-11-13 19:08:16,210 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:08:16,211 - __main__ - INFO - Parsed 0 regions with total 0 observations
+2025-11-13 19:08:16,270 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:08:18,270 - __main__ - INFO - Scraping 岡山県 (330000)...
+2025-11-13 19:08:18,270 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:08:19,525 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:08:19,592 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:08:19,648 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:08:21,028 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:08:21,028 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=330000
+2025-11-13 19:08:24,779 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:08:27,870 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:08:44,125 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:08:44,126 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:08:45,871 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:08:49,873 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:08:49,874 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:08:55,003 - __main__ - INFO - Found 2 data blocks
+2025-11-13 19:08:55,005 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:08:55,006 - __main__ - INFO - Parsed 0 regions with total 0 observations
+2025-11-13 19:08:55,072 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:08:57,073 - __main__ - INFO - Scraping 広島県 (340000)...
+2025-11-13 19:08:57,073 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:08:58,482 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:08:58,538 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:08:58,594 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:09:00,385 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:09:00,385 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=340000
+2025-11-13 19:09:03,679 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:09:06,812 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:09:23,118 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:09:23,119 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:09:23,516 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:09:27,518 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:09:27,518 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:09:32,613 - __main__ - INFO - Found 2 data blocks
+2025-11-13 19:09:32,614 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:09:32,615 - __main__ - INFO - Parsed 0 regions with total 0 observations
+2025-11-13 19:09:32,678 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:09:34,679 - __main__ - INFO - Scraping 山口県 (350000)...
+2025-11-13 19:09:34,679 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:09:35,957 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:09:36,025 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:09:36,081 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:09:36,693 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:09:36,693 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=350000
+2025-11-13 19:09:36,749 - __main__ - ERROR - Error navigating to prefecture page: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=142.0.7444.59)
+Stacktrace:
+#0 0x5fb04f65932a <unknown>
+#1 0x5fb04f0a5e4b <unknown>
+#2 0x5fb04f08c83e <unknown>
+#3 0x5fb04f0b4b3a <unknown>
+#4 0x5fb04f126e4f <unknown>
+#5 0x5fb04f144802 <unknown>
+#6 0x5fb04f0eac1a <unknown>
+#7 0x5fb04f0eb921 <unknown>
+#8 0x5fb04f620239 <unknown>
+#9 0x5fb04f6231e8 <unknown>
+#10 0x5fb04f6094c9 <unknown>
+#11 0x5fb04f623db5 <unknown>
+#12 0x5fb04f5f0e93 <unknown>
+#13 0x5fb04f646098 <unknown>
+#14 0x5fb04f646273 <unknown>
+#15 0x5fb04f6582c3 <unknown>
+#16 0x7b5d6569caa4 <unknown>
+#17 0x7b5d65729c6c <unknown>
+
+2025-11-13 19:09:36,749 - __main__ - ERROR - Failed to navigate to prefecture page
+2025-11-13 19:09:36,755 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:09:38,757 - __main__ - INFO - Scraping 徳島県 (360000)...
+2025-11-13 19:09:38,757 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:09:39,286 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:09:39,348 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:09:39,404 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:09:41,357 - __main__ - ERROR - Error scraping prefecture data: Message: session not created
+from disconnected: unable to connect to renderer
+Stacktrace:
+#0 0x62b760a1a32a <unknown>
+#1 0x62b760466e4b <unknown>
+#2 0x62b7604a7de2 <unknown>
+#3 0x62b7604a3233 <unknown>
+#4 0x62b76049d375 <unknown>
+#5 0x62b7604ee016 <unknown>
+#6 0x62b7604ed736 <unknown>
+#7 0x62b7604abc1a <unknown>
+#8 0x62b7604ac921 <unknown>
+#9 0x62b7609e1239 <unknown>
+#10 0x62b7609e41e8 <unknown>
+#11 0x62b7609ca4c9 <unknown>
+#12 0x62b7609e4db5 <unknown>
+#13 0x62b7609b1e93 <unknown>
+#14 0x62b760a07098 <unknown>
+#15 0x62b760a07273 <unknown>
+#16 0x62b760a192c3 <unknown>
+#17 0x77426fc9caa4 <unknown>
+#18 0x77426fd29c6c <unknown>
+
+2025-11-13 19:09:43,357 - __main__ - INFO - Scraping 香川県 (370000)...
+2025-11-13 19:09:43,357 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:09:44,226 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:09:44,286 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:09:44,344 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:09:45,645 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:09:45,645 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=370000
+2025-11-13 19:09:49,244 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:09:52,295 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:10:08,528 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:10:08,528 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:10:08,642 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:10:12,643 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:10:12,643 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:10:18,048 - __main__ - INFO - Found 11 data blocks
+2025-11-13 19:10:18,048 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:10:18,049 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 19:10:18,064 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 19:10:18,100 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 19:10:18,127 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 19:10:18,151 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 19:10:18,175 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 19:10:18,201 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 19:10:18,239 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 19:10:18,258 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 19:10:18,335 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:10:20,336 - __main__ - INFO - Scraping 愛媛県 (380000)...
+2025-11-13 19:10:20,336 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:10:21,668 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:10:21,730 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:10:21,786 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:10:23,922 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:10:23,922 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=380000
+2025-11-13 19:10:27,187 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:10:30,216 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:10:46,441 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:10:46,441 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:10:46,552 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:10:50,552 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:10:50,553 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:10:55,932 - __main__ - INFO - Found 11 data blocks
+2025-11-13 19:10:55,932 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:10:55,933 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 19:10:55,948 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 19:10:55,984 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 19:10:56,011 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 19:10:56,035 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 19:10:56,059 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 19:10:56,084 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 19:10:56,123 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 19:10:56,142 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 19:10:56,203 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:10:58,203 - __main__ - INFO - Scraping 高知県 (390000)...
+2025-11-13 19:10:58,204 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:10:59,655 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:10:59,714 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:10:59,768 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:11:01,979 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:11:01,980 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=390000
+2025-11-13 19:11:05,569 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:11:08,595 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:11:24,791 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:11:24,791 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:11:24,912 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:11:28,913 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:11:28,913 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:11:34,330 - __main__ - INFO - Found 11 data blocks
+2025-11-13 19:11:34,330 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:11:34,331 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 19:11:34,345 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 19:11:34,382 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 19:11:34,409 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 19:11:34,433 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 19:11:34,456 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 19:11:34,482 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 19:11:34,521 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 19:11:34,540 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 19:11:34,606 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:11:36,607 - __main__ - INFO - Scraping 福岡県 (400000)...
+2025-11-13 19:11:36,607 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:11:37,974 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:11:38,034 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:11:38,094 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:11:40,107 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:11:40,107 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=400000
+2025-11-13 19:11:43,389 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:11:46,429 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:12:02,589 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:12:02,589 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:12:02,685 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:12:06,685 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:12:06,686 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:12:12,063 - __main__ - INFO - Found 11 data blocks
+2025-11-13 19:12:12,064 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:12:12,065 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 19:12:12,079 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 19:12:12,116 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 19:12:12,143 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 19:12:12,167 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 19:12:12,191 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 19:12:12,222 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 19:12:12,262 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 19:12:12,284 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 19:12:12,344 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:12:14,344 - __main__ - INFO - Scraping 佐賀県 (410000)...
+2025-11-13 19:12:14,345 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:12:15,611 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:12:15,670 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:12:15,727 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:12:17,847 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:12:17,848 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=410000
+2025-11-13 19:12:21,153 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:12:24,183 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:12:40,400 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:12:40,400 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:12:40,499 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:12:44,499 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:12:44,500 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:12:49,955 - __main__ - INFO - Found 11 data blocks
+2025-11-13 19:12:49,956 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:12:49,957 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 19:12:49,971 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 19:12:50,008 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 19:12:50,034 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 19:12:50,058 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 19:12:50,082 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 19:12:50,110 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 19:12:50,150 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 19:12:50,170 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 19:12:50,227 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:12:52,227 - __main__ - INFO - Scraping 長崎県 (420000)...
+2025-11-13 19:12:52,228 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:12:53,579 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:12:53,637 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:12:53,694 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:12:55,944 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:12:55,945 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=420000
+2025-11-13 19:12:59,192 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:13:02,217 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:13:18,448 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:13:18,449 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:13:18,567 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:13:22,568 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:13:22,568 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:13:27,968 - __main__ - INFO - Found 11 data blocks
+2025-11-13 19:13:27,968 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:13:27,969 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 19:13:27,984 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 19:13:28,020 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 19:13:28,047 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 19:13:28,071 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 19:13:28,094 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 19:13:28,120 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 19:13:28,159 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 19:13:28,179 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 19:13:28,241 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:13:30,241 - __main__ - INFO - Scraping 熊本県 (430000)...
+2025-11-13 19:13:30,241 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:13:31,641 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:13:31,712 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:13:31,778 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:13:33,676 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:13:33,676 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=430000
+2025-11-13 19:13:36,925 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:13:39,960 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:13:56,161 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:13:56,161 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:13:56,252 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:14:00,252 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:14:00,253 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:14:05,680 - __main__ - INFO - Found 11 data blocks
+2025-11-13 19:14:05,680 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:14:05,681 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 19:14:05,696 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 19:14:05,740 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 19:14:05,767 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 19:14:05,791 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 19:14:05,814 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 19:14:05,840 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 19:14:05,879 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 19:14:05,898 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 19:14:05,962 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:14:07,962 - __main__ - INFO - Scraping 大分県 (440000)...
+2025-11-13 19:14:07,963 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:14:09,254 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:14:09,319 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:14:09,373 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:14:11,504 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:14:11,504 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=440000
+2025-11-13 19:14:14,792 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:14:17,821 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:14:34,047 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:14:34,048 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:14:34,155 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:14:38,155 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:14:38,156 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:14:43,537 - __main__ - INFO - Found 11 data blocks
+2025-11-13 19:14:43,538 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:14:43,539 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 19:14:43,553 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 19:14:43,591 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 19:14:43,618 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 19:14:43,642 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 19:14:43,666 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 19:14:43,692 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 19:14:43,731 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 19:14:43,750 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 19:14:43,812 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:14:45,812 - __main__ - INFO - Scraping 宮崎県 (450000)...
+2025-11-13 19:14:45,813 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:14:47,109 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:14:47,168 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:14:47,224 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:14:48,446 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:14:48,446 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=450000
+2025-11-13 19:14:51,660 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:14:54,678 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:15:10,866 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:15:10,866 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:15:10,950 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:15:14,950 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:15:14,950 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:15:20,393 - __main__ - INFO - Found 11 data blocks
+2025-11-13 19:15:20,394 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:15:20,395 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 19:15:20,409 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 19:15:20,446 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 19:15:20,472 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 19:15:20,496 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 19:15:20,520 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 19:15:20,546 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 19:15:20,585 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 19:15:20,604 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 19:15:20,661 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:15:22,661 - __main__ - INFO - Scraping 鹿児島県 (460000)...
+2025-11-13 19:15:22,661 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:15:23,197 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:15:23,252 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:15:23,312 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:15:24,349 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:15:24,349 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=460000
+2025-11-13 19:15:27,520 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:15:30,540 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:15:46,710 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:15:46,710 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:15:46,793 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:15:50,793 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:15:50,793 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:15:56,175 - __main__ - INFO - Found 11 data blocks
+2025-11-13 19:15:56,175 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:15:56,176 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 19:15:56,190 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 19:15:56,226 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 19:15:56,253 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 19:15:56,277 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 19:15:56,300 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 19:15:56,326 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 19:15:56,364 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 19:15:56,384 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 19:15:56,441 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:15:58,441 - __main__ - INFO - Scraping 沖縄県 (471000)...
+2025-11-13 19:15:58,441 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 19:15:58,966 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:15:59,023 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 19:15:59,079 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 19:16:00,139 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 19:16:00,139 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=471000
+2025-11-13 19:16:03,322 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 19:16:06,338 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 19:16:22,484 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 19:16:22,484 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 19:16:22,579 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 19:16:26,579 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 19:16:26,580 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 19:16:31,999 - __main__ - INFO - Found 11 data blocks
+2025-11-13 19:16:32,000 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 19:16:32,001 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 19:16:32,015 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 19:16:32,052 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 19:16:32,078 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 19:16:32,102 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 19:16:32,125 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 19:16:32,151 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 19:16:32,190 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 19:16:32,219 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 19:16:32,278 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 19:16:34,278 - __main__ - INFO - Completed scraping. Total regions: 88
+================================================================================
+JMA AMeDAS Data Scraper (Selenium)
+================================================================================
+
+Scraping all prefectures...
+
+✓ Successfully scraped 88 regions
+✓ Total observations: 4972
+
+================================================================================
+Sample Region: 宗谷地方
+Observation Time: 2025年11月13日19時00分 現在
+Prefecture: 香川県
+================================================================================
+
+Location             Temp(°C)   Precip(mm)   Wind Dir     Wind Speed(m/s)
+-------------------------------------------------------------------------------------
+宗谷岬                  4.5        0.0          西北西          14.8           
+稚内                   3.3        0.0          西            4.9            
+礼文                   5.2        0.0          北            2.5            
+声問                   3.4        0.0          西北西          11.1           
+浜鬼志別                 2.5        0.0          西北西          5.0            
+本泊                   5.9        0.0          西北西          5.6            
+沼川                   3.2        0.5          西北西          3.4            
+沓形                   6.7        0.0          北西           6.4            
+豊富                   4.2        0.0          北西           6.2            
+浜頓別                  2.5        0.0          西北西          4.7            
+
+================================================================================
+Exporting data to JSON...
+✓ Data exported to: amedas_data.json
+✓ Total regions: 88
+✓ Total observations: 4972
+================================================================================
+✓ Scraper completed successfully
+End time: Thu Nov 13 19:16:34 JST 2025
+==================================================================

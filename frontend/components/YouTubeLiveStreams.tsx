@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { YouTubePlayerHybrid } from './YouTubePlayer';
+import { apiClient, API_ENDPOINTS } from '@/lib/api-config';
 import { 
   Camera, 
   Radio, 
@@ -15,7 +16,8 @@ import {
   Clock,
   Users,
   Volume2,
-  VolumeX
+  VolumeX,
+  RefreshCw
 } from 'lucide-react';
 
 interface LiveStream {
@@ -27,12 +29,28 @@ interface LiveStream {
   category: 'news' | 'weather' | 'emergency' | 'camera';
   isLive: boolean;
   viewerCount?: number;
+  thumbnail?: string;
+  link?: string;
+  verified_channel?: boolean;
 }
 
-const LIVE_STREAMS: LiveStream[] = [
+interface BackendLiveStream {
+  video_id: string;
+  title: string;
+  channel: string;
+  description?: string;
+  video_type?: string;
+  duration?: string;
+  thumbnail?: string;
+  link?: string;
+  verified_channel?: boolean;
+}
+
+// Default/fallback streams - moved outside component to avoid dependency issues
+const DEFAULT_STREAMS: LiveStream[] = [
   {
     id: 'nhk-news',
-    videoId: 'jfKfPfyJRdk', // NHK WORLD JAPAN live stream
+    videoId: 'jfKfPfyJRdk',
     title: 'NHKニュース ライブ配信',
     channel: 'NHK',
     description: 'NHKの24時間ライブニュース配信',
@@ -41,47 +59,90 @@ const LIVE_STREAMS: LiveStream[] = [
   },
   {
     id: 'weather-news',
-    videoId: 'Ch_ZqaUQhc8', // Weather News 24h
+    videoId: 'Ch_ZqaUQhc8',
     title: 'ウェザーニュース ライブ',
     channel: 'Weather News',
     description: '24時間天気予報・災害情報',
     category: 'weather',
     isLive: true
-  },
-  {
-    id: 'tbs-news',
-    videoId: 'VUqg_FhBn3Y', // TBS NEWS DIG Powered by JNN
-    title: 'TBS NEWS ライブ',
-    channel: 'TBS',
-    description: 'TBSニュース24時間配信',
-    category: 'news',
-    isLive: true
-  },
-  {
-    id: 'fuji-news',
-    videoId: 'aNWYXjH8pdY', // FNNプライムオンライン
-    title: 'フジニュースネットワーク',
-    channel: 'FNN',
-    description: 'フジテレビニュース配信',
-    category: 'news',
-    isLive: true
   }
 ];
 
 export function YouTubeLiveStreams() {
-  const [selectedStream, setSelectedStream] = useState<LiveStream>(LIVE_STREAMS[0]);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState(new Date());
+  const [selectedStream, setSelectedStream] = useState<string>('');
+  const [liveStreams, setLiveStreams] = useState<LiveStream[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [muted, setMuted] = useState(false);
+
+  const loadLiveStreams = useCallback(async () => {
+    setLoading(true);
+    setError('');
+
+    try {
+      // Fetch live streams from backend
+      const response = await apiClient.get<{streams?: BackendLiveStream[], videos?: BackendLiveStream[]}>(API_ENDPOINTS.youtube.liveStreams);
+      
+      if (response.streams || response.videos) {
+        const streams = response.streams || response.videos || [];
+        const convertedStreams: LiveStream[] = streams.map((stream, index) => ({
+          id: stream.video_id || `stream-${index}`,
+          videoId: stream.video_id,
+          title: stream.title,
+          channel: stream.channel,
+          description: stream.description || '',
+          category: determineCategoryFromTitle(stream.title, stream.channel),
+          isLive: stream.video_type === 'live' || stream.duration === 'LIVE',
+          thumbnail: stream.thumbnail,
+          link: stream.link,
+          verified_channel: stream.verified_channel
+        }));
+
+        if (convertedStreams.length > 0) {
+          setLiveStreams(convertedStreams);
+          if (!selectedStream) {
+            setSelectedStream(convertedStreams[0].videoId);
+          }
+        } else {
+          // Use default streams if no backend streams available
+          setLiveStreams(DEFAULT_STREAMS);
+          setSelectedStream(DEFAULT_STREAMS[0].videoId);
+        }
+      } else {
+        // Use default streams as fallback
+        setLiveStreams(DEFAULT_STREAMS);
+        setSelectedStream(DEFAULT_STREAMS[0].videoId);
+      }
+    } catch (err) {
+      console.error('Error loading live streams:', err);
+      setError('ライブ配信の読み込みに失敗しました');
+      // Use default streams as fallback
+      setLiveStreams(DEFAULT_STREAMS);
+      setSelectedStream(DEFAULT_STREAMS[0].videoId);
+    } finally {
+      setLoading(false);
+    }
+  }, [selectedStream]);
 
   useEffect(() => {
-    // Update timestamp every minute
-    const interval = setInterval(() => {
-      setLastUpdated(new Date());
-    }, 60000);
+    loadLiveStreams();
+  }, [loadLiveStreams]);
 
-    return () => clearInterval(interval);
-  }, []);
+  const determineCategoryFromTitle = (title: string, channel: string): LiveStream['category'] => {
+    const titleLower = title.toLowerCase();
+    const channelLower = channel.toLowerCase();
+    
+    if (titleLower.includes('weather') || titleLower.includes('ウェザー') || titleLower.includes('天気')) {
+      return 'weather';
+    }
+    if (titleLower.includes('emergency') || titleLower.includes('災害') || titleLower.includes('緊急')) {
+      return 'emergency';
+    }
+    if (titleLower.includes('camera') || titleLower.includes('カメラ') || titleLower.includes('ライブカメラ')) {
+      return 'camera';
+    }
+    return 'news';
+  };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
@@ -121,7 +182,7 @@ export function YouTubeLiveStreams() {
           <div className="flex items-center justify-between">
             <CardTitle className="text-white flex items-center gap-2 text-sm">
               <Camera className="h-4 w-4 text-red-500" />
-              {selectedStream.title}
+              {liveStreams.find(stream => stream.videoId === selectedStream)?.title}
               <Badge className="bg-red-500 text-white text-xs ml-2 animate-pulse">
                 LIVE
               </Badge>
@@ -130,75 +191,101 @@ export function YouTubeLiveStreams() {
               <Button
                 size="sm"
                 variant="ghost"
-                onClick={() => setIsMuted(!isMuted)}
+                onClick={() => setMuted(!muted)}
                 className="text-white hover:bg-white/20"
               >
-                {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
               </Button>
               <Badge variant="outline" className="text-white border-white/30 text-xs">
                 <Users className="h-3 w-3 mr-1" />
-                {selectedStream.viewerCount?.toLocaleString() || '--'}
+                {liveStreams.find(stream => stream.videoId === selectedStream)?.viewerCount?.toLocaleString() || '--'}
               </Badge>
             </div>
           </div>
-          <p className="text-gray-300 text-xs">{selectedStream.description}</p>
+          <p className="text-gray-300 text-xs">{liveStreams.find(stream => stream.videoId === selectedStream)?.description}</p>
         </CardHeader>
         <CardContent className="p-4">
-          <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden">
-            <YouTubePlayerHybrid
-              videoId={selectedStream.videoId}
-              title={selectedStream.title}
-              autoplay={true}
-              muted={isMuted}
-              controls={true}
-              className="w-full h-full"
-            />
-          </div>
+          {selectedStream ? (
+            <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+              <YouTubePlayerHybrid
+                videoId={selectedStream}
+                title={liveStreams.find(stream => stream.videoId === selectedStream)?.title || ''}
+                autoplay={true}
+                muted={muted}
+                controls={true}
+                className="w-full h-full"
+              />
+            </div>
+          ) : (
+            <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
+              <div className="text-center">
+                <Tv className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-white text-lg">配信を選択してください</p>
+                <p className="text-gray-400 text-sm">下から視聴したい配信を選んでください</p>
+              </div>
+            </div>
+          )}
           
           {/* Stream Info */}
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Badge variant="outline" className="text-white border-white/30">
-              🔴 リアルタイム配信
-            </Badge>
-            <Badge variant="outline" className="text-white border-white/30">
-              📺 {selectedStream.channel}
-            </Badge>
-            <Badge 
-              variant="outline" 
-              className={`text-white border-white/30 ${getCategoryColor(selectedStream.category)}`}
-            >
-              {getCategoryIcon(selectedStream.category)}
-              <span className="ml-1">
-                {selectedStream.category === 'news' && 'ニュース'}
-                {selectedStream.category === 'weather' && '天気'}
-                {selectedStream.category === 'emergency' && '緊急'}
-                {selectedStream.category === 'camera' && 'カメラ'}
-              </span>
-            </Badge>
-            <Badge variant="outline" className="text-white border-white/30">
-              <Clock className="h-3 w-3 mr-1" />
-              更新: {lastUpdated.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
-            </Badge>
-          </div>
+          {selectedStream && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Badge variant="outline" className="text-white border-white/30">
+                🔴 リアルタイム配信
+              </Badge>
+              <Badge variant="outline" className="text-white border-white/30">
+                📺 {liveStreams.find(stream => stream.videoId === selectedStream)?.channel || ''}
+              </Badge>
+              <Badge 
+                variant="outline" 
+                className={`text-white border-white/30 ${getCategoryColor(liveStreams.find(stream => stream.videoId === selectedStream)?.category || 'news')}`}
+              >
+                {getCategoryIcon(liveStreams.find(stream => stream.videoId === selectedStream)?.category || 'news')}
+                <span className="ml-1">
+                  {liveStreams.find(stream => stream.videoId === selectedStream)?.category === 'news' && 'ニュース'}
+                  {liveStreams.find(stream => stream.videoId === selectedStream)?.category === 'weather' && '天気'}
+                  {liveStreams.find(stream => stream.videoId === selectedStream)?.category === 'emergency' && '緊急'}
+                  {liveStreams.find(stream => stream.videoId === selectedStream)?.category === 'camera' && 'カメラ'}
+                </span>
+              </Badge>
+              <Badge variant="outline" className="text-white border-white/30">
+                <Clock className="h-3 w-3 mr-1" />
+                更新: {new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
+              </Badge>
+            </div>
+          )}
         </CardContent>
       </Card>
 
       {/* Stream Selection Grid */}
       <Card className="bg-white/10 backdrop-blur-md border-white/20">
         <CardHeader>
-          <CardTitle className="text-white text-sm">配信チャンネル選択</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-white text-sm">配信チャンネル選択</CardTitle>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={loadLiveStreams}
+              disabled={loading}
+              className="text-white hover:bg-white/20"
+            >
+              <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+            </Button>
+          </div>
+          {error && (
+            <div className="text-red-400 text-xs mt-2">{error}</div>
+          )}
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {LIVE_STREAMS.map((stream) => (
+            {liveStreams.map((stream) => (
               <div
                 key={stream.id}
                 className={`p-3 rounded-lg border cursor-pointer transition-all ${
-                  selectedStream.id === stream.id
+                  selectedStream === stream.videoId
                     ? 'border-red-500 bg-red-500/20'
                     : 'border-white/20 bg-white/5 hover:bg-white/10'
                 }`}
-                onClick={() => setSelectedStream(stream)}
+                onClick={() => setSelectedStream(stream.videoId)}
               >
                 <div className="flex items-center gap-2 mb-2">
                   {getCategoryIcon(stream.category)}
@@ -241,3 +328,5 @@ export function YouTubeLiveStreams() {
     </div>
   );
 } 
+
+export default YouTubeLiveStreams; 

@@ -1,0 +1,329 @@
+2025-11-13 21:41:40,002 - __main__ - INFO - Scraping 11 unique regions covering 47 prefectures
+2025-11-13 21:41:40,002 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:41:40,554 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:41:40,617 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:41:40,676 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:41:41,328 - __main__ - INFO - Chrome WebDriver initialized (debug port: 9320)
+2025-11-13 21:41:41,328 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=010000
+2025-11-13 21:41:44,519 - __main__ - INFO - ✓ Base page loaded, starting to scrape all regions...
+2025-11-13 21:41:44,519 - __main__ - INFO - [1/11] Scraping region: 北海道
+2025-11-13 21:41:44,519 - __main__ - INFO -   Prefectures: 北海道
+2025-11-13 21:41:44,519 - __main__ - INFO - Searching for prefecture: 北海道 (in region: 北海道)
+2025-11-13 21:41:46,556 - __main__ - INFO - Opening dropdown menu...
+2025-11-13 21:41:47,633 - __main__ - INFO - ✓ Dropdown menu opened
+2025-11-13 21:41:47,650 - __main__ - INFO - Found 11 全域 buttons in dropdown
+2025-11-13 21:41:47,715 - __main__ - INFO -   Option 1: 北海道 (value=010100)
+2025-11-13 21:41:47,757 - __main__ - INFO -   Option 2: 東北 (value=010200)
+2025-11-13 21:41:47,797 - __main__ - INFO -   Option 3: 関東甲信 (value=010300)
+2025-11-13 21:41:47,839 - __main__ - INFO -   Option 4: 北陸 (value=010500)
+2025-11-13 21:41:47,876 - __main__ - INFO -   Option 5: 東海 (value=010400)
+2025-11-13 21:41:48,149 - __main__ - INFO - ✓ Found matching 全域 button for region '北海道' (prefecture: 北海道, value=010100)
+2025-11-13 21:41:49,224 - __main__ - INFO - ✓ Clicked 全域 button for region 北海道 (prefecture: 北海道)
+2025-11-13 21:41:54,243 - __main__ - INFO - Found 11 content blocks after clicking
+2025-11-13 21:41:54,243 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:41:59,343 - __main__ - INFO - ✓ Page source retrieved (495330 bytes)
+2025-11-13 21:41:59,688 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:41:59,689 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:41:59,689 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:41:59,701 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:41:59,730 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:41:59,751 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:41:59,770 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:41:59,788 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:41:59,809 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:41:59,839 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:41:59,855 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:41:59,855 - __main__ - INFO - ✓ [1/11] 北海道 completed - 8 sub-regions
+2025-11-13 21:42:01,855 - __main__ - INFO - [2/11] Scraping region: 東北
+2025-11-13 21:42:01,856 - __main__ - INFO -   Prefectures: 青森県, 岩手県, 宮城県, 秋田県, 山形県, 福島県
+2025-11-13 21:42:01,856 - __main__ - INFO - Searching for prefecture: 青森県 (in region: 東北)
+2025-11-13 21:42:03,903 - __main__ - INFO - Opening dropdown menu...
+2025-11-13 21:42:05,001 - __main__ - INFO - ✓ Dropdown menu opened
+2025-11-13 21:42:05,017 - __main__ - INFO - Found 11 全域 buttons in dropdown
+2025-11-13 21:42:05,070 - __main__ - INFO -   Option 1: 北海道 (value=010100)
+2025-11-13 21:42:05,116 - __main__ - INFO -   Option 2: 東北 (value=010200)
+2025-11-13 21:42:05,159 - __main__ - INFO -   Option 3: 関東甲信 (value=010300)
+2025-11-13 21:42:05,208 - __main__ - INFO -   Option 4: 北陸 (value=010500)
+2025-11-13 21:42:05,255 - __main__ - INFO -   Option 5: 東海 (value=010400)
+2025-11-13 21:42:05,615 - __main__ - INFO - ✓ Found matching 全域 button for region '東北' (prefecture: 青森県, value=010200)
+2025-11-13 21:42:07,334 - __main__ - INFO - ✓ Clicked 全域 button for region 東北 (prefecture: 青森県)
+2025-11-13 21:42:12,358 - __main__ - INFO - Found 9 content blocks after clicking
+2025-11-13 21:42:12,358 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:42:17,432 - __main__ - INFO - ✓ Page source retrieved (463381 bytes)
+2025-11-13 21:42:17,711 - __main__ - INFO - Found 9 data blocks
+2025-11-13 21:42:17,711 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:42:17,713 - __main__ - INFO - Region: 青森県, Data rows: 60
+2025-11-13 21:42:17,736 - __main__ - INFO - Region: 岩手県, Data rows: 94
+2025-11-13 21:42:17,769 - __main__ - INFO - Region: 宮城県, Data rows: 48
+2025-11-13 21:42:17,788 - __main__ - INFO - Region: 秋田県, Data rows: 74
+2025-11-13 21:42:17,815 - __main__ - INFO - Region: 山形県, Data rows: 56
+2025-11-13 21:42:17,836 - __main__ - INFO - Region: 福島県, Data rows: 76
+2025-11-13 21:42:17,862 - __main__ - INFO - Parsed 6 regions with total 408 observations
+2025-11-13 21:42:17,863 - __main__ - INFO - ✓ [2/11] 東北 completed - 6 sub-regions
+2025-11-13 21:42:19,863 - __main__ - INFO - [3/11] Scraping region: 関東甲信
+2025-11-13 21:42:19,863 - __main__ - INFO -   Prefectures: 茨城県, 栃木県, 群馬県, 埼玉県, 千葉県, 東京都, 神奈川県, 新潟県, 山梨県, 長野県
+2025-11-13 21:42:19,863 - __main__ - INFO - Searching for prefecture: 茨城県 (in region: 関東甲信)
+2025-11-13 21:42:21,888 - __main__ - INFO - Opening dropdown menu...
+2025-11-13 21:42:22,942 - __main__ - INFO - ✓ Dropdown menu opened
+2025-11-13 21:42:22,954 - __main__ - INFO - Found 11 全域 buttons in dropdown
+2025-11-13 21:42:22,996 - __main__ - INFO -   Option 1: 北海道 (value=010100)
+2025-11-13 21:42:23,041 - __main__ - INFO -   Option 2: 東北 (value=010200)
+2025-11-13 21:42:23,090 - __main__ - INFO -   Option 3: 関東甲信 (value=010300)
+2025-11-13 21:42:23,132 - __main__ - INFO -   Option 4: 北陸 (value=010500)
+2025-11-13 21:42:23,173 - __main__ - INFO -   Option 5: 東海 (value=010400)
+2025-11-13 21:42:23,600 - __main__ - INFO - ✓ Found matching 全域 button for region '関東甲信' (prefecture: 茨城県, value=010300)
+2025-11-13 21:42:25,347 - __main__ - INFO - ✓ Clicked 全域 button for region 関東甲信 (prefecture: 茨城県)
+2025-11-13 21:42:30,358 - __main__ - INFO - Found 12 content blocks after clicking
+2025-11-13 21:42:30,358 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:42:35,433 - __main__ - INFO - ✓ Page source retrieved (466267 bytes)
+2025-11-13 21:42:35,752 - __main__ - INFO - Found 12 data blocks
+2025-11-13 21:42:35,753 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:42:35,754 - __main__ - INFO - Region: 茨城県, Data rows: 46
+2025-11-13 21:42:35,770 - __main__ - INFO - Region: 栃木県, Data rows: 38
+2025-11-13 21:42:35,784 - __main__ - INFO - Region: 群馬県, Data rows: 34
+2025-11-13 21:42:35,797 - __main__ - INFO - Region: 埼玉県, Data rows: 28
+2025-11-13 21:42:35,807 - __main__ - INFO - Region: 千葉県, Data rows: 36
+2025-11-13 21:42:35,821 - __main__ - INFO - Region: 東京都, Data rows: 46
+2025-11-13 21:42:35,837 - __main__ - INFO - Region: 神奈川県, Data rows: 22
+2025-11-13 21:42:35,846 - __main__ - INFO - Region: 山梨県, Data rows: 28
+2025-11-13 21:42:35,857 - __main__ - INFO - Region: 長野県, Data rows: 90
+2025-11-13 21:42:35,888 - __main__ - INFO - Parsed 9 regions with total 368 observations
+2025-11-13 21:42:35,888 - __main__ - INFO - ✓ [3/11] 関東甲信 completed - 9 sub-regions
+2025-11-13 21:42:37,889 - __main__ - INFO - [4/11] Scraping region: 北陸
+2025-11-13 21:42:37,889 - __main__ - INFO -   Prefectures: 富山県, 石川県, 福井県
+2025-11-13 21:42:37,889 - __main__ - INFO - Searching for prefecture: 富山県 (in region: 北陸)
+2025-11-13 21:42:39,917 - __main__ - INFO - Opening dropdown menu...
+2025-11-13 21:42:40,970 - __main__ - INFO - ✓ Dropdown menu opened
+2025-11-13 21:42:40,985 - __main__ - INFO - Found 11 全域 buttons in dropdown
+2025-11-13 21:42:41,031 - __main__ - INFO -   Option 1: 北海道 (value=010100)
+2025-11-13 21:42:41,076 - __main__ - INFO -   Option 2: 東北 (value=010200)
+2025-11-13 21:42:41,132 - __main__ - INFO -   Option 3: 関東甲信 (value=010300)
+2025-11-13 21:42:41,171 - __main__ - INFO -   Option 4: 北陸 (value=010500)
+2025-11-13 21:42:41,213 - __main__ - INFO -   Option 5: 東海 (value=010400)
+2025-11-13 21:42:41,687 - __main__ - INFO - ✓ Found matching 全域 button for region '北陸' (prefecture: 富山県, value=010500)
+2025-11-13 21:42:43,221 - __main__ - INFO - ✓ Clicked 全域 button for region 北陸 (prefecture: 富山県)
+2025-11-13 21:42:48,236 - __main__ - INFO - Found 7 content blocks after clicking
+2025-11-13 21:42:48,237 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:42:53,310 - __main__ - INFO - ✓ Page source retrieved (350906 bytes)
+2025-11-13 21:42:53,453 - __main__ - INFO - Found 7 data blocks
+2025-11-13 21:42:53,454 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:42:53,455 - __main__ - INFO - Region: 新潟県, Data rows: 88
+2025-11-13 21:42:53,490 - __main__ - INFO - Region: 富山県, Data rows: 30
+2025-11-13 21:42:53,501 - __main__ - INFO - Region: 石川県, Data rows: 32
+2025-11-13 21:42:53,513 - __main__ - INFO - Region: 福井県, Data rows: 28
+2025-11-13 21:42:53,523 - __main__ - INFO - Parsed 4 regions with total 178 observations
+2025-11-13 21:42:53,523 - __main__ - INFO - ✓ [4/11] 北陸 completed - 4 sub-regions
+2025-11-13 21:42:55,523 - __main__ - INFO - [5/11] Scraping region: 東海
+2025-11-13 21:42:55,523 - __main__ - INFO -   Prefectures: 岐阜県, 静岡県, 愛知県, 三重県
+2025-11-13 21:42:55,524 - __main__ - INFO - Searching for prefecture: 岐阜県 (in region: 東海)
+2025-11-13 21:42:57,556 - __main__ - INFO - Opening dropdown menu...
+2025-11-13 21:42:58,612 - __main__ - INFO - ✓ Dropdown menu opened
+2025-11-13 21:42:58,634 - __main__ - INFO - Found 11 全域 buttons in dropdown
+2025-11-13 21:42:58,702 - __main__ - INFO -   Option 1: 北海道 (value=010100)
+2025-11-13 21:42:58,759 - __main__ - INFO -   Option 2: 東北 (value=010200)
+2025-11-13 21:42:58,814 - __main__ - INFO -   Option 3: 関東甲信 (value=010300)
+2025-11-13 21:42:58,860 - __main__ - INFO -   Option 4: 北陸 (value=010500)
+2025-11-13 21:42:58,898 - __main__ - INFO -   Option 5: 東海 (value=010400)
+2025-11-13 21:42:59,368 - __main__ - INFO - ✓ Found matching 全域 button for region '東海' (prefecture: 岐阜県, value=010400)
+2025-11-13 21:43:00,828 - __main__ - INFO - ✓ Clicked 全域 button for region 東海 (prefecture: 岐阜県)
+2025-11-13 21:43:05,848 - __main__ - INFO - Found 7 content blocks after clicking
+2025-11-13 21:43:05,849 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:43:10,913 - __main__ - INFO - ✓ Page source retrieved (362629 bytes)
+2025-11-13 21:43:11,077 - __main__ - INFO - Found 7 data blocks
+2025-11-13 21:43:11,078 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:43:11,079 - __main__ - INFO - Region: 岐阜県, Data rows: 64
+2025-11-13 21:43:11,102 - __main__ - INFO - Region: 静岡県, Data rows: 62
+2025-11-13 21:43:11,124 - __main__ - INFO - Region: 愛知県, Data rows: 40
+2025-11-13 21:43:11,139 - __main__ - INFO - Region: 三重県, Data rows: 40
+2025-11-13 21:43:11,152 - __main__ - INFO - Parsed 4 regions with total 206 observations
+2025-11-13 21:43:11,152 - __main__ - INFO - ✓ [5/11] 東海 completed - 4 sub-regions
+2025-11-13 21:43:13,153 - __main__ - INFO - [6/11] Scraping region: 近畿
+2025-11-13 21:43:13,153 - __main__ - INFO -   Prefectures: 滋賀県, 京都府, 大阪府, 兵庫県, 奈良県, 和歌山県
+2025-11-13 21:43:13,153 - __main__ - INFO - Searching for prefecture: 滋賀県 (in region: 近畿)
+2025-11-13 21:43:15,189 - __main__ - INFO - Opening dropdown menu...
+2025-11-13 21:43:16,247 - __main__ - INFO - ✓ Dropdown menu opened
+2025-11-13 21:43:16,262 - __main__ - INFO - Found 11 全域 buttons in dropdown
+2025-11-13 21:43:16,308 - __main__ - INFO -   Option 1: 北海道 (value=010100)
+2025-11-13 21:43:16,348 - __main__ - INFO -   Option 2: 東北 (value=010200)
+2025-11-13 21:43:16,385 - __main__ - INFO -   Option 3: 関東甲信 (value=010300)
+2025-11-13 21:43:16,425 - __main__ - INFO -   Option 4: 北陸 (value=010500)
+2025-11-13 21:43:16,461 - __main__ - INFO -   Option 5: 東海 (value=010400)
+2025-11-13 21:43:16,925 - __main__ - INFO - ✓ Found matching 全域 button for region '近畿' (prefecture: 滋賀県, value=010600)
+2025-11-13 21:43:18,477 - __main__ - INFO - ✓ Clicked 全域 button for region 近畿 (prefecture: 滋賀県)
+2025-11-13 21:43:23,490 - __main__ - INFO - Found 9 content blocks after clicking
+2025-11-13 21:43:23,490 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:43:28,554 - __main__ - INFO - ✓ Page source retrieved (371219 bytes)
+2025-11-13 21:43:28,779 - __main__ - INFO - Found 9 data blocks
+2025-11-13 21:43:28,779 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:43:28,780 - __main__ - INFO - Region: 滋賀県, Data rows: 24
+2025-11-13 21:43:28,789 - __main__ - INFO - Region: 京都府, Data rows: 34
+2025-11-13 21:43:28,801 - __main__ - INFO - Region: 大阪府, Data rows: 22
+2025-11-13 21:43:28,810 - __main__ - INFO - Region: 兵庫県, Data rows: 52
+2025-11-13 21:43:28,828 - __main__ - INFO - Region: 奈良県, Data rows: 26
+2025-11-13 21:43:28,838 - __main__ - INFO - Region: 和歌山県, Data rows: 36
+2025-11-13 21:43:28,851 - __main__ - INFO - Parsed 6 regions with total 194 observations
+2025-11-13 21:43:28,851 - __main__ - INFO - ✓ [6/11] 近畿 completed - 6 sub-regions
+2025-11-13 21:43:30,854 - __main__ - INFO - [7/11] Scraping region: 中国（山口は除く）
+2025-11-13 21:43:30,854 - __main__ - INFO -   Prefectures: 鳥取県, 島根県, 岡山県, 広島県
+2025-11-13 21:43:30,854 - __main__ - INFO - Searching for prefecture: 鳥取県 (in region: 中国（山口は除く）)
+2025-11-13 21:43:32,886 - __main__ - INFO - Opening dropdown menu...
+2025-11-13 21:43:33,941 - __main__ - INFO - ✓ Dropdown menu opened
+2025-11-13 21:43:33,955 - __main__ - INFO - Found 11 全域 buttons in dropdown
+2025-11-13 21:43:34,007 - __main__ - INFO -   Option 1: 北海道 (value=010100)
+2025-11-13 21:43:34,055 - __main__ - INFO -   Option 2: 東北 (value=010200)
+2025-11-13 21:43:34,097 - __main__ - INFO -   Option 3: 関東甲信 (value=010300)
+2025-11-13 21:43:34,133 - __main__ - INFO -   Option 4: 北陸 (value=010500)
+2025-11-13 21:43:34,173 - __main__ - INFO -   Option 5: 東海 (value=010400)
+2025-11-13 21:43:34,788 - __main__ - INFO - ✓ Found matching 全域 button for region '中国（山口は除く）' (prefecture: 鳥取県, value=010700)
+2025-11-13 21:43:36,261 - __main__ - INFO - ✓ Clicked 全域 button for region 中国（山口は除く） (prefecture: 鳥取県)
+2025-11-13 21:43:41,283 - __main__ - INFO - Found 7 content blocks after clicking
+2025-11-13 21:43:41,284 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:43:46,341 - __main__ - INFO - ✓ Page source retrieved (361359 bytes)
+2025-11-13 21:43:46,499 - __main__ - INFO - Found 7 data blocks
+2025-11-13 21:43:46,500 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:43:46,501 - __main__ - INFO - Region: 鳥取県, Data rows: 32
+2025-11-13 21:43:46,513 - __main__ - INFO - Region: 島根県, Data rows: 54
+2025-11-13 21:43:46,533 - __main__ - INFO - Region: 岡山県, Data rows: 50
+2025-11-13 21:43:46,551 - __main__ - INFO - Region: 広島県, Data rows: 66
+2025-11-13 21:43:46,574 - __main__ - INFO - Parsed 4 regions with total 202 observations
+2025-11-13 21:43:46,574 - __main__ - INFO - ✓ [7/11] 中国（山口は除く） completed - 4 sub-regions
+2025-11-13 21:43:48,575 - __main__ - INFO - [8/11] Scraping region: 九州北部（山口を含む）
+2025-11-13 21:43:48,575 - __main__ - INFO -   Prefectures: 山口県, 福岡県, 佐賀県, 長崎県, 熊本県, 大分県
+2025-11-13 21:43:48,575 - __main__ - INFO - Searching for prefecture: 山口県 (in region: 九州北部（山口を含む）)
+2025-11-13 21:43:50,610 - __main__ - INFO - Opening dropdown menu...
+2025-11-13 21:43:51,678 - __main__ - INFO - ✓ Dropdown menu opened
+2025-11-13 21:43:51,691 - __main__ - INFO - Found 11 全域 buttons in dropdown
+2025-11-13 21:43:51,732 - __main__ - INFO -   Option 1: 北海道 (value=010100)
+2025-11-13 21:43:51,778 - __main__ - INFO -   Option 2: 東北 (value=010200)
+2025-11-13 21:43:51,812 - __main__ - INFO -   Option 3: 関東甲信 (value=010300)
+2025-11-13 21:43:51,845 - __main__ - INFO -   Option 4: 北陸 (value=010500)
+2025-11-13 21:43:51,882 - __main__ - INFO -   Option 5: 東海 (value=010400)
+2025-11-13 21:43:52,521 - __main__ - INFO - ✓ Found matching 全域 button for region '九州北部（山口を含む）' (prefecture: 山口県, value=010900)
+2025-11-13 21:43:54,061 - __main__ - INFO - ✓ Clicked 全域 button for region 九州北部（山口を含む） (prefecture: 山口県)
+2025-11-13 21:43:59,075 - __main__ - INFO - Found 9 content blocks after clicking
+2025-11-13 21:43:59,075 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:44:04,141 - __main__ - INFO - ✓ Page source retrieved (385558 bytes)
+2025-11-13 21:44:04,328 - __main__ - INFO - Found 9 data blocks
+2025-11-13 21:44:04,329 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:44:04,329 - __main__ - INFO - Region: 山口県, Data rows: 42
+2025-11-13 21:44:04,345 - __main__ - INFO - Region: 福岡県, Data rows: 40
+2025-11-13 21:44:04,359 - __main__ - INFO - Region: 佐賀県, Data rows: 16
+2025-11-13 21:44:04,366 - __main__ - INFO - Region: 長崎県, Data rows: 40
+2025-11-13 21:44:04,381 - __main__ - INFO - Region: 熊本県, Data rows: 52
+2025-11-13 21:44:04,400 - __main__ - INFO - Region: 大分県, Data rows: 38
+2025-11-13 21:44:04,413 - __main__ - INFO - Parsed 6 regions with total 228 observations
+2025-11-13 21:44:04,413 - __main__ - INFO - ✓ [8/11] 九州北部（山口を含む） completed - 6 sub-regions
+2025-11-13 21:44:06,414 - __main__ - INFO - [9/11] Scraping region: 四国
+2025-11-13 21:44:06,414 - __main__ - INFO -   Prefectures: 徳島県, 香川県, 愛媛県, 高知県
+2025-11-13 21:44:06,414 - __main__ - INFO - Searching for prefecture: 徳島県 (in region: 四国)
+2025-11-13 21:44:08,442 - __main__ - INFO - Opening dropdown menu...
+2025-11-13 21:44:09,501 - __main__ - INFO - ✓ Dropdown menu opened
+2025-11-13 21:44:09,512 - __main__ - INFO - Found 11 全域 buttons in dropdown
+2025-11-13 21:44:09,555 - __main__ - INFO -   Option 1: 北海道 (value=010100)
+2025-11-13 21:44:09,597 - __main__ - INFO -   Option 2: 東北 (value=010200)
+2025-11-13 21:44:09,633 - __main__ - INFO -   Option 3: 関東甲信 (value=010300)
+2025-11-13 21:44:09,668 - __main__ - INFO -   Option 4: 北陸 (value=010500)
+2025-11-13 21:44:09,709 - __main__ - INFO -   Option 5: 東海 (value=010400)
+2025-11-13 21:44:10,263 - __main__ - INFO - ✓ Found matching 全域 button for region '四国' (prefecture: 徳島県, value=010800)
+2025-11-13 21:44:11,605 - __main__ - INFO - ✓ Clicked 全域 button for region 四国 (prefecture: 徳島県)
+2025-11-13 21:44:16,629 - __main__ - INFO - Found 7 content blocks after clicking
+2025-11-13 21:44:16,629 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:44:21,686 - __main__ - INFO - ✓ Page source retrieved (332032 bytes)
+2025-11-13 21:44:21,813 - __main__ - INFO - Found 7 data blocks
+2025-11-13 21:44:21,814 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:44:21,814 - __main__ - INFO - Region: 徳島県, Data rows: 22
+2025-11-13 21:44:21,823 - __main__ - INFO - Region: 香川県, Data rows: 16
+2025-11-13 21:44:21,829 - __main__ - INFO - Region: 愛媛県, Data rows: 44
+2025-11-13 21:44:21,849 - __main__ - INFO - Region: 高知県, Data rows: 52
+2025-11-13 21:44:21,867 - __main__ - INFO - Parsed 4 regions with total 134 observations
+2025-11-13 21:44:21,867 - __main__ - INFO - ✓ [9/11] 四国 completed - 4 sub-regions
+2025-11-13 21:44:23,867 - __main__ - INFO - [10/11] Scraping region: 九州南部・奄美
+2025-11-13 21:44:23,868 - __main__ - INFO -   Prefectures: 宮崎県, 鹿児島県
+2025-11-13 21:44:23,868 - __main__ - INFO - Searching for prefecture: 宮崎県 (in region: 九州南部・奄美)
+2025-11-13 21:44:25,892 - __main__ - INFO - Opening dropdown menu...
+2025-11-13 21:44:26,956 - __main__ - INFO - ✓ Dropdown menu opened
+2025-11-13 21:44:26,967 - __main__ - INFO - Found 11 全域 buttons in dropdown
+2025-11-13 21:44:27,009 - __main__ - INFO -   Option 1: 北海道 (value=010100)
+2025-11-13 21:44:27,046 - __main__ - INFO -   Option 2: 東北 (value=010200)
+2025-11-13 21:44:27,085 - __main__ - INFO -   Option 3: 関東甲信 (value=010300)
+2025-11-13 21:44:27,158 - __main__ - INFO -   Option 4: 北陸 (value=010500)
+2025-11-13 21:44:27,197 - __main__ - INFO -   Option 5: 東海 (value=010400)
+2025-11-13 21:44:27,843 - __main__ - INFO - ✓ Found matching 全域 button for region '九州南部・奄美' (prefecture: 宮崎県, value=011000)
+2025-11-13 21:44:29,187 - __main__ - INFO - ✓ Clicked 全域 button for region 九州南部・奄美 (prefecture: 宮崎県)
+2025-11-13 21:44:34,205 - __main__ - INFO - Found 6 content blocks after clicking
+2025-11-13 21:44:34,205 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:44:39,258 - __main__ - INFO - ✓ Page source retrieved (327249 bytes)
+2025-11-13 21:44:39,374 - __main__ - INFO - Found 6 data blocks
+2025-11-13 21:44:39,375 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:44:39,376 - __main__ - INFO - Region: 宮崎県, Data rows: 52
+2025-11-13 21:44:39,401 - __main__ - INFO - Region: 鹿児島県（奄美地方除く）, Data rows: 60
+2025-11-13 21:44:39,422 - __main__ - INFO - Region: 奄美地方, Data rows: 26
+2025-11-13 21:44:39,431 - __main__ - INFO - Parsed 3 regions with total 138 observations
+2025-11-13 21:44:39,431 - __main__ - INFO - ✓ [10/11] 九州南部・奄美 completed - 3 sub-regions
+2025-11-13 21:44:41,431 - __main__ - INFO - [11/11] Scraping region: 沖縄
+2025-11-13 21:44:41,432 - __main__ - INFO -   Prefectures: 沖縄県
+2025-11-13 21:44:41,432 - __main__ - INFO - Searching for prefecture: 沖縄県 (in region: 沖縄)
+2025-11-13 21:44:43,459 - __main__ - INFO - Opening dropdown menu...
+2025-11-13 21:44:44,520 - __main__ - INFO - ✓ Dropdown menu opened
+2025-11-13 21:44:44,531 - __main__ - INFO - Found 11 全域 buttons in dropdown
+2025-11-13 21:44:44,578 - __main__ - INFO -   Option 1: 北海道 (value=010100)
+2025-11-13 21:44:44,614 - __main__ - INFO -   Option 2: 東北 (value=010200)
+2025-11-13 21:44:44,651 - __main__ - INFO -   Option 3: 関東甲信 (value=010300)
+2025-11-13 21:44:44,685 - __main__ - INFO -   Option 4: 北陸 (value=010500)
+2025-11-13 21:44:44,725 - __main__ - INFO -   Option 5: 東海 (value=010400)
+2025-11-13 21:44:45,360 - __main__ - INFO - ✓ Found matching 全域 button for region '沖縄' (prefecture: 沖縄県, value=011100)
+2025-11-13 21:44:46,653 - __main__ - INFO - ✓ Clicked 全域 button for region 沖縄 (prefecture: 沖縄県)
+2025-11-13 21:44:51,673 - __main__ - INFO - Found 7 content blocks after clicking
+2025-11-13 21:44:51,674 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:44:56,724 - __main__ - INFO - ✓ Page source retrieved (303313 bytes)
+2025-11-13 21:44:56,888 - __main__ - INFO - Found 7 data blocks
+2025-11-13 21:44:56,888 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:44:56,889 - __main__ - INFO - Region: 沖縄本島地方, Data rows: 34
+2025-11-13 21:44:56,901 - __main__ - INFO - Region: 大東島地方, Data rows: 6
+2025-11-13 21:44:56,904 - __main__ - INFO - Region: 宮古島地方, Data rows: 10
+2025-11-13 21:44:56,908 - __main__ - INFO - Region: 八重山地方, Data rows: 18
+2025-11-13 21:44:56,914 - __main__ - INFO - Parsed 4 regions with total 68 observations
+2025-11-13 21:44:56,914 - __main__ - INFO - ✓ [11/11] 沖縄 completed - 4 sub-regions
+2025-11-13 21:44:59,018 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:44:59,019 - __main__ - INFO - 
+================================================================================
+2025-11-13 21:44:59,019 - __main__ - INFO - Scraping Summary:
+2025-11-13 21:44:59,019 - __main__ - INFO -   Completed: 11/11 regions
+2025-11-13 21:44:59,019 - __main__ - INFO -   Total sub-regions: 58
+2025-11-13 21:44:59,019 - __main__ - INFO -   Total observations: 2576
+2025-11-13 21:44:59,019 - __main__ - INFO - ================================================================================
+
+================================================================================
+JMA AMeDAS Data Scraper (Selenium)
+================================================================================
+
+Scraping all prefectures...
+
+✓ Successfully scraped 58 regions
+✓ Total observations: 2576
+
+================================================================================
+Sample Region: 宗谷地方
+Observation Time: 2025年11月13日21時30分 現在
+Prefecture: 
+================================================================================
+
+Location             Temp(°C)   Precip(mm)   Wind Dir     Wind Speed(m/s)
+-------------------------------------------------------------------------------------
+宗谷岬                  2.7        0.0          北西           9.5            
+稚内                   5.4        0.0          西            4.3            
+礼文                   4.4        0.0          北西           2.6            
+声問                   3.9        0.0          西北西          6.0            
+浜鬼志別                 2.0        0.0          西北西          5.4            
+本泊                   5.0        0.0          西北西          8.4            
+沼川                   2.9        0.0          西北西          2.1            
+沓形                   5.8        0.0          北西           8.0            
+豊富                   4.4        0.0          西北西          3.4            
+浜頓別                  1.6        0.0          南            1.4            
+
+================================================================================
+Exporting data to JSON...
+✓ Data exported to: amedas_data.json
+✓ Total regions: 58
+✓ Total observations: 2576
+================================================================================

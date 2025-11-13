@@ -1,0 +1,14 @@
+# Requirements for JMA AMeDAS Selenium Scraper
+selenium>=4.15.0
+beautifulsoup4>=4.12.0
+aiohttp>=3.9.0
+lxml>=4.9.0
+webdriver-manager>=4.0.0
+
+# Note: You also need to install Chromium browser
+# For Ubuntu/Debian:
+#   sudo apt-get update
+#   sudo apt-get install -y chromium-browser
+#
+# webdriver-manager will automatically download the correct ChromeDriver version
+

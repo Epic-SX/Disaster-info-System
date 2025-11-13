@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import {
   Wifi, 
   WifiOff 
 } from 'lucide-react';
+import { apiClient, API_ENDPOINTS, createWebSocket, WS_ENDPOINTS } from '@/lib/api-config';
 
 // Dynamically import Leaflet CSS and components to avoid SSR issues
 const MapWithNoSSR = dynamic(() => import('./MapComponent'), {
@@ -65,36 +66,79 @@ const DisasterMap: React.FC = () => {
   const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'disconnected'>('disconnected');
   const wsRef = useRef<WebSocket | null>(null);
 
-  useEffect(() => {
-    // Set mounted state to handle client-side rendering
-    setIsMounted(true);
-    
-    // Initial data fetch
-    fetchDisasterData();
-    
-    // Connect to WebSocket for real-time updates
-    connectWebSocket();
-    
-    // Refresh data every 5 minutes as backup
-    const interval = setInterval(fetchDisasterData, 300000);
-    return () => {
-      clearInterval(interval);
-      if (wsRef.current) {
-        wsRef.current.close();
+  // Fallback HTTP polling function
+  const startHttpPolling = useCallback(() => {
+    console.log('Starting HTTP polling for disaster data');
+    const pollInterval = setInterval(async () => {
+      // Inline the fetch to avoid dependency issues
+      setLoading(true);
+      setError(null);
+      
+      try {
+        // Fetch from your backend API which aggregates disaster data using the new API client
+        const [earthquakeResponse, tsunamiResponse] = await Promise.allSettled([
+          apiClient.get(API_ENDPOINTS.earthquake.recent),
+          apiClient.get(API_ENDPOINTS.tsunami.alerts)
+        ]);
+
+        if (earthquakeResponse.status === 'fulfilled') {
+          const earthquakeData = earthquakeResponse.value;
+          setEarthquakes(earthquakeData.slice(0, 50)); // Limit to 50 recent earthquakes
+        }
+
+        if (tsunamiResponse.status === 'fulfilled') {
+          const tsunamiData = tsunamiResponse.value;
+          setTsunamis(tsunamiData.slice(0, 20)); // Limit to 20 tsunami alerts
+        }
+
+        setLastUpdate(new Date());
+      } catch (err) {
+        setError('災害データの取得に失敗しました');
+        console.error('Failed to fetch disaster data:', err);
+      } finally {
+        setLoading(false);
       }
-    };
+    }, 15000); // Poll every 15 seconds
+
+    return pollInterval;
   }, []);
 
-  const connectWebSocket = () => {
+  const connectWebSocket = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    
+    let reconnectAttempts = 0;
+    const maxReconnectAttempts = 2; // Reduced to fail faster
+    let initialTimeout: NodeJS.Timeout;
+    
     try {
       setConnectionStatus('connecting');
-      const ws = new WebSocket('ws://localhost:8000/ws');
+      const ws = createWebSocket(WS_ENDPOINTS.main);
+      
+      // Handle case where WebSocket creation fails or is not available
+      if (!ws) {
+        console.log('WebSocket not available, falling back to HTTP polling');
+        setConnectionStatus('disconnected');
+        startHttpPolling();
+        return;
+      }
+      
       wsRef.current = ws;
 
+      // Set a faster timeout for initial connection
+      initialTimeout = setTimeout(() => {
+        if (ws.readyState === WebSocket.CONNECTING) {
+          console.log('Earthquake WebSocket initial connection timeout, falling back to HTTP polling');
+          ws.close();
+          startHttpPolling();
+        }
+      }, 5000); // 5 second timeout
+
       ws.onopen = () => {
+        clearTimeout(initialTimeout);
         console.log('Earthquake WebSocket connected');
         setConnectionStatus('connected');
         setError(null);
+        reconnectAttempts = 0;
       };
 
       ws.onmessage = (event) => {
@@ -102,10 +146,10 @@ const DisasterMap: React.FC = () => {
           const data = JSON.parse(event.data);
           console.log('Received WebSocket message:', data);
           
-          if (data.type === 'earthquake_update') {
-            setEarthquakes(data.data);
+          if (data.type === 'earthquake_data_update' || data.type === 'earthquake_update') {
+            setEarthquakes(data.earthquakes || data.data || []);
             setLastUpdate(new Date());
-            console.log('Updated earthquake data:', data.data);
+            console.log('Updated earthquake data:', data.earthquakes || data.data);
           }
         } catch (err) {
           console.error('Error parsing WebSocket message:', err);
@@ -113,48 +157,76 @@ const DisasterMap: React.FC = () => {
       };
 
       ws.onclose = (event) => {
-        console.log('Earthquake WebSocket disconnected:', event.code, event.reason);
+        clearTimeout(initialTimeout);
+        console.log('🔄 災害監視WebSocket切断 - HTTPポーリングに切替中');
         setConnectionStatus('disconnected');
-        // Attempt to reconnect after 5 seconds
-        setTimeout(connectWebSocket, 5000);
+        
+        // Only attempt reconnect if we haven't exceeded max attempts and it's not a proxy error (1006)
+        if (reconnectAttempts < maxReconnectAttempts && event.code !== 1006) {
+          reconnectAttempts++;
+          console.log(`🔄 WebSocket再接続試行 ${reconnectAttempts}/${maxReconnectAttempts}`);
+          setTimeout(() => connectWebSocket(), 3000); // Faster reconnect
+        } else {
+          console.log('✅ HTTPポーリングモードで災害監視を継続中');
+          startHttpPolling();
+        }
       };
 
       ws.onerror = (error) => {
-        console.error('Earthquake WebSocket error:', {
-          type: error.type,
-          target: error.target?.url || 'Unknown',
-          readyState: error.target?.readyState || 'Unknown',
-          timestamp: new Date().toISOString()
-        });
+        clearTimeout(initialTimeout);
+        console.log('🔄 WebSocket接続エラー - HTTPポーリングに切替中');
         setConnectionStatus('disconnected');
-        setError('リアルタイム接続エラー');
+        
+        // Immediately try HTTP polling on error
+        setTimeout(() => {
+          startHttpPolling();
+        }, 1000);
       };
-
-    } catch (err) {
-      console.error('Failed to connect to WebSocket:', err);
+    } catch (error) {
+      console.error('Failed to connect WebSocket:', error);
       setConnectionStatus('disconnected');
-      setError('WebSocket接続に失敗しました');
+      startHttpPolling();
     }
-  };
+  }, [startHttpPolling]);
+
+  useEffect(() => {
+    // Set mounted state to handle client-side rendering
+    setIsMounted(true);
+    
+    // Initial data fetch
+    fetchDisasterData();
+    
+    // Connect WebSocket
+    connectWebSocket();
+    
+    // Set up periodic refresh
+    const interval = setInterval(fetchDisasterData, 300000);
+    return () => {
+      clearInterval(interval);
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
+    };
+  }, [connectWebSocket]);
 
   const fetchDisasterData = async () => {
     setLoading(true);
     setError(null);
     
     try {
-      // Fetch from your backend API which aggregates disaster data
+      // Fetch from your backend API which aggregates disaster data using the new API client
       const [earthquakeResponse, tsunamiResponse] = await Promise.allSettled([
-        fetch('http://localhost:8000/api/earthquake/recent'),
-        fetch('http://localhost:8000/api/tsunami/alerts')
+        apiClient.get(API_ENDPOINTS.earthquake.recent),
+        apiClient.get(API_ENDPOINTS.tsunami.alerts)
       ]);
 
-      if (earthquakeResponse.status === 'fulfilled' && earthquakeResponse.value.ok) {
-        const earthquakeData = await earthquakeResponse.value.json();
+      if (earthquakeResponse.status === 'fulfilled') {
+        const earthquakeData = earthquakeResponse.value;
         setEarthquakes(earthquakeData.slice(0, 50)); // Limit to 50 recent earthquakes
       }
 
-      if (tsunamiResponse.status === 'fulfilled' && tsunamiResponse.value.ok) {
-        const tsunamiData = await tsunamiResponse.value.json();
+      if (tsunamiResponse.status === 'fulfilled') {
+        const tsunamiData = tsunamiResponse.value;
         setTsunamis(tsunamiData.slice(0, 20)); // Limit to 20 tsunami alerts
       }
 
@@ -247,21 +319,24 @@ const DisasterMap: React.FC = () => {
   }
 
   return (
-    <Card className="h-full">
-      <CardHeader>
+    <Card className="h-full bg-gradient-to-br from-slate-900 to-slate-800 text-white border-slate-700">
+      <CardHeader className="bg-gradient-to-r from-red-600 to-orange-600">
         <CardTitle className="text-xl font-bold flex items-center gap-2">
           <MapPin className="h-5 w-5" />
-          災害マップ
+          🚨 リアルタイム災害監視システム
           <div className="flex items-center gap-2 ml-auto">
             <div className="flex items-center gap-1 text-sm">
               {getConnectionIcon()}
-              <span className="text-xs">{getConnectionText()}</span>
+              <span className="text-xs font-bold">
+                {connectionStatus === 'connected' ? '🔴 LIVE' : getConnectionText()}
+              </span>
             </div>
             <Button
               onClick={fetchDisasterData}
               disabled={loading}
               size="sm"
               variant="outline"
+              className="border-white/20 text-white hover:bg-white/10"
             >
               <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
               更新
@@ -269,113 +344,134 @@ const DisasterMap: React.FC = () => {
           </div>
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
+      <CardContent className="p-6">
+        <div className="space-y-6">
           {error && (
-            <Alert className="border-red-200 bg-red-50">
-              <AlertTriangle className="h-4 w-4 text-red-600" />
-              <AlertDescription className="text-red-600">
-                {error}
+            <Alert className="border-red-400 bg-red-900/50 text-red-100">
+              <AlertTriangle className="h-4 w-4 text-red-400" />
+              <AlertDescription className="text-red-100">
+                ⚠️ {error}
               </AlertDescription>
             </Alert>
           )}
 
-          {/* Map Container */}
-          <div className="h-96 rounded-lg overflow-hidden border">
+          {/* 緊急アラート表示 */}
+          {earthquakes.some(eq => eq.magnitude >= 6.0) && (
+            <div className="bg-red-600 border-2 border-red-400 rounded-lg p-4 animate-pulse">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">🚨</span>
+                <div>
+                  <div className="font-bold text-lg">緊急地震速報</div>
+                  <div className="text-sm">大規模地震を検出しました</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* メインマップ表示 */}
+          <div className="relative h-96 rounded-lg overflow-hidden border-2 border-slate-600">
             <MapWithNoSSR
               earthquakes={earthquakes}
               tsunamis={tsunamis}
               onMapReady={() => setMapReady(true)}
             />
+            
+            {/* ライブ配信用オーバーレイ */}
+            <div className="absolute top-4 left-4 bg-black/70 rounded-lg p-3">
+              <div className="text-xs text-gray-300">災害情報システム</div>
+              <div className="text-lg font-bold text-white">
+                🌊 リアルタイム監視中
+              </div>
+              {lastUpdate && (
+                <div className="text-xs text-gray-400">
+                  最終更新: {lastUpdate.toLocaleTimeString('ja-JP')}
+                </div>
+              )}
+            </div>
+
+            {/* 接続状況インジケーター */}
+            <div className="absolute top-4 right-4">
+              {connectionStatus === 'connected' && (
+                <div className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  LIVE配信中
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Legend and Status */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <h4 className="font-semibold mb-2">凡例</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 rounded-full bg-red-500"></div>
-                  <span>M7.0以上（大地震）</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 rounded-full bg-orange-500"></div>
-                  <span>M6.0-6.9（強い地震）</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 rounded-full bg-yellow-500"></div>
-                  <span>M5.0-5.9（中程度の地震）</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 rounded-full bg-green-500"></div>
-                  <span>M5.0未満（軽微な地震）</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="text-blue-600">🌊</div>
-                  <span>津波情報</span>
+          {/* ダッシュボード情報パネル */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* 地震活動統計 */}
+            <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg p-4">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white">{earthquakes.length}</div>
+                <div className="text-blue-100 text-sm">検出中の地震</div>
+                <div className="text-xs text-blue-200 mt-1">
+                  最大M{earthquakes.length > 0 ? Math.max(...earthquakes.map(eq => eq.magnitude)).toFixed(1) : '0.0'}
                 </div>
               </div>
             </div>
-            
-            <div>
-              <h4 className="font-semibold mb-2">データ状況</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span>地震情報:</span>
-                  <span className="font-medium">{earthquakes.length}件</span>
+
+            {/* 津波警報状況 */}
+            <div className="bg-gradient-to-br from-orange-600 to-red-600 rounded-lg p-4">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white">{tsunamis.length}</div>
+                <div className="text-orange-100 text-sm">津波警報</div>
+                <div className="text-xs text-orange-200 mt-1">
+                  {tsunamis.length > 0 ? '⚠️ 警戒中' : '✅ 正常'}
                 </div>
-                <div className="flex justify-between">
-                  <span>津波情報:</span>
-                  <span className="font-medium">{tsunamis.length}件</span>
+              </div>
+            </div>
+
+            {/* システム状況 */}
+            <div className="bg-gradient-to-br from-green-600 to-emerald-600 rounded-lg p-4">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white">
+                  {connectionStatus === 'connected' ? '100%' : '0%'}
                 </div>
-                {lastUpdate && (
-                  <div className="flex justify-between">
-                    <span>最終更新:</span>
-                    <span className="font-medium text-xs">
-                      {lastUpdate.toLocaleTimeString('ja-JP')}
-                    </span>
-                  </div>
-                )}
-                <div className="flex justify-between">
-                  <span>接続状況:</span>
-                  <span className="font-medium flex items-center gap-1">
-                    {getConnectionIcon()}
-                    <span className="text-xs">{getConnectionText()}</span>
-                  </span>
+                <div className="text-green-100 text-sm">システム稼働率</div>
+                <div className="text-xs text-green-200 mt-1">
+                  {connectionStatus === 'connected' ? '🟢 オンライン' : '🔴 オフライン'}
                 </div>
               </div>
             </div>
           </div>
           
-          {/* Recent Events Summary */}
+          {/* 最新地震情報リスト（放送用） */}
           {earthquakes.length > 0 && (
-            <div>
-              <h4 className="font-semibold mb-2 flex items-center gap-2">
-                最近の地震活動
+            <div className="bg-slate-800 rounded-lg p-4 border border-slate-600">
+              <h4 className="font-bold mb-3 flex items-center gap-2 text-white">
+                📊 最新地震情報
                 {connectionStatus === 'connected' && (
-                  <Badge variant="secondary" className="text-xs bg-green-100 text-green-700">
-                    ライブ更新中
+                  <Badge className="bg-red-600 text-white text-xs animate-pulse">
+                    🔴 LIVE更新
                   </Badge>
                 )}
               </h4>
-          <div className="space-y-2">
-                {earthquakes.slice(0, 3).map((earthquake) => (
-                  <div key={earthquake.id} className="flex justify-between items-center p-2 border rounded">
-                <div>
-                      <div className="font-medium">{earthquake.location}</div>
-                      <div className="text-sm text-gray-600">
-                        M{earthquake.magnitude} • {getIntensityLabel(earthquake.intensity)} • {earthquake.depth}km
+              <div className="space-y-3">
+                {earthquakes.slice(0, 5).map((earthquake) => (
+                  <div key={earthquake.id} className="flex justify-between items-center p-3 bg-slate-700 rounded border-l-4 border-orange-500">
+                    <div className="flex-1">
+                      <div className="font-bold text-white text-lg">{earthquake.location}</div>
+                      <div className="text-gray-300 text-sm">
+                        <span className="bg-red-600 text-white px-2 py-1 rounded text-xs font-bold mr-2">
+                          M{earthquake.magnitude}
+                        </span>
+                        {getIntensityLabel(earthquake.intensity)} • 深さ{earthquake.depth}km
                       </div>
                     </div>
-                    <div className="text-right text-sm">
-                      <div>{formatTime(earthquake.time)}</div>
+                    <div className="text-right">
+                      <div className="text-white font-medium">{formatTime(earthquake.time)}</div>
                       {earthquake.tsunami && (
-                        <Badge className="bg-red-500 text-white text-xs">津波</Badge>
+                        <Badge className="bg-blue-600 text-white text-xs mt-1">
+                          🌊 津波注意
+                        </Badge>
                       )}
-                </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
             </div>
           )}
         </div>

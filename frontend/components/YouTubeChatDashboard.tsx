@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -20,6 +20,7 @@ import {
   Activity,
   BarChart3
 } from 'lucide-react';
+import { apiClient, API_ENDPOINTS, createWebSocket, WS_ENDPOINTS } from '@/lib/api-config';
 
 interface ChatMessage {
   id: string;
@@ -55,7 +56,7 @@ export default function YouTubeChatDashboard() {
   const [analytics, setAnalytics] = useState<ChatAnalytics | null>(null);
   const [autoResponses, setAutoResponses] = useState<AutoResponse[]>([]);
   const [isConnected, setIsConnected] = useState(false);
-  const [connectionStatus, setConnectionStatus] = useState<'disconnected' | 'connecting' | 'connected' | 'reconnecting'>('disconnected');
+  const [connectionStatus, setConnectionStatus] = useState<'disconnected' | 'connecting' | 'connected' | 'reconnecting' | 'error'>('disconnected');
   const [manualResponse, setManualResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -63,14 +64,149 @@ export default function YouTubeChatDashboard() {
   const wsRef = useRef<WebSocket | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Fallback HTTP polling for chat data
+  const startChatPolling = useCallback(() => {
+    console.log('Starting HTTP polling for chat data');
+    setConnectionStatus('connected');
+    setError('Using HTTP polling');
+    
+    const pollInterval = setInterval(async () => {
+      try {
+        // Inline the fetch functions to avoid dependency issues
+        const [messagesData, analyticsData, responsesData] = await Promise.all([
+          apiClient.get(`${API_ENDPOINTS.chat.messages}?limit=50`),
+          apiClient.get(API_ENDPOINTS.chat.analytics),
+          apiClient.get(API_ENDPOINTS.chat.responses)
+        ]);
+        
+        setMessages(messagesData);
+        setAnalytics(analyticsData);
+        setAutoResponses(responsesData);
+      } catch (err) {
+        console.error('Chat polling error:', err);
+      }
+    }, 5000); // Poll every 5 seconds
+
+    return pollInterval;
+  }, []);
+
   // WebSocket connection
+  const connectWebSocket = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    
+    const maxRetries = 3;
+    let reconnectAttempts = 0;
+    
+    try {
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
+
+      setConnectionStatus('connecting');
+      const ws = createWebSocket(WS_ENDPOINTS.main);
+      
+      // Handle case where WebSocket creation fails or is not available
+      if (!ws) {
+        console.log('WebSocket not available for chat, falling back to HTTP polling');
+        setConnectionStatus('disconnected');
+        startChatPolling();
+        return;
+      }
+      
+      wsRef.current = ws;
+
+      ws.onopen = () => {
+        console.log('Chat WebSocket connected');
+        setConnectionStatus('connected');
+        setIsConnected(true);
+        setError(null);
+        reconnectAttempts = 0;
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          
+          if (data.type === 'chat_message') {
+            setMessages(prev => [...prev, data.message].slice(-100)); // Keep last 100 messages
+          } else if (data.type === 'chat_analytics') {
+            setAnalytics(data.analytics);
+          } else if (data.type === 'auto_response') {
+            setAutoResponses(prev => [...prev, data.response].slice(-50)); // Keep last 50 responses
+          }
+        } catch (err) {
+          console.error('Error parsing chat WebSocket message:', err);
+        }
+      };
+
+      ws.onclose = (event) => {
+        console.log('Chat WebSocket disconnected:', event.code, event.reason);
+        setConnectionStatus('disconnected');
+        setIsConnected(false);
+        
+        if (reconnectAttempts < maxRetries) {
+          reconnectAttempts++;
+          console.log(`Attempting chat WebSocket reconnect ${reconnectAttempts}/${maxRetries}`);
+          setTimeout(connectWebSocket, 5000);
+        } else {
+          console.log('Max WebSocket reconnect attempts reached, falling back to HTTP polling');
+          startChatPolling();
+        }
+      };
+
+      ws.onerror = (error) => {
+        console.error('Chat WebSocket error:', error);
+        setConnectionStatus('error');
+        setError('WebSocket connection error');
+      };
+
+    } catch (error) {
+      console.error('Failed to connect chat WebSocket:', error);
+      setConnectionStatus('error');
+      setError('Failed to establish WebSocket connection');
+      startChatPolling();
+    }
+  }, [startChatPolling]);
+
+  // Initial connection and data fetch
   useEffect(() => {
-    // Delay initial connection slightly to ensure backend is ready
+    console.log('🚀 YouTubeChatDashboard mounted, initializing...');
+    
+    // Skip during build time
+    if (typeof window === 'undefined') { // Check if it's running in a browser environment
+      console.log('⏭️ Skipping WebSocket during build time');
+      return;
+    }
+    
+    // Inline initial data fetch to avoid dependency issues
+    const fetchInitialData = async () => {
+      setIsLoading(true);
+      try {
+        // Fetch recent messages using the new API client
+        const messagesData = await apiClient.get(`${API_ENDPOINTS.chat.messages}?limit=50`);
+        setMessages(messagesData);
+
+        // Fetch analytics
+        const analyticsData = await apiClient.get(API_ENDPOINTS.chat.analytics);
+        setAnalytics(analyticsData);
+
+        // Fetch auto-responses
+        const responsesData = await apiClient.get(API_ENDPOINTS.chat.responses);
+        setAutoResponses(responsesData);
+      } catch (error) {
+        setError('Failed to fetch initial data');
+        console.error('Failed to fetch data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchInitialData();
+    
+    // Connect WebSocket after a small delay to ensure component is fully mounted
     const connectTimer = setTimeout(() => {
       connectWebSocket();
     }, 1000);
-    
-    fetchInitialData();
     
     return () => {
       clearTimeout(connectTimer);
@@ -79,7 +215,7 @@ export default function YouTubeChatDashboard() {
         wsRef.current.close(1000, 'Component unmounting');
       }
     };
-  }, []);
+  }, [connectWebSocket]);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -91,14 +227,8 @@ export default function YouTubeChatDashboard() {
     setError(null);
     
     try {
-      // First test if the backend is reachable
-      const healthResponse = await fetch('http://localhost:8000/api/health');
-      if (!healthResponse.ok) {
-        setError('Backend server not responding');
-        return;
-      }
-      
-      const healthData = await healthResponse.json();
+      // First test if the backend is reachable using the new API client
+      const healthData = await apiClient.get(API_ENDPOINTS.health);
       console.log('✅ Backend health check passed:', healthData);
       
       // Now test WebSocket
@@ -118,164 +248,27 @@ export default function YouTubeChatDashboard() {
     }
   };
 
-  const connectWebSocket = () => {
-    // Prevent multiple simultaneous connection attempts
-    if (wsRef.current && wsRef.current.readyState === WebSocket.CONNECTING) {
-      console.log('⏳ WebSocket connection already in progress...');
-      return;
-    }
-
-    // Close existing connection if any
-    if (wsRef.current) {
-      wsRef.current.close();
-      wsRef.current = null;
-    }
-
-    try {
-      // Add connection state logging
-      console.log('🚀 Attempting to connect to WebSocket at ws://localhost:8000/ws');
-      setError(null);
-      
-      const ws = new WebSocket('ws://localhost:8000/ws');
-      
-      // Set a connection timeout
-      const connectionTimeout = setTimeout(() => {
-        if (ws.readyState === WebSocket.CONNECTING) {
-          console.log('⏰ WebSocket connection timeout');
-          ws.close();
-          setError('Connection timeout');
-        }
-      }, 5000);
-      
-      ws.onopen = () => {
-        clearTimeout(connectionTimeout);
-        setIsConnected(true);
-        setError(null);
-        console.log('✅ WebSocket connected successfully');
-      };
-      
-      ws.onmessage = (event) => {
-        try {
-          const data = JSON.parse(event.data);
-          console.log('📨 Received WebSocket message:', data);
-          
-          if (data.type === 'chat_message') {
-            setMessages(prev => [...prev, data.message].slice(-100)); // Keep last 100 messages
-          } else if (data.type === 'analytics_update') {
-            setAnalytics(data.analytics);
-          } else if (data.type === 'ping') {
-            // Keep-alive ping
-            console.log('🏓 Received ping from server');
-          } else if (data.type === 'connection_established') {
-            console.log('🎯 Connection established:', data.message);
-          }
-        } catch (parseError) {
-          console.error('Error parsing WebSocket message:', parseError);
-        }
-      };
-      
-      ws.onclose = (event) => {
-        clearTimeout(connectionTimeout);
-        setIsConnected(false);
-        
-        // More detailed close code handling
-        const closeReason = event.code === 1006 ? 'Connection lost unexpectedly' :
-                          event.code === 1000 ? 'Normal closure' :
-                          event.code === 1001 ? 'Endpoint going away' :
-                          event.code === 1002 ? 'Protocol error' :
-                          event.code === 1003 ? 'Unsupported data' :
-                          event.reason || 'Unknown reason';
-        
-        console.log(`🔌 WebSocket disconnected. Code: ${event.code}, Reason: ${closeReason}`);
-        
-        // Only attempt to reconnect for unexpected disconnections
-        if (event.code === 1006 || (event.code !== 1000 && event.code !== 1001)) {
-          console.log('🔄 Attempting to reconnect in 3 seconds...');
-          setTimeout(connectWebSocket, 3000);
-        }
-      };
-      
-      ws.onerror = (error) => {
-        clearTimeout(connectionTimeout);
-        console.error('❌ WebSocket error occurred');
-        console.error('WebSocket readyState:', ws.readyState);
-        console.error('WebSocket URL:', ws.url);
-        
-        // Don't set connection error immediately, wait to see if it recovers
-        if (ws.readyState === WebSocket.CLOSED) {
-          setError('WebSocket connection failed');
-        }
-      };
-      
-      wsRef.current = ws;
-    } catch (error) {
-      setError('Failed to create WebSocket connection');
-      console.error('💥 WebSocket connection creation failed:', error);
-    }
-  };
-
-  const fetchInitialData = async () => {
-    setIsLoading(true);
-    try {
-      // Fetch recent messages
-      const messagesResponse = await fetch('http://localhost:8000/api/chat/messages?limit=50');
-      if (messagesResponse.ok) {
-        const messagesData = await messagesResponse.json();
-        setMessages(messagesData);
-      }
-
-      // Fetch analytics
-      const analyticsResponse = await fetch('http://localhost:8000/api/chat/analytics');
-      if (analyticsResponse.ok) {
-        const analyticsData = await analyticsResponse.json();
-        setAnalytics(analyticsData);
-      }
-
-      // Fetch auto-responses
-      const responsesResponse = await fetch('http://localhost:8000/api/chat/responses');
-      if (responsesResponse.ok) {
-        const responsesData = await responsesResponse.json();
-        setAutoResponses(responsesData);
-      }
-    } catch (error) {
-      setError('Failed to fetch initial data');
-      console.error('Failed to fetch data:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const sendManualResponse = async () => {
     if (!manualResponse.trim()) return;
     
     try {
-      const response = await fetch('http://localhost:8000/api/chat/response', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: manualResponse }),
-      });
+      await apiClient.post(API_ENDPOINTS.chat.response, { message: manualResponse });
+      setManualResponse('');
       
-      if (response.ok) {
-        setManualResponse('');
-        // Add the sent message to our local state
-        const sentMessage: ChatMessage = {
-          id: `manual_${Date.now()}`,
-          message_id: `manual_${Date.now()}`,
-          author: 'Bot (Manual)',
-          message: manualResponse,
-          timestamp: new Date().toISOString(),
-          sentiment_score: 1,
-          category: 'manual',
-          platform: 'youtube'
-        };
-        setMessages(prev => [...prev, sentMessage]);
-      } else {
-        setError('Failed to send message');
-      }
+      // Add the sent message to our local state
+      const sentMessage: ChatMessage = {
+        id: `manual_${Date.now()}`,
+        message_id: `manual_${Date.now()}`,
+        author: 'Bot (Manual)',
+        message: manualResponse,
+        timestamp: new Date().toISOString(),
+        sentiment_score: 1,
+        category: 'manual',
+        platform: 'youtube'
+      };
+      setMessages(prev => [...prev, sentMessage]);
     } catch (error) {
-      setError('Network error while sending message');
+      setError('Failed to send message');
       console.error('Failed to send message:', error);
     }
   };
@@ -315,13 +308,22 @@ export default function YouTubeChatDashboard() {
   return (
     <div className="space-y-6">
       {/* Connection Status */}
-      <Alert className={isConnected ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'}>
-        <Activity className={`h-4 w-4 ${isConnected ? 'text-green-600' : 'text-red-600'}`} />
+      <Alert className={
+        connectionStatus === 'connected' ? 'border-green-200 bg-green-50' : 
+        connectionStatus === 'connecting' || connectionStatus === 'reconnecting' ? 'border-yellow-200 bg-yellow-50' :
+        'border-red-200 bg-red-50'
+      }>
+        <Activity className={`h-4 w-4 ${
+          connectionStatus === 'connected' ? 'text-green-600' : 
+          connectionStatus === 'connecting' || connectionStatus === 'reconnecting' ? 'text-yellow-600 animate-spin' :
+          'text-red-600'
+        }`} />
         <AlertDescription>
           チャットサービスの状態: <strong>
             {connectionStatus === 'connected' ? '接続済み' : 
              connectionStatus === 'connecting' ? '接続中...' :
              connectionStatus === 'reconnecting' ? '再接続中...' :
+             connectionStatus === 'error' ? 'エラー' :
              '切断中'}
           </strong>
           {error && <span className="text-red-600 ml-2">({error})</span>}

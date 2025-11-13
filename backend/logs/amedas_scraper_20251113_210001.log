@@ -1,0 +1,1319 @@
+==================================================================
+AMeDAS Scraper Run - Thu Nov 13 21:00:01 JST 2025
+==================================================================
+2025-11-13 21:00:02,169 - __main__ - INFO - Scraping 北海道 (010000)...
+2025-11-13 21:00:02,169 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:00:03,792 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:00:03,855 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:00:03,915 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:00:06,125 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:00:06,125 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=010000
+2025-11-13 21:00:09,324 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:00:12,342 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:00:28,531 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:00:28,531 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:00:28,625 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:00:32,625 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:00:32,626 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:00:38,046 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:00:38,046 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:00:38,047 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:00:38,063 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:00:38,100 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:00:38,128 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:00:38,152 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:00:38,177 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:00:38,203 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:00:38,243 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:00:38,262 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:00:38,363 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:00:40,364 - __main__ - INFO - Scraping 青森県 (020000)...
+2025-11-13 21:00:40,364 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:00:40,891 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:00:40,946 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:00:41,002 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:00:42,071 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:00:42,071 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=020000
+2025-11-13 21:00:45,240 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:00:48,260 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:01:04,469 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:01:04,469 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:01:04,563 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:01:08,564 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:01:08,564 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:01:13,935 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:01:13,935 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:01:13,936 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:01:13,951 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:01:13,988 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:01:14,016 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:01:14,040 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:01:14,064 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:01:14,090 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:01:14,130 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:01:14,149 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:01:14,206 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:01:16,207 - __main__ - INFO - Scraping 岩手県 (030000)...
+2025-11-13 21:01:16,207 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:01:16,722 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:01:16,781 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:01:16,843 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:01:17,920 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:01:17,920 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=030000
+2025-11-13 21:01:21,080 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:01:24,102 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:01:40,289 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:01:40,289 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:01:40,382 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:01:44,382 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:01:44,383 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:01:49,836 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:01:49,837 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:01:49,837 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:01:49,852 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:01:49,889 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:01:49,916 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:01:49,941 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:01:49,964 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:01:49,991 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:01:50,031 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:01:50,051 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:01:50,108 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:01:52,108 - __main__ - INFO - Scraping 宮城県 (040000)...
+2025-11-13 21:01:52,109 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:01:52,643 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:01:52,701 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:01:52,761 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:01:53,832 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:01:53,832 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=040000
+2025-11-13 21:01:56,985 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:02:00,006 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:02:16,185 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:02:16,186 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:02:16,291 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:02:20,291 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:02:20,291 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:02:25,709 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:02:25,710 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:02:25,711 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:02:25,725 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:02:25,763 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:02:25,790 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:02:25,815 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:02:25,838 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:02:25,865 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:02:25,904 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:02:25,924 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:02:25,982 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:02:27,983 - __main__ - INFO - Scraping 秋田県 (050000)...
+2025-11-13 21:02:27,983 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:02:28,509 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:02:28,568 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:02:28,622 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:02:29,682 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:02:29,682 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=050000
+2025-11-13 21:02:32,902 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:02:35,924 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:02:52,109 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:02:52,109 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:02:52,184 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:02:56,185 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:02:56,185 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:03:01,624 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:03:01,625 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:03:01,626 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:03:01,640 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:03:01,677 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:03:01,704 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:03:01,728 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:03:01,751 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:03:01,777 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:03:01,816 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:03:01,836 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:03:01,891 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:03:03,892 - __main__ - INFO - Scraping 山形県 (060000)...
+2025-11-13 21:03:03,892 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:03:04,435 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:03:04,492 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:03:04,562 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:03:05,712 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:03:05,712 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=060000
+2025-11-13 21:03:08,884 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:03:11,903 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:03:28,087 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:03:28,087 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:03:28,189 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:03:32,190 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:03:32,190 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:03:37,564 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:03:37,564 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:03:37,565 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:03:37,579 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:03:37,616 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:03:37,643 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:03:37,667 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:03:37,692 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:03:37,718 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:03:37,758 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:03:37,777 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:03:37,834 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:03:39,834 - __main__ - INFO - Scraping 福島県 (070000)...
+2025-11-13 21:03:39,835 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:03:40,366 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:03:40,423 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:03:40,478 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:03:41,562 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:03:41,563 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=070000
+2025-11-13 21:03:44,772 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:03:47,793 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:04:04,008 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:04:04,008 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:04:04,101 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:04:08,102 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:04:08,102 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:04:13,547 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:04:13,548 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:04:13,549 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:04:13,563 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:04:13,600 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:04:13,627 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:04:13,651 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:04:13,676 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:04:13,702 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:04:13,741 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:04:13,760 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:04:13,819 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:04:15,819 - __main__ - INFO - Scraping 茨城県 (080000)...
+2025-11-13 21:04:15,819 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:04:16,769 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:04:16,826 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:04:16,882 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:04:18,285 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:04:18,285 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=080000
+2025-11-13 21:04:21,498 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:04:24,519 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:04:40,683 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:04:40,683 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:04:40,786 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:04:44,787 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:04:44,787 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:04:50,167 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:04:50,168 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:04:50,169 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:04:50,183 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:04:50,220 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:04:50,248 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:04:50,272 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:04:50,296 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:04:50,322 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:04:50,361 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:04:50,380 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:04:50,439 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:04:52,439 - __main__ - INFO - Scraping 栃木県 (090000)...
+2025-11-13 21:04:52,439 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:04:52,996 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:04:53,056 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:04:53,115 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:04:54,302 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:04:54,302 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=090000
+2025-11-13 21:04:57,614 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:05:00,634 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:05:16,828 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:05:16,828 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:05:16,921 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:05:20,921 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:05:20,921 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:05:26,363 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:05:26,363 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:05:26,364 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:05:26,379 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:05:26,415 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:05:26,442 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:05:26,466 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:05:26,491 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:05:26,517 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:05:26,556 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:05:26,575 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:05:26,632 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:05:28,632 - __main__ - INFO - Scraping 群馬県 (100000)...
+2025-11-13 21:05:28,632 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:05:29,147 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:05:29,208 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:05:29,264 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:05:30,299 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:05:30,299 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=100000
+2025-11-13 21:05:33,496 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:05:36,513 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:05:52,762 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:05:52,762 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:05:52,865 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:05:56,866 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:05:56,866 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:06:02,237 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:06:02,238 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:06:02,239 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:06:02,253 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:06:02,289 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:06:02,316 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:06:02,340 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:06:02,364 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:06:02,390 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:06:02,429 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:06:02,448 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:06:02,503 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:06:04,503 - __main__ - INFO - Scraping 埼玉県 (110000)...
+2025-11-13 21:06:04,504 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:06:05,003 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:06:05,060 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:06:05,115 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:06:06,173 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:06:06,173 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=110000
+2025-11-13 21:06:09,353 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:06:12,371 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:06:28,548 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:06:28,549 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:06:28,630 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:06:32,630 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:06:32,630 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:06:38,048 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:06:38,049 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:06:38,050 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:06:38,064 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:06:38,101 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:06:38,128 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:06:38,152 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:06:38,176 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:06:38,202 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:06:38,241 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:06:38,260 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:06:38,318 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:06:40,318 - __main__ - INFO - Scraping 千葉県 (120000)...
+2025-11-13 21:06:40,318 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:06:41,008 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:06:41,068 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:06:41,124 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:06:42,232 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:06:42,232 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=120000
+2025-11-13 21:06:45,433 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:06:48,453 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:07:04,630 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:07:04,630 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:07:04,735 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:07:08,736 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:07:08,736 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:07:14,122 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:07:14,123 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:07:14,124 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:07:14,138 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:07:14,175 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:07:14,202 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:07:14,226 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:07:14,249 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:07:14,275 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:07:14,314 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:07:14,334 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:07:14,391 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:07:16,391 - __main__ - INFO - Scraping 東京都 (130000)...
+2025-11-13 21:07:16,391 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:07:16,920 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:07:16,977 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:07:17,067 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:07:18,118 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:07:18,118 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=130000
+2025-11-13 21:07:21,317 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:07:24,334 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:07:40,528 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:07:40,528 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:07:40,621 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:07:44,622 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:07:44,622 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:07:50,072 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:07:50,072 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:07:50,073 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:07:50,088 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:07:50,124 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:07:50,151 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:07:50,176 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:07:50,201 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:07:50,228 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:07:50,268 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:07:50,288 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:07:50,357 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:07:52,357 - __main__ - INFO - Scraping 神奈川県 (140000)...
+2025-11-13 21:07:52,357 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:07:52,876 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:07:52,933 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:07:52,987 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:07:54,037 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:07:54,037 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=140000
+2025-11-13 21:07:57,221 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:08:00,240 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:08:16,391 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:08:16,391 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:08:16,493 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:08:20,493 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:08:20,493 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:08:25,901 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:08:25,901 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:08:25,902 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:08:25,917 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:08:25,954 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:08:25,982 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:08:26,006 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:08:26,034 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:08:26,060 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:08:26,100 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:08:26,120 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:08:26,177 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:08:28,177 - __main__ - INFO - Scraping 新潟県 (150000)...
+2025-11-13 21:08:28,177 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:08:28,787 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:08:28,859 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:08:28,917 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:08:29,981 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:08:29,981 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=150000
+2025-11-13 21:08:33,172 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:08:36,195 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:08:52,387 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:08:52,387 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:08:52,487 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:08:56,487 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:08:56,487 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:09:01,916 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:09:01,916 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:09:01,917 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:09:01,932 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:09:01,968 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:09:01,996 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:09:02,020 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:09:02,043 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:09:02,069 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:09:02,108 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:09:02,128 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:09:02,184 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:09:04,185 - __main__ - INFO - Scraping 富山県 (160000)...
+2025-11-13 21:09:04,185 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:09:04,696 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:09:04,776 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:09:04,833 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:09:05,882 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:09:05,882 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=160000
+2025-11-13 21:09:09,087 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:09:12,104 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:09:28,254 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:09:28,255 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:09:28,361 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:09:32,361 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:09:32,361 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:09:37,759 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:09:37,760 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:09:37,761 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:09:37,775 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:09:37,814 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:09:37,840 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:09:37,864 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:09:37,888 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:09:37,914 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:09:37,952 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:09:37,972 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:09:38,029 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:09:40,029 - __main__ - INFO - Scraping 石川県 (170000)...
+2025-11-13 21:09:40,029 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:09:40,549 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:09:40,606 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:09:40,661 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:09:41,683 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:09:41,683 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=170000
+2025-11-13 21:09:44,849 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:09:47,869 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:10:04,092 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:10:04,092 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:10:04,188 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:10:08,188 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:10:08,189 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:10:13,619 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:10:13,619 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:10:13,620 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:10:13,635 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:10:13,671 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:10:13,698 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:10:13,722 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:10:13,753 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:10:13,779 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:10:13,819 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:10:13,839 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:10:13,896 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:10:15,897 - __main__ - INFO - Scraping 福井県 (180000)...
+2025-11-13 21:10:15,897 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:10:16,462 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:10:16,524 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:10:16,586 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:10:17,703 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:10:17,703 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=180000
+2025-11-13 21:10:20,914 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:10:23,937 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:10:40,133 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:10:40,134 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:10:40,229 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:10:44,229 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:10:44,230 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:10:49,631 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:10:49,631 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:10:49,633 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:10:49,647 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:10:49,685 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:10:49,712 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:10:49,737 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:10:49,761 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:10:49,788 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:10:49,828 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:10:49,847 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:10:49,906 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:10:51,906 - __main__ - INFO - Scraping 山梨県 (190000)...
+2025-11-13 21:10:51,906 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:10:52,435 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:10:52,518 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:10:52,577 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:10:53,610 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:10:53,610 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=190000
+2025-11-13 21:10:56,803 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:10:59,820 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:11:15,983 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:11:15,983 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:11:16,066 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:11:20,066 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:11:20,066 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:11:25,498 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:11:25,499 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:11:25,500 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:11:25,514 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:11:25,551 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:11:25,578 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:11:25,603 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:11:25,628 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:11:25,654 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:11:25,693 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:11:25,712 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:11:26,767 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:11:28,767 - __main__ - INFO - Scraping 長野県 (200000)...
+2025-11-13 21:11:28,768 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:11:29,268 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:11:29,347 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:11:29,406 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:11:30,455 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:11:30,456 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=200000
+2025-11-13 21:11:33,655 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:11:36,672 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:11:52,835 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:11:52,835 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:11:52,928 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:11:56,929 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:11:56,929 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:12:02,322 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:12:02,322 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:12:02,323 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:12:02,338 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:12:02,374 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:12:02,401 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:12:02,426 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:12:02,449 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:12:02,475 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:12:02,515 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:12:02,534 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:12:02,594 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:12:04,594 - __main__ - INFO - Scraping 岐阜県 (210000)...
+2025-11-13 21:12:04,594 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:12:05,095 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:12:05,162 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:12:05,214 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:12:06,261 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:12:06,261 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=210000
+2025-11-13 21:12:09,465 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:12:12,483 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:12:28,682 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:12:28,682 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:12:28,785 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:12:32,785 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:12:32,785 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:12:38,204 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:12:38,204 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:12:38,205 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:12:38,220 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:12:38,257 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:12:38,284 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:12:38,308 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:12:38,332 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:12:38,358 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:12:38,397 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:12:38,417 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:12:38,474 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:12:40,476 - __main__ - INFO - Scraping 静岡県 (220000)...
+2025-11-13 21:12:40,476 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:12:41,235 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:12:41,294 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:12:41,351 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:12:42,415 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:12:42,415 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=220000
+2025-11-13 21:12:45,594 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:12:48,612 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:13:04,842 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:13:04,842 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:13:04,938 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:13:08,938 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:13:08,938 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:13:14,318 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:13:14,318 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:13:14,319 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:13:14,334 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:13:14,370 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:13:14,397 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:13:14,426 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:13:14,449 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:13:14,475 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:13:14,514 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:13:14,534 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:13:14,593 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:13:16,593 - __main__ - INFO - Scraping 愛知県 (230000)...
+2025-11-13 21:13:16,593 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:13:17,128 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:13:17,188 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:13:17,245 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:13:18,339 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:13:18,339 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=230000
+2025-11-13 21:13:21,550 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:13:24,568 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:13:40,791 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:13:40,791 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:13:40,892 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:13:44,892 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:13:44,893 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:13:50,349 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:13:50,349 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:13:50,350 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:13:50,365 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:13:50,403 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:13:50,431 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:13:50,456 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:13:50,480 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:13:50,507 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:13:50,546 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:13:50,567 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:13:50,624 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:13:52,624 - __main__ - INFO - Scraping 三重県 (240000)...
+2025-11-13 21:13:52,624 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:13:53,294 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:13:53,354 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:13:53,455 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:13:54,527 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:13:54,527 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=240000
+2025-11-13 21:13:57,702 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:14:00,720 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:14:16,902 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:14:16,902 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:14:16,995 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:14:20,996 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:14:20,996 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:14:26,402 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:14:26,402 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:14:26,403 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:14:26,418 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:14:26,456 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:14:26,483 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:14:26,508 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:14:26,533 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:14:26,559 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:14:26,600 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:14:26,620 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:14:26,679 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:14:28,679 - __main__ - INFO - Scraping 滋賀県 (250000)...
+2025-11-13 21:14:28,680 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:14:29,197 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:14:29,258 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:14:29,317 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:14:30,415 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:14:30,415 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=250000
+2025-11-13 21:14:33,606 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:14:36,626 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:14:52,807 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:14:52,807 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:14:52,899 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:14:56,900 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:14:56,900 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:15:02,340 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:15:02,341 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:15:02,342 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:15:02,356 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:15:02,393 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:15:02,420 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:15:02,444 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:15:02,468 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:15:02,494 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:15:02,533 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:15:02,552 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:15:02,610 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:15:04,610 - __main__ - INFO - Scraping 京都府 (260000)...
+2025-11-13 21:15:04,610 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:15:05,146 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:15:05,218 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:15:05,273 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:15:06,320 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:15:06,320 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=260000
+2025-11-13 21:15:09,479 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:15:12,496 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:15:28,689 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:15:28,690 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:15:28,788 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:15:32,789 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:15:32,789 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:15:38,181 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:15:38,181 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:15:38,182 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:15:38,197 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:15:38,233 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:15:38,261 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:15:38,285 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:15:38,308 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:15:38,334 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:15:38,374 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:15:38,393 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:15:38,451 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:15:40,451 - __main__ - INFO - Scraping 大阪府 (270000)...
+2025-11-13 21:15:40,452 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:15:40,967 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:15:41,024 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:15:41,081 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:15:42,139 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:15:42,139 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=270000
+2025-11-13 21:15:45,337 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:15:48,356 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:16:04,563 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:16:04,563 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:16:04,671 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:16:08,671 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:16:08,672 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:16:14,105 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:16:14,106 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:16:14,107 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:16:14,121 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:16:14,158 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:16:14,185 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:16:14,209 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:16:14,233 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:16:14,260 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:16:14,299 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:16:14,318 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:16:14,375 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:16:16,375 - __main__ - INFO - Scraping 兵庫県 (280000)...
+2025-11-13 21:16:16,376 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:16:16,899 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:16:17,024 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:16:17,081 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:16:18,198 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:16:18,198 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=280000
+2025-11-13 21:16:21,431 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:16:24,456 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:16:40,688 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:16:40,688 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:16:40,700 - __main__ - ERROR - Method 2 failed: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=142.0.7444.59); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+#0 0x5d4e7baf132a <unknown>
+#1 0x5d4e7b53de4b <unknown>
+#2 0x5d4e7b544d06 <unknown>
+#3 0x5d4e7b5477bc <unknown>
+#4 0x5d4e7b5dde6e <unknown>
+#5 0x5d4e7b5dcdf7 <unknown>
+#6 0x5d4e7b582c1a <unknown>
+#7 0x5d4e7b583921 <unknown>
+#8 0x5d4e7bab8239 <unknown>
+#9 0x5d4e7babb1e8 <unknown>
+#10 0x5d4e7baa14c9 <unknown>
+#11 0x5d4e7babbdb5 <unknown>
+#12 0x5d4e7ba88e93 <unknown>
+#13 0x5d4e7bade098 <unknown>
+#14 0x5d4e7bade273 <unknown>
+#15 0x5d4e7baf02c3 <unknown>
+#16 0x75084fc9caa4 <unknown>
+#17 0x75084fd29c6c <unknown>
+
+2025-11-13 21:16:40,700 - __main__ - ERROR - Failed to click 全域 button
+2025-11-13 21:16:40,757 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:16:42,758 - __main__ - INFO - Scraping 奈良県 (290000)...
+2025-11-13 21:16:42,758 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:16:43,759 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:16:43,819 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:16:43,877 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:16:44,997 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:16:44,997 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=290000
+2025-11-13 21:16:48,178 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:16:51,199 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:17:07,399 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:17:07,399 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:17:07,484 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:17:11,484 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:17:11,485 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:17:16,911 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:17:16,912 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:17:16,913 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:17:16,928 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:17:16,965 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:17:16,992 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:17:17,017 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:17:17,041 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:17:17,068 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:17:17,108 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:17:17,127 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:17:17,185 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:17:19,185 - __main__ - INFO - Scraping 和歌山県 (300000)...
+2025-11-13 21:17:19,186 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:17:19,705 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:17:19,764 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:17:19,819 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:17:20,874 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:17:20,874 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=300000
+2025-11-13 21:17:24,064 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:17:27,084 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:17:43,283 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:17:43,283 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:17:43,378 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:17:47,378 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:17:47,378 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:17:52,839 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:17:52,840 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:17:52,841 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:17:52,856 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:17:52,893 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:17:52,920 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:17:52,947 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:17:52,971 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:17:52,998 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:17:53,037 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:17:53,056 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:17:53,115 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:17:55,115 - __main__ - INFO - Scraping 鳥取県 (310000)...
+2025-11-13 21:17:55,115 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:17:55,629 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:17:55,713 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:17:55,769 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:17:56,796 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:17:56,797 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=310000
+2025-11-13 21:17:59,997 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:18:03,013 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:18:19,225 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:18:19,225 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:18:19,333 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:18:23,333 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:18:23,333 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:18:28,710 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:18:28,711 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:18:28,712 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:18:28,726 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:18:28,763 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:18:28,791 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:18:28,815 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:18:28,839 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:18:28,866 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:18:28,905 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:18:28,925 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:18:28,980 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:18:30,980 - __main__ - INFO - Scraping 島根県 (320000)...
+2025-11-13 21:18:30,981 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:18:31,518 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:18:31,572 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:18:31,629 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:18:32,688 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:18:32,688 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=320000
+2025-11-13 21:18:35,881 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:18:38,908 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:18:55,122 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:18:55,122 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:18:55,224 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:18:59,224 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:18:59,225 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:19:04,687 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:19:04,687 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:19:04,688 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:19:04,703 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:19:04,739 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:19:04,766 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:19:04,791 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:19:04,814 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:19:04,840 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:19:04,879 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:19:04,899 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:19:04,956 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:19:06,956 - __main__ - INFO - Scraping 岡山県 (330000)...
+2025-11-13 21:19:06,956 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:19:07,489 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:19:07,547 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:19:07,620 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:19:08,695 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:19:08,695 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=330000
+2025-11-13 21:19:11,872 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:19:14,905 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:19:31,152 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:19:31,152 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:19:31,250 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:19:35,250 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:19:35,251 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:19:40,652 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:19:40,653 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:19:40,654 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:19:40,668 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:19:40,706 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:19:40,732 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:19:40,757 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:19:40,781 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:19:40,807 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:19:40,846 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:19:40,866 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:19:40,922 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:19:42,923 - __main__ - INFO - Scraping 広島県 (340000)...
+2025-11-13 21:19:42,923 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:19:43,529 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:19:43,592 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:19:43,648 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:19:44,708 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:19:44,708 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=340000
+2025-11-13 21:19:47,903 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:19:50,922 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:20:07,154 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:20:07,154 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:20:07,250 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:20:11,250 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:20:11,250 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:20:16,669 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:20:16,669 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:20:16,670 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:20:16,685 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:20:16,722 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:20:16,750 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:20:16,775 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:20:16,800 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:20:16,826 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:20:16,866 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:20:16,886 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:20:16,943 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:20:18,943 - __main__ - INFO - Scraping 山口県 (350000)...
+2025-11-13 21:20:18,944 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:20:19,967 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:20:20,023 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:20:20,079 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:20:21,170 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:20:21,170 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=350000
+2025-11-13 21:20:24,358 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:20:27,376 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:20:43,601 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:20:43,601 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:20:43,688 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:20:47,689 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:20:47,689 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:20:53,046 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:20:53,046 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:20:53,047 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:20:53,062 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:20:53,098 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:20:53,125 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:20:53,150 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:20:53,176 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:20:53,202 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:20:53,241 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:20:53,260 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:20:53,317 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:20:55,317 - __main__ - INFO - Scraping 徳島県 (360000)...
+2025-11-13 21:20:55,317 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:20:55,839 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:20:55,898 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:20:55,953 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:20:57,020 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:20:57,020 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=360000
+2025-11-13 21:21:00,245 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:21:03,262 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:21:19,435 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:21:19,435 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:21:19,527 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:21:23,527 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:21:23,527 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:21:28,989 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:21:28,989 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:21:28,990 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:21:29,005 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:21:29,042 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:21:29,069 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:21:29,094 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:21:29,118 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:21:29,145 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:21:29,184 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:21:29,204 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:21:29,261 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:21:31,261 - __main__ - INFO - Scraping 香川県 (370000)...
+2025-11-13 21:21:31,262 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:21:31,785 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:21:31,845 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:21:31,904 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:21:32,979 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:21:32,979 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=370000
+2025-11-13 21:21:36,171 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:21:39,190 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:21:55,365 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:21:55,365 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:21:55,455 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:21:59,455 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:21:59,455 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:22:04,836 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:22:04,837 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:22:04,837 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:22:04,853 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:22:04,890 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:22:04,917 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:22:04,940 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:22:04,964 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:22:04,989 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:22:05,028 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:22:05,048 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:22:05,104 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:22:07,105 - __main__ - INFO - Scraping 愛媛県 (380000)...
+2025-11-13 21:22:07,105 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:22:07,598 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:22:07,657 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:22:07,724 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:22:08,817 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:22:08,817 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=380000
+2025-11-13 21:22:12,012 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:22:15,029 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:22:31,232 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:22:31,232 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:22:31,327 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:22:35,328 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:22:35,330 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:22:40,772 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:22:40,773 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:22:40,774 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:22:40,789 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:22:40,827 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:22:40,855 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:22:40,880 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:22:40,904 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:22:40,930 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:22:40,970 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:22:40,991 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:22:41,046 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:22:43,047 - __main__ - INFO - Scraping 高知県 (390000)...
+2025-11-13 21:22:43,047 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:22:43,786 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:22:43,850 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:22:43,910 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:22:44,985 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:22:44,985 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=390000
+2025-11-13 21:22:48,189 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:22:51,210 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:23:07,415 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:23:07,415 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:23:07,517 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:23:11,517 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:23:11,517 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:23:16,915 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:23:16,916 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:23:16,916 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:23:16,932 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:23:16,972 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:23:16,999 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:23:17,024 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:23:17,048 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:23:17,074 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:23:17,114 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:23:17,133 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:23:17,191 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:23:19,191 - __main__ - INFO - Scraping 福岡県 (400000)...
+2025-11-13 21:23:19,191 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:23:19,718 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:23:19,776 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:23:19,833 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:23:20,881 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:23:20,881 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=400000
+2025-11-13 21:23:24,092 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:23:27,115 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:23:43,320 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:23:43,320 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:23:43,410 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:23:47,410 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:23:47,411 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:23:52,852 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:23:52,852 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:23:52,853 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:23:52,868 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:23:52,906 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:23:52,934 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:23:52,959 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:23:52,983 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:23:53,010 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:23:53,051 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:23:53,071 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:23:53,129 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:23:55,129 - __main__ - INFO - Scraping 佐賀県 (410000)...
+2025-11-13 21:23:55,129 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:23:55,724 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:23:55,781 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:23:55,838 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:23:56,920 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:23:56,920 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=410000
+2025-11-13 21:24:00,172 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:24:03,191 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:24:19,396 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:24:19,396 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:24:19,485 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:24:23,486 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:24:23,486 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:24:28,883 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:24:28,884 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:24:28,885 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:24:28,899 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:24:28,936 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:24:28,963 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:24:28,987 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:24:29,010 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:24:29,036 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:24:29,075 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:24:29,094 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:24:29,152 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:24:31,152 - __main__ - INFO - Scraping 長崎県 (420000)...
+2025-11-13 21:24:31,152 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:24:31,689 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:24:31,750 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:24:31,808 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:24:32,843 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:24:32,843 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=420000
+2025-11-13 21:24:35,997 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:24:39,014 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:24:55,290 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:24:55,290 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:24:55,402 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:24:59,403 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:24:59,403 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:25:04,849 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:25:04,850 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:25:04,851 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:25:04,866 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:25:04,903 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:25:04,930 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:25:04,955 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:25:04,978 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:25:05,004 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:25:05,044 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:25:05,063 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:25:05,120 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:25:07,120 - __main__ - INFO - Scraping 熊本県 (430000)...
+2025-11-13 21:25:07,123 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:25:07,643 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:25:07,703 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:25:07,760 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:25:08,859 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:25:08,859 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=430000
+2025-11-13 21:25:12,026 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:25:15,048 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:25:31,225 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:25:31,225 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:25:31,322 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:25:35,322 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:25:35,322 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:25:40,723 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:25:40,723 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:25:40,724 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:25:40,739 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:25:40,777 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:25:40,804 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:25:40,829 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:25:40,853 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:25:40,879 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:25:40,919 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:25:40,938 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:25:40,995 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:25:42,996 - __main__ - INFO - Scraping 大分県 (440000)...
+2025-11-13 21:25:42,996 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:25:43,546 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:25:43,604 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:25:43,658 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:25:44,716 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:25:44,716 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=440000
+2025-11-13 21:25:47,915 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:25:50,942 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:26:07,158 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:26:07,158 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:26:07,248 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:26:11,248 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:26:11,249 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:26:16,704 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:26:16,704 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:26:16,705 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:26:16,720 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:26:16,767 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:26:16,796 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:26:16,821 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:26:16,845 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:26:16,872 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:26:16,911 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:26:16,931 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:26:16,988 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:26:18,988 - __main__ - INFO - Scraping 宮崎県 (450000)...
+2025-11-13 21:26:18,989 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:26:19,606 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:26:19,664 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:26:19,718 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:26:20,787 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:26:20,787 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=450000
+2025-11-13 21:26:23,979 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:26:27,006 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:26:43,191 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:26:43,192 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:26:43,277 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:26:47,277 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:26:47,278 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:26:52,677 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:26:52,677 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:26:52,678 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:26:52,693 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:26:52,729 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:26:52,756 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:26:52,781 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:26:52,804 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:26:52,830 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:26:52,869 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:26:52,888 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:26:52,945 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:26:54,947 - __main__ - INFO - Scraping 鹿児島県 (460000)...
+2025-11-13 21:26:54,947 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:26:55,456 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:26:55,514 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:26:55,572 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:26:56,620 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:26:56,620 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=460000
+2025-11-13 21:26:59,799 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:27:02,820 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:27:19,068 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:27:19,068 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:27:19,155 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:27:23,155 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:27:23,155 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:27:28,629 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:27:28,629 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:27:28,630 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:27:28,645 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:27:28,682 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:27:28,709 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:27:28,734 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:27:28,758 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:27:28,784 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:27:28,823 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:27:28,846 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:27:28,904 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:27:30,904 - __main__ - INFO - Scraping 沖縄県 (471000)...
+2025-11-13 21:27:30,904 - WDM - INFO - ====== WebDriver manager ======
+2025-11-13 21:27:31,425 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:27:31,484 - WDM - INFO - Get LATEST chromedriver version for chromium
+2025-11-13 21:27:31,560 - WDM - INFO - Driver [/home/ubuntu/.wdm/drivers/chromedriver/linux64/142.0.7444.162/chromedriver-linux64/chromedriver] found in cache
+2025-11-13 21:27:32,620 - __main__ - INFO - Chrome WebDriver initialized
+2025-11-13 21:27:32,620 - __main__ - INFO - Navigating to: https://www.jma.go.jp/bosai/amedas/#area_type=japan&area_code=471000
+2025-11-13 21:27:35,803 - __main__ - INFO - Looking for prefecture dropdown...
+2025-11-13 21:27:38,827 - __main__ - INFO - Found 11 全域 buttons, attempting to click the first one...
+2025-11-13 21:27:55,021 - __main__ - WARNING - Method 1 failed: Message: 
+
+2025-11-13 21:27:55,021 - __main__ - INFO - Trying JavaScript click...
+2025-11-13 21:27:55,102 - __main__ - INFO - Clicked 全域 button successfully (Method 2: JavaScript)
+2025-11-13 21:27:59,102 - __main__ - INFO - 全域 button clicked, waiting for data to load...
+2025-11-13 21:27:59,102 - __main__ - INFO - Waiting for data tables to populate...
+2025-11-13 21:28:04,516 - __main__ - INFO - Found 11 data blocks
+2025-11-13 21:28:04,517 - __main__ - INFO - Region: , Data rows: 0
+2025-11-13 21:28:04,518 - __main__ - INFO - Region: 宗谷地方, Data rows: 28
+2025-11-13 21:28:04,532 - __main__ - INFO - Region: 上川・留萌地方, Data rows: 80
+2025-11-13 21:28:04,570 - __main__ - INFO - Region: 網走・北見・紋別地方, Data rows: 58
+2025-11-13 21:28:04,598 - __main__ - INFO - Region: 釧路・根室地方, Data rows: 52
+2025-11-13 21:28:04,623 - __main__ - INFO - Region: 十勝地方, Data rows: 50
+2025-11-13 21:28:04,647 - __main__ - INFO - Region: 胆振・日高地方, Data rows: 54
+2025-11-13 21:28:04,673 - __main__ - INFO - Region: 石狩・空知・後志地方, Data rows: 86
+2025-11-13 21:28:04,714 - __main__ - INFO - Region: 渡島・檜山地方, Data rows: 44
+2025-11-13 21:28:04,737 - __main__ - INFO - Parsed 8 regions with total 452 observations
+2025-11-13 21:28:04,796 - __main__ - INFO - Chrome WebDriver closed
+2025-11-13 21:28:06,797 - __main__ - INFO - Completed scraping. Total regions: 368
+================================================================================
+JMA AMeDAS Data Scraper (Selenium)
+================================================================================
+
+Scraping all prefectures...
+
+✓ Successfully scraped 368 regions
+✓ Total observations: 20792
+
+================================================================================
+Sample Region: 宗谷地方
+Observation Time: 2025年11月13日20時50分 現在
+Prefecture: 北海道
+================================================================================
+
+Location             Temp(°C)   Precip(mm)   Wind Dir     Wind Speed(m/s)
+-------------------------------------------------------------------------------------
+宗谷岬                  3.0        0.0          西北西          17.0           
+稚内                   3.4        0.0          北北西          4.5            
+礼文                   4.9        0.0          西北西          2.9            
+声問                   3.5        0.0          北西           11.2           
+浜鬼志別                 1.8        0.0          南西           3.6            
+本泊                   5.4        0.0          西北西          8.4            
+沼川                   2.7        0.0          西            0.9            
+沓形                   6.1        0.0          北西           6.6            
+豊富                   3.4        0.0          西北西          1.0            
+浜頓別                  1.7        0.0          南南西          1.9            
+
+================================================================================
+Exporting data to JSON...
+✓ Data exported to: amedas_data.json
+✓ Total regions: 368
+✓ Total observations: 20792
+================================================================================
+✓ Scraper completed successfully
+End time: Thu Nov 13 21:28:07 JST 2025
+==================================================================
