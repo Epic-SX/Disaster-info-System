@@ -45,46 +45,69 @@ export function YouTubePlayer({
   const [isLoading, setIsLoading] = useState(true);
 
   const checkIfLive = useCallback(async () => {
-    // Disabled YouTube API call to avoid searching for video metadata
-    // Just assume all videos are live by default
-    setIsLive(true);
-    
-    // Original implementation (commented out):
-    // try {
-    //   const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
-    //   if (!API_KEY) return;
-    //   const response = await fetch(
-    //     `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=liveStreamingDetails&key=${API_KEY}`
-    //   );
-    //   const data = await response.json();
-    //   if (data.items && data.items[0]?.liveStreamingDetails) {
-    //     setIsLive(true);
-    //   }
-    // } catch (error) {
-    //   console.error('ライブ状況の確認に失敗:', error);
-    // }
+    // Check if video is currently live using YouTube API
+    try {
+      const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
+      if (!API_KEY) {
+        // Fallback: assume live if no API key
+        setIsLive(true);
+        return;
+      }
+      
+      const response = await fetch(
+        `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=liveStreamingDetails&key=${API_KEY}`,
+        { 
+          method: 'GET',
+          // Add timeout to prevent hanging
+          signal: AbortSignal.timeout(5000)
+        }
+      );
+      
+      if (!response.ok) {
+        // Fallback: assume live on error
+        setIsLive(true);
+        return;
+      }
+      
+      const data = await response.json();
+      if (data.items && data.items[0]?.liveStreamingDetails) {
+        setIsLive(true);
+      } else {
+        setIsLive(false);
+      }
+    } catch (error) {
+      console.error('ライブ状況の確認に失敗:', error);
+      // Fallback: assume live on error
+      setIsLive(true);
+    }
   }, [videoId]);
 
   const updateViewerCount = useCallback(async () => {
-    // Disabled YouTube API call to avoid searching for video metadata
-    // Viewer count will remain at 0 or can be set to a default value
-    
-    // Original implementation (commented out):
-    // try {
-    //   const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
-    //   if (!API_KEY) return;
-    //   const response = await fetch(
-    //     `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=liveStreamingDetails,statistics&key=${API_KEY}`
-    //   );
-    //   const data = await response.json();
-    //   if (data.items && data.items[0]) {
-    //     const concurrent = data.items[0].liveStreamingDetails?.concurrentViewers;
-    //     const views = data.items[0].statistics?.viewCount;
-    //     setViewerCount(parseInt(concurrent || views || '0'));
-    //   }
-    // } catch (error) {
-    //   console.error('視聴者数の取得に失敗:', error);
-    // }
+    // Get viewer count using YouTube API
+    try {
+      const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
+      if (!API_KEY) return;
+      
+      const response = await fetch(
+        `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=liveStreamingDetails,statistics&key=${API_KEY}`,
+        {
+          method: 'GET',
+          signal: AbortSignal.timeout(5000)
+        }
+      );
+      
+      if (!response.ok) return;
+      
+      const data = await response.json();
+      if (data.items && data.items[0]) {
+        const concurrent = data.items[0].liveStreamingDetails?.concurrentViewers;
+        const views = data.items[0].statistics?.viewCount;
+        setViewerCount(parseInt(concurrent || views || '0'));
+      }
+    } catch (error) {
+      console.error('視聴者数の取得に失敗:', error);
+      // Keep current viewer count on error
+    }
   }, [videoId]);
 
   const onPlayerReady = useCallback((event: any) => {

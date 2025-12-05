@@ -93,7 +93,20 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; frame-ancestors 'self'; default-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.gstatic.com;",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://www.youtube.com https://www.youtube-nocookie.com https://www.gstatic.com",
+              "style-src 'self' 'unsafe-inline'",
+              "img-src 'self' data: https: blob:",
+              "font-src 'self' data:",
+              "connect-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.google-analytics.com https://overbridgenet.com https://camera.mics.kaiho.mlit.go.jp https://tile.openstreetmap.org https://*.tile.openstreetmap.org ws: wss:",
+              "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com",
+              "media-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://camera.mics.kaiho.mlit.go.jp blob:",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "frame-ancestors 'self'",
+            ].join('; '),
           },
         ],
       },
@@ -110,6 +123,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'img.youtube.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'yt3.ggpht.com',
       },
     ],
   },

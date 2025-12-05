@@ -1,0 +1,24 @@
+<svg width="320" height="180" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="nhkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="180" rx="16" fill="url(#nhkGradient)"/>
+  <rect x="16" y="16" width="48" height="48" rx="8" fill="rgba(255,255,255,0.15)"/>
+  <circle cx="40" cy="40" r="12" fill="#f87171"/>
+  <path d="M36 34 L48 40 L36 46 Z" fill="#fff"/>
+  <text x="80" y="60" font-family="sans-serif" font-size="26" font-weight="600" fill="#fff">
+    NHK LIVE
+  </text>
+  <text x="80" y="88" font-family="sans-serif" font-size="16" fill="#cbd5f5">
+    災害速報 / Disaster Alerts
+  </text>
+  <text x="80" y="120" font-family="sans-serif" font-size="13" fill="#94a3b8">
+    固定プレースホルダー画像
+  </text>
+</svg>
+
+
+

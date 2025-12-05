@@ -135,7 +135,7 @@ const JapanPGAMapComponent: React.FC<JapanPGAMapComponentProps> = ({
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
         {/* PGA Data Points */}

@@ -29,7 +29,7 @@ def load_env_file():
 load_env_file()
 
 # Now import the rest of the modules
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, Query, APIRouter
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, Query, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pydantic_settings import BaseSettings
@@ -38,7 +38,7 @@ import uvicorn
 import json # Added for json.loads
 import httpx
 
-from fastapi.responses import JSONResponse, Response
+from fastapi.responses import JSONResponse, Response, StreamingResponse
 
 from youtube_chat_service import YouTubeChatAnalyzer
 from youtube_search_service import YouTubeSearchService, YouTubeVideo, YouTubeSearchResult
@@ -54,7 +54,7 @@ from p2p_earthquake_service import (
 )
 from social_media_automation import init_social_media_automation, social_media_automation
 from social_media_config import PostType
-from amedas_scheduler import get_scheduler, AMeDASScheduler
+from coast_guard_camera_service import CoastGuardCameraService
 
 
 class Settings(BaseSettings):
@@ -74,9 +74,9 @@ class Settings(BaseSettings):
     j_shis_api_base: str = "https://www.j-shis.bosai.go.jp/map"
     iij_earthquake_websocket: str = "wss://ws-api.iij.jp/v1/earthquake"
     
-    # SerpApi Configuration
-    serpapi_api_key: str = ""
-    serpapi_base_url: str = "https://serpapi.com/search.json"
+    # Legacy SerpApi Configuration (deprecated - now using YouTube Data API v3)
+    serpapi_api_key: str = ""  # No longer used for YouTube search
+    serpapi_base_url: str = "https://serpapi.com/search.json"  # Deprecated
     
     # Weather API Configuration
     openweather_api_key: str = ""
@@ -156,7 +156,7 @@ chat_analyzer: Optional[YouTubeChatAnalyzer] = None
 youtube_search_service: Optional[YouTubeSearchService] = None
 disaster_api_service: Optional[DisasterAPIService] = None
 p2p_earthquake_service: Optional[P2PEarthquakeService] = None
-amedas_scheduler: Optional[AMeDASScheduler] = None
+coast_guard_camera_service: Optional[CoastGuardCameraService] = None
 connected_websockets: List[WebSocket] = []
 
 # Add missing global variables
@@ -205,7 +205,7 @@ async def global_periodic_updates():
                 news_data = await fetch_real_time_news()
                 news_update = {
                     "type": "news_update",
-                    "news": [article.dict() for article in news_data],
+                    "news": [article.model_dump(mode='json') for article in news_data],
                     "timestamp": datetime.now().isoformat()
                 }
                 await broadcast_to_websockets(news_update)
@@ -218,7 +218,7 @@ async def global_periodic_updates():
                 camera_data = await fetch_real_time_camera_feeds()
                 camera_update = {
                     "type": "camera_feeds_update",
-                    "camera_feeds": [feed.dict() for feed in camera_data],
+                    "camera_feeds": [feed.model_dump(mode='json') for feed in camera_data],
                     "timestamp": datetime.now().isoformat()
                 }
                 await broadcast_to_websockets(camera_update)
@@ -360,7 +360,7 @@ class AutoResponse(BaseModel):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Manage application lifecycle"""
-    global chat_analyzer, youtube_search_service, disaster_api_service, p2p_earthquake_service, amedas_scheduler, periodic_update_task
+    global chat_analyzer, youtube_search_service, disaster_api_service, p2p_earthquake_service, coast_guard_camera_service, periodic_update_task
     
     # Startup
     logger.info("Starting Disaster Information System backend...")
@@ -439,6 +439,15 @@ async def lifespan(app: FastAPI):
         logger.error(f"Failed to initialize P2P earthquake service: {e}")
         p2p_earthquake_service = None
     
+    # Initialize Coast Guard camera service (live shoreline feeds)
+    try:
+        coast_guard_camera_service = CoastGuardCameraService()
+        await coast_guard_camera_service.warm_cache()
+        logger.info("✓ Coast Guard camera service initialized successfully")
+    except Exception as e:
+        logger.error(f"Failed to initialize Coast Guard camera service: {e}")
+        coast_guard_camera_service = None
+    
     # Initialize YouTube chat analyzer
     try:
         # Get video ID from environment, use a default for development
@@ -474,19 +483,9 @@ async def lifespan(app: FastAPI):
         logger.error(f"Failed to initialize social media automation: {e}")
         social_media_automation = None
     
-    # Initialize and start AMeDAS scheduler for hourly JSON export updates
-    try:
-        amedas_scheduler = get_scheduler(
-            db_path="amedas_data.db", 
-            update_interval=3600,
-            export_json=False,  # JSON export handled by jma_amedas_scraper.py via cron
-            json_path="amedas_data.json"
-        )
-        await amedas_scheduler.start()
-        logger.info("✓ AMeDAS scheduler started - database tracking enabled (JSON created by cron job)")
-    except Exception as e:
-        logger.error(f"Failed to start AMeDAS scheduler: {e}")
-        amedas_scheduler = None
+    # Note: AMeDAS data updates are handled by cron job running jma_amedas_scraper.py
+    # The JSON file (amedas_data.json) is updated hourly by the cron job
+    logger.info("✓ AMeDAS data updates handled by cron job (amedas_data.json)")
     
     # Start global periodic updates task
     try:
@@ -500,14 +499,6 @@ async def lifespan(app: FastAPI):
     
     # Shutdown
     logger.info("Shutting down Disaster Information System backend...")
-    
-    # Stop AMeDAS scheduler
-    if amedas_scheduler:
-        try:
-            await amedas_scheduler.stop()
-            logger.info("✓ AMeDAS scheduler stopped")
-        except Exception as e:
-            logger.error(f"Error stopping AMeDAS scheduler: {e}")
     
     # Cancel periodic updates task
     if periodic_update_task and not periodic_update_task.done():
@@ -797,7 +788,7 @@ async def websocket_endpoint(websocket: WebSocket):
             initial_news_data = await fetch_real_time_news()
             await websocket.send_json({
                 "type": "news_update",
-                "news": [article.dict() for article in initial_news_data],
+                "news": [article.model_dump(mode='json') for article in initial_news_data],
                 "timestamp": datetime.now().isoformat()
             })
         except Exception as e:
@@ -808,7 +799,7 @@ async def websocket_endpoint(websocket: WebSocket):
             initial_camera_data = await fetch_real_time_camera_feeds()
             await websocket.send_json({
                 "type": "camera_feeds_update",
-                "camera_feeds": [feed.dict() for feed in initial_camera_data],
+                "camera_feeds": [feed.model_dump(mode='json') for feed in initial_camera_data],
                 "timestamp": datetime.now().isoformat()
             })
         except Exception as e:
@@ -1000,34 +991,35 @@ async def root():
             "earthquake_data": ["P2P地震情報 API v2", "P2P地震情報", "USGS", "IIJ Engineering"],
             "tsunami_alerts": ["P2P地震情報 API v2", "P2P地震情報", "JMA"],
             "emergency_warnings": ["P2P地震情報 緊急地震速報"],
-            "youtube_search": ["SerpApi - Enhanced YouTube Search API"],
-            "youtube_video_details": ["SerpApi - YouTube Video API"],
+            "youtube_search": ["YouTube Data API v3 - Search API"],
+            "youtube_video_details": ["YouTube Data API v3 - Videos API"],
             "seismic_hazard": ["J-SHIS"],
             "real_time_monitoring": ["P2P地震情報 WebSocket API", "IIJ WebSocket"]
         },
-        "serpapi_features": {
-            "search_engines": ["youtube", "youtube_video"],
+        "youtube_api_features": {
+            "api": "YouTube Data API v3",
+            "endpoints_used": ["search", "videos", "channels"],
             "filters_supported": [
                 "time_based", "quality_based", "content_type", 
-                "location_based", "channel_specific"
+                "location_based", "channel_specific", "event_type"
             ],
             "localization": {
-                "countries": "configurable (default: jp)",
-                "languages": "configurable (default: ja)"
+                "countries": "configurable via regionCode (default: JP)",
+                "languages": "configurable via relevanceLanguage (default: ja)"
             },
             "content_types": [
-                "videos", "live_streams", "shorts", "channels", "playlists"
+                "videos", "live_streams", "shorts", "channels"
             ],
             "advanced_features": [
                 "trending_analysis", "keyword_extraction", "duplicate_removal",
-                "metadata_enrichment", "performance_monitoring"
+                "metadata_enrichment", "performance_monitoring", "iso8601_duration_parsing"
             ]
         },
         "rate_limiting": {
             "youtube_search": "Built-in delays between requests",
             "p2p_earthquake": "Complies with P2P地震情報 rate limits",
             "concurrent_requests": "Managed automatically",
-            "api_quota": "Monitored per SerpApi limits"
+            "api_quota": "Monitored per YouTube Data API v3 quota limits"
         }
     }
 
@@ -1213,84 +1205,52 @@ async def get_news_articles():
 
 async def fetch_real_time_camera_feeds() -> List[CameraFeed]:
     """Fetch real-time camera feed status and information"""
-    feeds = []
+    # Prefer scraped data from Coast Guard camera service
+    if coast_guard_camera_service:
+        try:
+            logger.debug("Fetching camera feeds via Coast Guard service")
+            feed_dicts = await coast_guard_camera_service.get_camera_feeds()
+            return [
+                CameraFeed(
+                    id=feed["id"],
+                    name=feed["name"],
+                    status=feed.get("status", "online"),
+                    location=feed.get("location", feed["name"]),
+                    stream_url=feed.get("stream_url"),
+                    thumbnail_url=feed.get("thumbnail_url"),
+                    last_updated=feed.get("last_updated", datetime.now()),
+                    coordinates=feed.get("coordinates"),
+                )
+                for feed in feed_dicts
+            ]
+        except Exception as service_error:
+            logger.error(f"Coast Guard camera service failed: {service_error}")
     
-    try:
-        # Tokyo Bay Camera Feed
-        feeds.append(CameraFeed(
+    # Fallback to static sample data to keep UI usable
+    logger.info("Using fallback camera feed data (service unavailable)")
+    now = datetime.now()
+    return [
+        CameraFeed(
             id="tokyo_bay_001",
             name="東京湾",
             status="online",
             location="東京都心部",
-            stream_url="https://example.com/streams/tokyo_bay",
-            thumbnail_url="https://example.com/thumbnails/tokyo_bay.jpg",
-            last_updated=datetime.now(),
-            coordinates={"lat": 35.6762, "lng": 139.6503}
-        ))
-        
-        # Mount Fuji Camera Feed
-        feeds.append(CameraFeed(
-            id="fuji_001",
-            name="富士山",
-            status="online",
-            location="静岡県",
-            stream_url="https://example.com/streams/fuji",
-            thumbnail_url="https://example.com/thumbnails/fuji.jpg",
-            last_updated=datetime.now(),
-            coordinates={"lat": 35.3606, "lng": 138.7274}
-        ))
-        
-        # Osaka Port Camera Feed (simulate maintenance)
-        feeds.append(CameraFeed(
-            id="osaka_port_001",
-            name="大阪港",
-            status="maintenance",
-            location="大阪府",
             stream_url=None,
-            thumbnail_url="https://example.com/thumbnails/maintenance.jpg",
-            last_updated=datetime.now() - timedelta(hours=2),
-            coordinates={"lat": 34.6937, "lng": 135.5023}
-        ))
-        
-        # Additional camera feeds for better coverage
-        feeds.append(CameraFeed(
-            id="yokohama_001",
-            name="横浜港",
-            status="online",
-            location="神奈川県",
-            stream_url="https://example.com/streams/yokohama",
-            thumbnail_url="https://example.com/thumbnails/yokohama.jpg",
-            last_updated=datetime.now(),
-            coordinates={"lat": 35.4437, "lng": 139.6380}
-        ))
-        
-        feeds.append(CameraFeed(
-            id="nagoya_001",
-            name="名古屋港",
-            status="online",
-            location="愛知県",
-            stream_url="https://example.com/streams/nagoya",
-            thumbnail_url="https://example.com/thumbnails/nagoya.jpg",
-            last_updated=datetime.now(),
-            coordinates={"lat": 35.0956, "lng": 136.8844}
-        ))
-        
-        # Simulate some feeds being offline
-        feeds.append(CameraFeed(
+            thumbnail_url=None,
+            last_updated=now,
+            coordinates={"lat": 35.6762, "lng": 139.6503},
+        ),
+        CameraFeed(
             id="kobe_001",
             name="神戸港",
             status="offline",
             location="兵庫県",
             stream_url=None,
-            thumbnail_url="https://example.com/thumbnails/offline.jpg",
-            last_updated=datetime.now() - timedelta(hours=1),
-            coordinates={"lat": 34.6901, "lng": 135.1956}
-        ))
-        
-    except Exception as e:
-        logger.error(f"Error in fetch_real_time_camera_feeds: {e}")
-    
-    return feeds
+            thumbnail_url=None,
+            last_updated=now - timedelta(hours=1),
+            coordinates={"lat": 34.6901, "lng": 135.1956},
+        ),
+    ]
 
 
 @app.get("/api/camera-feeds", response_model=List[CameraFeed])
@@ -1302,6 +1262,185 @@ async def get_camera_feeds():
     except Exception as e:
         logger.error(f"Error fetching camera feeds: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch camera feeds")
+
+
+@app.get("/api/camera-proxy/{path:path}")
+async def proxy_camera_stream(path: str, request: Request):
+    """
+    Proxy endpoint for HLS streams to bypass CORS restrictions.
+    Handles .m3u8 manifests and .ts video segments.
+    """
+    COAST_GUARD_BASE = "https://camera.mics.kaiho.mlit.go.jp"
+    target_url = f"{COAST_GUARD_BASE}/{path}"
+    
+    # Get base URL for absolute URLs in manifest
+    base_url = str(request.base_url).rstrip('/')
+    
+    # Log the request for debugging (only for segments to avoid spam)
+    if not path.endswith('.m3u8'):
+        logger.debug(f"Proxying segment: {path} -> {target_url}")
+    
+    try:
+        headers = {
+            "User-Agent": "disaster-info-system/1.0",
+            "Referer": f"{COAST_GUARD_BASE}/",
+        }
+        
+        async with httpx.AsyncClient(headers=headers, timeout=30.0, follow_redirects=True) as client:
+            response = await client.get(target_url)
+            response.raise_for_status()
+            
+            # Get the actual URL after redirects - this is important for resolving relative paths
+            actual_url = str(response.url)
+            # Extract the path from the actual URL (after redirects)
+            from urllib.parse import urlparse
+            actual_parsed = urlparse(actual_url)
+            actual_path = actual_parsed.path.lstrip('/')
+            
+            # Log redirects for debugging
+            if actual_path != path:
+                logger.debug(f"Manifest redirected: {path} -> {actual_path}")
+            
+            # Handle HLS manifest files (.m3u8)
+            if path.endswith('.m3u8') or actual_path.endswith('.m3u8'):
+                content = response.text
+                
+                # Log manifest content for debugging (first 20 lines)
+                logger.debug(f"Manifest content (first 20 lines) for {path}:")
+                for i, line in enumerate(content.split('\n')[:20]):
+                    logger.debug(f"  {i+1}: {line}")
+                
+                # Rewrite URLs in the manifest to point to our proxy
+                # Replace absolute URLs and relative URLs
+                from urllib.parse import urljoin
+                
+                lines = content.split('\n')
+                rewritten_lines = []
+                # Use the actual URL (after redirects) as base for resolving relative paths
+                # Get the directory containing the manifest file
+                if '/' in actual_url:
+                    manifest_base_url = actual_url.rsplit('/', 1)[0] + '/'
+                else:
+                    manifest_base_url = actual_url + '/'
+                
+                logger.debug(f"Using manifest base URL for resolution: {manifest_base_url}")
+                
+                for line in lines:
+                    stripped = line.strip()
+                    # Skip comments and empty lines (but preserve them)
+                    if not stripped or stripped.startswith('#'):
+                        rewritten_lines.append(line)
+                        continue
+                    
+                    # If it's a URL line (not a comment)
+                    if stripped and not stripped.startswith('#'):
+                        try:
+                            # Handle absolute URLs
+                            if stripped.startswith('http://') or stripped.startswith('https://'):
+                                # Extract the path from the URL
+                                parsed = urlparse(stripped)
+                                path_part = parsed.path.lstrip('/')
+                                # Rewrite to our proxy with absolute URL
+                                rewritten_lines.append(f"{base_url}/api/camera-proxy/{path_part}")
+                            # Handle absolute paths (starting with /)
+                            elif stripped.startswith('/'):
+                                # Remove leading slash and prepend our proxy path
+                                path_part = stripped.lstrip('/')
+                                rewritten_lines.append(f"{base_url}/api/camera-proxy/{path_part}")
+                            else:
+                                # Relative path - resolve it properly using the actual manifest URL
+                                # urljoin needs a base URL with trailing slash for proper resolution
+                                # manifest_base_url already has trailing slash from above
+                                
+                                # Resolve the relative path against the manifest's actual location
+                                resolved_url = urljoin(manifest_base_url, stripped)
+                                
+                                # Extract the path part from the resolved URL
+                                parsed = urlparse(resolved_url)
+                                path_part = parsed.path.lstrip('/')
+                                
+                                # If the resolved URL contains the COAST_GUARD_BASE domain, extract just the path
+                                # The path should be relative to the COAST_GUARD_BASE root
+                                if COAST_GUARD_BASE in resolved_url:
+                                    # Extract everything after the domain
+                                    path_part = resolved_url.split(COAST_GUARD_BASE, 1)[1].lstrip('/')
+                                
+                                # Rewrite to our proxy with absolute URL
+                                rewritten_lines.append(f"{base_url}/api/camera-proxy/{path_part}")
+                        except Exception as e:
+                            logger.warning(f"Error rewriting URL line '{stripped}': {e}")
+                            # Keep original line if rewriting fails
+                            rewritten_lines.append(line)
+                    else:
+                        rewritten_lines.append(line)
+                
+                rewritten_content = '\n'.join(rewritten_lines)
+                
+                return Response(
+                    content=rewritten_content,
+                    media_type="application/vnd.apple.mpegurl",
+                    headers={
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "GET, OPTIONS",
+                        "Access-Control-Allow-Headers": "*",
+                        "Cache-Control": "no-cache, no-store, must-revalidate",
+                    }
+                )
+            
+            # Handle video segments (.ts) and other binary files
+            else:
+                # Determine content type
+                content_type = "application/octet-stream"
+                if path.endswith('.ts'):
+                    content_type = "video/mp2t"
+                elif path.endswith('.jpg') or path.endswith('.jpeg'):
+                    content_type = "image/jpeg"
+                elif path.endswith('.png'):
+                    content_type = "image/png"
+                
+                async def generate():
+                    async for chunk in response.aiter_bytes():
+                        yield chunk
+                
+                return StreamingResponse(
+                    generate(),
+                    media_type=content_type,
+                    headers={
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "GET, OPTIONS",
+                        "Access-Control-Allow-Headers": "*",
+                        "Cache-Control": "public, max-age=3600",
+                    }
+                )
+                
+    except httpx.HTTPStatusError as e:
+        # Log 404s with more detail for debugging (common for old segments in live streams)
+        if e.response.status_code == 404:
+            logger.debug(f"404 Not Found when proxying {target_url} (path: {path})")
+            # For segments, 404s are sometimes expected (old segments get deleted in live streams)
+            # But we should still return 404 to the client
+        else:
+            logger.error(f"HTTP error proxying {target_url}: {e.response.status_code}")
+        raise HTTPException(status_code=e.response.status_code, detail=f"Failed to proxy stream: {e.response.status_code}")
+    except httpx.RequestError as e:
+        logger.error(f"Request error proxying {target_url}: {e}")
+        raise HTTPException(status_code=502, detail=f"Failed to connect to stream server: {str(e)}")
+    except Exception as e:
+        logger.error(f"Unexpected error proxying {target_url}: {e}")
+        raise HTTPException(status_code=500, detail=f"Proxy error: {str(e)}")
+
+
+@app.options("/api/camera-proxy/{path:path}")
+async def proxy_camera_stream_options(path: str, request: Request):
+    """Handle CORS preflight requests for the proxy endpoint"""
+    return Response(
+        status_code=200,
+        headers={
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, OPTIONS",
+            "Access-Control-Allow-Headers": "*",
+        }
+    )
 
 
 @app.get("/api/test")
@@ -1791,6 +1930,61 @@ async def get_trending_disaster_topics(region: str = "JP"):
         raise HTTPException(status_code=500, detail="Failed to fetch trending topics")
 
 
+@app.get("/api/youtube/trending/details")
+async def get_trending_topic_details(
+    query: str = Query(..., description="Trending topic keyword to fetch detailed videos for"),
+    limit: int = Query(12, ge=1, le=50, description="Number of videos to retrieve"),
+    time_filter: str = Query("today", description="Time filter: today, this_week, this_month, or all"),
+    include_shorts: bool = Query(True, description="Whether to include YouTube Shorts"),
+    search_type: str = Query("recent", description="Search mode: general, live, or recent")
+):
+    """Fetch detailed video data for a specific trending disaster topic"""
+    if not youtube_search_service:
+        raise HTTPException(status_code=503, detail="YouTube search service not available")
+    
+    try:
+        normalized_time_filter = time_filter if time_filter in ("today", "this_week", "this_month") else None
+        
+        result = await youtube_search_service.search_disaster_videos(
+            query=query,
+            limit=limit,
+            search_type=search_type if search_type in ("general", "live", "recent", "channels") else "recent",
+            time_filter=normalized_time_filter,
+            include_shorts=include_shorts
+        )
+        
+        return {
+            "videos": [
+                {
+                    "video_id": video.video_id,
+                    "title": video.title,
+                    "channel": video.channel,
+                    "description": video.description,
+                    "thumbnail": video.thumbnail,
+                    "duration": video.duration,
+                    "views": video.views,
+                    "published_time": video.published_time,
+                    "link": video.link,
+                    "video_type": video.video_type,
+                    "verified_channel": video.verified_channel
+                }
+                for video in result.videos
+            ],
+            "total_results": result.total_results,
+            "search_query": result.search_query,
+            "search_metadata": {
+                "query": query,
+                "limit": limit,
+                "time_filter": normalized_time_filter or "all",
+                "include_shorts": include_shorts,
+                "search_type": search_type
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error fetching trending topic details: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch trending topic details")
+
+
 @app.get("/api/youtube/search/advanced")
 async def advanced_youtube_search(
     query: str = None,
@@ -1853,41 +2047,57 @@ async def advanced_youtube_search(
             for video in video_result.videos
         ]
         
-        # Channel search if requested
+        # Channel search if requested (optional to save quota)
         if include_channels:
-            channel_result = await youtube_search_service.search_disaster_channels(limit // 2)
-            results["channels"] = [
-                {
-                    "channel_id": channel.channel_id,
-                    "name": channel.name,
-                    "url": channel.url,
-                    "thumbnail": channel.thumbnail,
-                    "subscriber_count": channel.subscriber_count,
-                    "verified": channel.verified,
-                    "description": channel.description
-                }
-                for channel in channel_result.channels
-            ]
+            try:
+                channel_result = await youtube_search_service.search_disaster_channels(limit // 2)
+                results["channels"] = [
+                    {
+                        "channel_id": channel.channel_id,
+                        "name": channel.name,
+                        "url": channel.url,
+                        "thumbnail": channel.thumbnail,
+                        "subscriber_count": channel.subscriber_count,
+                        "verified": channel.verified,
+                        "description": channel.description
+                    }
+                    for channel in channel_result.channels
+                ]
+            except Exception as e:
+                logger.warning(f"Channel search failed (quota may be exceeded): {e}")
+                results["channels"] = []
+        else:
+            results["channels"] = []
         
-        # Live streams
-        if search_type in ['live', 'general']:
-            live_result = await youtube_search_service.search_live_disaster_streams(location or "Japan")
-            results["live_streams"] = [
-                {
-                    "video_id": video.video_id,
-                    "title": video.title,
-                    "channel": video.channel,
-                    "thumbnail": video.thumbnail,
-                    "link": video.link,
-                    "duration": video.duration,
-                    "verified_channel": video.verified_channel
-                }
-                for video in live_result.videos[:5]  # Limit live streams
-            ]
+        # Live streams (only for live search type to save quota)
+        if search_type == 'live':
+            try:
+                live_result = await youtube_search_service.search_live_disaster_streams(location or "Japan")
+                results["live_streams"] = [
+                    {
+                        "video_id": video.video_id,
+                        "title": video.title,
+                        "channel": video.channel,
+                        "thumbnail": video.thumbnail,
+                        "link": video.link,
+                        "duration": video.duration,
+                        "verified_channel": video.verified_channel
+                    }
+                    for video in live_result.videos[:5]  # Limit live streams
+                ]
+            except Exception as e:
+                logger.warning(f"Live stream search failed (quota may be exceeded): {e}")
+                results["live_streams"] = []
+        else:
+            results["live_streams"] = []
         
-        # Trending topics
-        trending = await youtube_search_service.get_trending_disaster_topics()
-        results["trending_topics"] = trending[:10]  # Top 10 trending topics
+        # Trending topics (optional - skip if quota is tight)
+        try:
+            trending = await youtube_search_service.get_trending_disaster_topics()
+            results["trending_topics"] = trending[:10]  # Top 10 trending topics
+        except Exception as e:
+            logger.warning(f"Trending topics search failed (quota may be exceeded): {e}")
+            results["trending_topics"] = []
         
         # Add summary statistics
         results["summary"] = {
@@ -1964,6 +2174,48 @@ async def get_tsunami_alerts():
     except Exception as e:
         logger.error(f"Error fetching tsunami alerts: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch tsunami alerts")
+
+
+@app.get("/api/disasters/tsunami/jma-status")
+async def get_jma_tsunami_status():
+    """Get JMA tsunami status message"""
+    if not disaster_api_service:
+        logger.error("Disaster API service not available")
+        raise HTTPException(status_code=503, detail="Disaster API service not available")
+    
+    try:
+        logger.info("Received request for JMA tsunami status")
+        jma_status = await disaster_api_service.get_jma_tsunami_status()
+        if jma_status:
+            logger.info("Returning JMA tsunami status successfully")
+            return {
+                "message": jma_status.message,
+                "has_warning": jma_status.has_warning,
+                "warning_type": jma_status.warning_type,
+                "affected_areas": jma_status.affected_areas or [],
+                "timestamp": jma_status.timestamp.isoformat() if jma_status.timestamp else None,
+                "source": jma_status.source
+            }
+        else:
+            logger.warning("JMA tsunami status is None, returning error message")
+            return {
+                "message": "データを取得できませんでした。しばらくしてから再度お試しください。",
+                "has_warning": False,
+                "warning_type": None,
+                "affected_areas": [],
+                "timestamp": None,
+                "source": "JMA"
+            }
+    except Exception as e:
+        logger.error(f"Error fetching JMA tsunami status: {e}", exc_info=True)
+        return {
+            "message": f"エラーが発生しました: {str(e)}",
+            "has_warning": False,
+            "warning_type": None,
+            "affected_areas": [],
+            "timestamp": None,
+            "source": "JMA"
+        }
 
 
 @app.get("/api/disasters/alerts/recent")
@@ -2448,6 +2700,82 @@ async def get_obs_config(stream_key: str = Query(..., description="YouTube Live 
     
     except Exception as e:
         logger.error(f"Error generating OBS config: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# Streaming configuration models
+class StreamConfigModel(BaseModel):
+    stream_key: str
+    stream_url: str = "rtmp://a.rtmp.youtube.com/live2"
+    dashboard_url: str = "http://49.212.176.130/"
+
+
+@app.post("/api/streaming/config")
+async def save_stream_config(config: StreamConfigModel):
+    """Save streaming configuration"""
+    try:
+        config_file = "backend/config.json"
+        
+        # Load existing config
+        existing_config = {}
+        if os.path.exists(config_file):
+            with open(config_file, 'r') as f:
+                existing_config = json.load(f)
+        
+        # Update streaming config
+        existing_config['streaming'] = {
+            'stream_key': config.stream_key,
+            'stream_url': config.stream_url,
+            'dashboard_url': config.dashboard_url
+        }
+        
+        # Save config
+        with open(config_file, 'w') as f:
+            json.dump(existing_config, f, indent=2)
+        
+        return {
+            "status": "success",
+            "message": "Streaming configuration saved successfully"
+        }
+    
+    except Exception as e:
+        logger.error(f"Error saving stream config: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/streaming/config")
+async def get_stream_config():
+    """Get saved streaming configuration"""
+    try:
+        config_file = "backend/config.json"
+        
+        if not os.path.exists(config_file):
+            return {
+                "stream_key": "",
+                "stream_url": "rtmp://a.rtmp.youtube.com/live2",
+                "dashboard_url": "http://49.212.176.130/"
+            }
+        
+        with open(config_file, 'r') as f:
+            existing_config = json.load(f)
+        
+        streaming_config = existing_config.get('streaming', {})
+        
+        # Mask the stream key for security (only show last 4 characters)
+        stream_key = streaming_config.get('stream_key', '')
+        if len(stream_key) > 4:
+            masked_key = '*' * (len(stream_key) - 4) + stream_key[-4:]
+        else:
+            masked_key = stream_key
+        
+        return {
+            "stream_key": masked_key,
+            "stream_url": streaming_config.get('stream_url', 'rtmp://a.rtmp.youtube.com/live2'),
+            "dashboard_url": streaming_config.get('dashboard_url', 'http://49.212.176.130/')
+        }
+    
+    except Exception as e:
+        logger.error(f"Error getting stream config: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 

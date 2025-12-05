@@ -15,6 +15,7 @@ import NoSSR from "@/components/NoSSR"
 // Regular imports with client-side rendering checks
 import EarthquakeMonitor from "@/components/EarthquakeMonitor"
 import TsunamiAlert from "@/components/TsunamiAlert"
+import JMATsunamiMapDisplay from "@/components/JMATsunamiMapDisplay"
 import NewsAggregator from "@/components/NewsAggregator"
 import LiveCameraFeeds from "@/components/LiveCameraFeeds"
 import WindDataDisplay from "@/components/WindDataDisplay"
@@ -25,6 +26,7 @@ import YouTubeChatDashboard from "@/components/YouTubeChatDashboard"
 import YouTubeSearchDashboard from "@/components/YouTubeSearchDashboard"
 import SocialMediaDashboard from "@/components/SocialMediaDashboard"
 import YouTubeLiveStreams from '@/components/YouTubeLiveStreams'
+import YouTubeStreamingConfig from '@/components/YouTubeStreamingConfig'
 import P2PEarthquakeMonitor from '@/components/P2PEarthquakeMonitor'
 import dynamicImport from 'next/dynamic'
 
@@ -105,7 +107,7 @@ export default function Home() {
               <EarthquakeMonitor />
             </ClientOnlyComponent>
             <ClientOnlyComponent>
-              <TsunamiAlert />
+              <JMATsunamiMapDisplay />
             </ClientOnlyComponent>
           </div>
           
@@ -128,19 +130,14 @@ export default function Home() {
 
         <TabsContent value="youtube" className="space-y-6">
           <ClientOnlyComponent>
+            <YouTubeStreamingConfig />
+          </ClientOnlyComponent>
+          <ClientOnlyComponent>
             <YouTubeSearchDashboard />
           </ClientOnlyComponent>
           <ClientOnlyComponent>
             <YouTubeLiveStreams />
           </ClientOnlyComponent>
-          <div className="grid gap-6 md:grid-cols-2">
-            <ClientOnlyComponent>
-              <EarthquakeMonitor />
-            </ClientOnlyComponent>
-            <ClientOnlyComponent>
-              <TsunamiAlert />
-            </ClientOnlyComponent>
-          </div>
         </TabsContent>
 
         <TabsContent value="chat" className="space-y-6">

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Enhanced YouTube Search Service using SerpApi
+Enhanced YouTube Search Service using YouTube Data API v3
 Provides comprehensive YouTube video search capabilities for disaster-related content
-Uses SerpApi's YouTube Search API, YouTube Video API, and Video Results API
+Uses YouTube Data API v3 for search, videos, and channels
 """
 
 import os
@@ -14,6 +14,7 @@ from typing import Dict, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from urllib.parse import urlencode
+import isodate
 
 # Load environment variables from .env file
 try:
@@ -74,15 +75,40 @@ class YouTubeSearchResult:
     response_time: float = 0.0
 
 class YouTubeSearchService:
-    """Enhanced YouTube search service using SerpApi"""
+    """Enhanced YouTube search service using YouTube Data API v3"""
     
     def __init__(self):
-        # API Configuration
-        self.api_key = os.getenv('SERPAPI_API_KEY') or os.getenv('SERPAPI_KEY')
-        self.base_url = os.getenv('SERPAPI_BASE_URL', 'https://serpapi.com/search.json')
+        # API Configuration - YouTube Data API v3
+        # Try to get API key from environment variable first, then fallback to default
+        self.api_key = os.getenv('YOUTUBE_API_KEY', 'AIzaSyDK9PqY_HUJCHz2KbVTWnU07v0S-CWLJG0')
+        self.base_url = 'https://www.googleapis.com/youtube/v3'
+        
+        # Track API key status to reduce log spam
+        self._api_key_validated = False
+        self._api_key_invalid = False
+        self._last_error_time = None
+        self._quota_exceeded = False
+        self._quota_exceeded_time = None
+        
+        # Caching to reduce API requests
+        self._cache = {}  # Key: (method, args), Value: (result, expiry_time)
+        self._cache_ttl = {
+            'search': 300,  # 5 minutes for searches
+            'channels': 1800,  # 30 minutes for channel searches
+            'trending': 3600,  # 1 hour for trending topics
+            'live': 180,  # 3 minutes for live streams
+            'details': 600  # 10 minutes for video/channel details
+        }
         
         if not self.api_key:
-            logger.warning("SERPAPI_API_KEY not found in environment variables")
+            logger.error("No YouTube API key configured! Set YOUTUBE_API_KEY environment variable.")
+            logger.error("See GET_YOUTUBE_API_KEY.md for instructions on getting your own key.")
+            self._api_key_invalid = True
+        elif self.api_key == 'AIzaSyDK9PqY_HUJCHz2KbVTWnU07v0S-CWLJG0':
+            logger.warning("⚠️  Using default YouTube API key which may not work.")
+            logger.warning("📝 Get your own free API key: https://console.cloud.google.com/")
+            logger.warning("📚 Instructions: See GET_YOUTUBE_API_KEY.md")
+            logger.warning("🔧 Setup: Run ./setup_youtube_api_key.sh YOUR_API_KEY")
             
         # Enhanced disaster-related search terms (Japanese and English)
         self.disaster_search_terms = {
@@ -108,20 +134,57 @@ class YouTubeSearchService:
             ]
         }
         
-        # Search filters for different content types
-        self.search_filters = {
-            'live': 'EgJAAQ%253D%253D',  # Live videos
-            'today': 'CAI%253D',  # Today's uploads
-            'this_week': 'CAM%253D',  # This week's uploads
-            'this_month': 'CAQ%253D',  # This month's uploads
-            'hd': 'EgIgAQ%253D%253D',  # HD videos
-            '4k': 'EgJwAQ%253D%253D',  # 4K videos
-            'short': 'EgQQARgB',  # YouTube Shorts
-            'long': 'EgQQAhgB',  # Long videos (>20 minutes)
-            'channel': 'EgIQAg%253D%253D',  # Channels
-            'playlist': 'EgIQAw%253D%253D'  # Playlists
+        # Time filters for YouTube Data API
+        self.time_filters = {
+            'today': (datetime.now() - timedelta(days=1)).isoformat() + 'Z',
+            'this_week': (datetime.now() - timedelta(days=7)).isoformat() + 'Z',
+            'this_month': (datetime.now() - timedelta(days=30)).isoformat() + 'Z'
         }
         
+        # Video definition filters
+        self.definition_filters = {
+            'hd': 'high',
+            '4k': 'high',
+            'all': 'any'
+        }
+        
+    def _get_cache_key(self, method: str, *args, **kwargs) -> str:
+        """Generate a cache key from method name and arguments"""
+        import hashlib
+        import json
+        key_data = {
+            'method': method,
+            'args': args,
+            'kwargs': {k: v for k, v in kwargs.items() if k != 'include_shorts'}  # Exclude non-critical params
+        }
+        key_str = json.dumps(key_data, sort_keys=True, default=str)
+        return hashlib.md5(key_str.encode()).hexdigest()
+    
+    def _get_cached_result(self, cache_key: str, cache_type: str) -> Optional[YouTubeSearchResult]:
+        """Get cached result if available and not expired"""
+        if cache_key not in self._cache:
+            return None
+        
+        result, expiry_time = self._cache[cache_key]
+        if datetime.now() > expiry_time:
+            del self._cache[cache_key]
+            return None
+        
+        logger.debug(f"Using cached result for {cache_type}")
+        return result
+    
+    def _cache_result(self, cache_key: str, result: YouTubeSearchResult, cache_type: str):
+        """Cache a result with appropriate TTL"""
+        ttl = self._cache_ttl.get(cache_type, 300)
+        expiry_time = datetime.now() + timedelta(seconds=ttl)
+        self._cache[cache_key] = (result, expiry_time)
+        # Limit cache size to prevent memory issues
+        if len(self._cache) > 100:
+            # Remove oldest entries
+            sorted_cache = sorted(self._cache.items(), key=lambda x: x[1][1])
+            for key, _ in sorted_cache[:20]:
+                del self._cache[key]
+    
     async def search_disaster_videos(self, 
                                    query: str = None, 
                                    limit: int = 10,
@@ -130,11 +193,11 @@ class YouTubeSearchService:
                                    quality_filter: str = None,
                                    include_shorts: bool = True) -> YouTubeSearchResult:
         """
-        Enhanced search for disaster-related YouTube videos
+        Enhanced search for disaster-related YouTube videos using YouTube Data API v3
         
         Args:
             query: Search query. If None, uses default disaster terms
-            limit: Maximum number of results to return
+            limit: Maximum number of results to return (max 50 per request)
             search_type: Type of search ('general', 'live', 'recent', 'channels')
             time_filter: Time filter ('today', 'this_week', 'this_month')
             quality_filter: Quality filter ('hd', '4k')
@@ -144,8 +207,33 @@ class YouTubeSearchService:
             YouTubeSearchResult containing video information
         """
         if not self.api_key:
-            logger.error("SerpApi API key not configured")
+            logger.error("YouTube API key not configured")
             return YouTubeSearchResult(videos=[], search_query=query or "")
+        
+        # Check if quota exceeded flag should be reset (daily reset)
+        if self._quota_exceeded and self._quota_exceeded_time:
+            hours_since_exceeded = (datetime.now() - self._quota_exceeded_time).total_seconds() / 3600
+            if hours_since_exceeded >= 24:
+                logger.info("Resetting quota exceeded flag (24 hours passed)")
+                self._quota_exceeded = False
+                self._quota_exceeded_time = None
+        
+        # Early exit if quota exceeded (don't make more requests)
+        if self._quota_exceeded:
+            logger.debug(f"Skipping YouTube search - quota exceeded")
+            return YouTubeSearchResult(videos=[], search_query=query or self._get_default_disaster_query(search_type))
+        
+        # Early exit if API key is known to be invalid (to reduce log spam)
+        if self._api_key_invalid:
+            # Only log at debug level after initial error has been logged
+            logger.debug(f"Skipping YouTube search for '{query or search_type}' - API key invalid (check logs above for fix)")
+            return YouTubeSearchResult(videos=[], search_query=query or self._get_default_disaster_query(search_type))
+        
+        # Check cache first
+        cache_key = self._get_cache_key('search_disaster_videos', query, limit, search_type, time_filter, quality_filter)
+        cached_result = self._get_cached_result(cache_key, 'search')
+        if cached_result:
+            return cached_result
             
         # Prepare search query
         search_query = query or self._get_default_disaster_query(search_type)
@@ -153,82 +241,177 @@ class YouTubeSearchService:
         start_time = datetime.now()
         
         try:
-            # Build search parameters
+            # Build search parameters for YouTube Data API
             params = {
-                'engine': 'youtube',
-                'search_query': search_query,
-                'api_key': self.api_key,
-                'num': min(limit, 100),  # SerpApi limit
-                'gl': 'jp',  # Japan for disaster-related content
-                'hl': 'ja'   # Japanese language
+                'part': 'snippet',
+                'q': search_query,
+                'key': self.api_key,
+                'maxResults': min(limit, 50),  # YouTube API limit per request
+                'regionCode': 'JP',  # Japan for disaster-related content
+                'relevanceLanguage': 'ja',  # Japanese language
+                'type': 'video' if search_type != 'channels' else 'channel',
+                'order': 'date' if search_type == 'recent' else 'relevance'
             }
             
-            # Apply filters
-            sp_filters = []
-            
+            # Apply event type filter for live videos
             if search_type == 'live':
-                sp_filters.append(self.search_filters['live'])
-            elif search_type == 'channels':
-                sp_filters.append(self.search_filters['channel'])
+                params['eventType'] = 'live'
                 
-            if time_filter and time_filter in self.search_filters:
-                sp_filters.append(self.search_filters[time_filter])
+            # Apply time filter
+            if time_filter and time_filter in self.time_filters:
+                params['publishedAfter'] = self.time_filters[time_filter]
                 
-            if quality_filter and quality_filter in self.search_filters:
-                sp_filters.append(self.search_filters[quality_filter])
-                
-            if not include_shorts:
-                # Exclude shorts (no direct filter, but we'll filter in results)
-                pass
-                
-            if sp_filters:
-                # Combine filters (this is simplified - real YouTube uses complex encoding)
-                params['sp'] = sp_filters[0]  # Use first filter for now
+            # Apply video definition filter
+            if quality_filter and quality_filter in self.definition_filters:
+                params['videoDefinition'] = self.definition_filters[quality_filter]
             
-            logger.info(f"Making SerpAPI request with params: {params}")
+            # Only log detailed params if debug logging is enabled
+            if logger.isEnabledFor(logging.DEBUG):
+                logger.debug(f"Making YouTube API request with params: {params}")
             
-            # Make API request
-            response = requests.get(self.base_url, params=params, timeout=10)
+            # Make API request to search endpoint
+            search_url = f"{self.base_url}/search"
+            response = requests.get(search_url, params=params, timeout=10)
+            response.raise_for_status()
+            
+            # Mark API key as validated if we get a successful response
+            if not self._api_key_validated:
+                self._api_key_validated = True
+                self._api_key_invalid = False
+                logger.info("✅ YouTube API key validated successfully")
+            
+            data = response.json()
+            
+            # Check for errors
+            if 'error' in data:
+                error_info = data['error']
+                error_code = error_info.get('code', 0)
+                error_reason = error_info.get('errors', [{}])[0].get('reason', '')
+                
+                # Check for quota exceeded
+                if error_code == 403 and 'quotaExceeded' in str(error_info):
+                    self._quota_exceeded = True
+                    self._quota_exceeded_time = datetime.now()
+                    logger.error(f"YouTube API quota exceeded! Skipping further requests.")
+                    logger.error(f"Quota resets daily. Consider reducing request frequency or upgrading quota.")
+                    return YouTubeSearchResult(videos=[], search_query=search_query)
+                
+                logger.error(f"YouTube API error: {error_info}")
+                return YouTubeSearchResult(videos=[], search_query=search_query)
+            
+            # Extract video IDs
+            video_ids = []
+            items = data.get('items', [])
+            
+            for item in items:
+                if item['id'].get('kind') == 'youtube#video':
+                    video_ids.append(item['id']['videoId'])
+            
+            logger.info(f"Found {len(video_ids)} video IDs from search")
+            
+            # Get detailed video information
+            videos = []
+            if video_ids:
+                videos = await self._get_videos_details(video_ids, include_shorts)
+            
+            # Parse response
+            result = YouTubeSearchResult(
+                videos=videos,
+                total_results=data.get('pageInfo', {}).get('totalResults', len(videos)),
+                search_query=search_query,
+                next_page_token=data.get('nextPageToken'),
+                response_time=(datetime.now() - start_time).total_seconds(),
+                search_parameters=params
+            )
+            
+            logger.info(f"YouTube search completed: {len(result.videos)} videos found for '{search_query}'")
+            
+            # Cache the result
+            self._cache_result(cache_key, result, 'search')
+            
+            return result
+            
+        except requests.exceptions.RequestException as e:
+            error_msg = str(e)
+            if "403" in error_msg or "Forbidden" in error_msg:
+                # Check if it's a quota exceeded error
+                if "quota" in error_msg.lower() or "quotaExceeded" in error_msg:
+                    self._quota_exceeded = True
+                    self._quota_exceeded_time = datetime.now()
+                    logger.error(f"YouTube API quota exceeded! Skipping further requests.")
+                    logger.error(f"Quota resets daily. Consider reducing request frequency or upgrading quota.")
+                    return YouTubeSearchResult(videos=[], search_query=search_query)
+                
+                # Only log detailed error message once or every 5 minutes
+                current_time = datetime.now()
+                should_log_details = (
+                    not self._api_key_invalid or 
+                    not self._last_error_time or
+                    (current_time - self._last_error_time).total_seconds() > 300
+                )
+                
+                if should_log_details:
+                    logger.error(f"YouTube API returned 403 Forbidden - API key issue!")
+                    logger.error(f"❌ The API key is invalid, expired, or quota exceeded")
+                    logger.error(f"🔑 Get a new key: https://console.cloud.google.com/")
+                    logger.error(f"📝 See: GET_YOUTUBE_API_KEY.md for instructions")
+                    logger.error(f"🔧 Run: ./setup_youtube_api_key.sh YOUR_NEW_KEY")
+                    self._api_key_invalid = True
+                    self._last_error_time = current_time
+                else:
+                    # Reduce log spam - only log at debug level after initial error
+                    logger.debug(f"YouTube API 403 Forbidden (API key invalid - check logs above for fix instructions)")
+            else:
+                logger.error(f"Error making YouTube API request: {e}")
+            return YouTubeSearchResult(videos=[], search_query=search_query)
+        except Exception as e:
+            logger.error(f"Unexpected error in YouTube search: {e}")
+            import traceback
+            logger.error(traceback.format_exc())
+            return YouTubeSearchResult(videos=[], search_query=search_query)
+    
+    async def _get_videos_details(self, video_ids: List[str], include_shorts: bool = True) -> List[YouTubeVideo]:
+        """
+        Get detailed information for multiple videos using YouTube Data API v3
+        
+        Args:
+            video_ids: List of YouTube video IDs
+            include_shorts: Whether to include YouTube Shorts
+            
+        Returns:
+            List of YouTubeVideo objects with detailed information
+        """
+        if not video_ids:
+            return []
+        
+        try:
+            # YouTube API allows up to 50 video IDs per request
+            params = {
+                'part': 'snippet,contentDetails,statistics,liveStreamingDetails',
+                'id': ','.join(video_ids),
+                'key': self.api_key
+            }
+            
+            videos_url = f"{self.base_url}/videos"
+            response = requests.get(videos_url, params=params, timeout=10)
             response.raise_for_status()
             
             data = response.json()
             
-            # Log response structure for debugging
-            logger.info(f"SerpAPI response keys: {list(data.keys())}")
-            if 'video_results' in data:
-                logger.info(f"Found {len(data['video_results'])} video results")
-            elif 'videos' in data:
-                logger.info(f"Found {len(data['videos'])} videos")
-            else:
-                logger.warning("No video results found in response")
+            videos = []
+            for item in data.get('items', []):
+                video = self._parse_video_data_youtube_api(item)
+                if video:
+                    # Filter out shorts if requested
+                    if not include_shorts and self._is_youtube_short(video):
+                        continue
+                    videos.append(video)
             
-            # Log a sample of the response for debugging
-            if 'video_results' in data and data['video_results']:
-                logger.info(f"Sample video result: {data['video_results'][0]}")
-            elif 'videos' in data and data['videos']:
-                logger.info(f"Sample video: {data['videos'][0]}")
+            return videos
             
-            # Check for error in response
-            if 'error' in data:
-                logger.error(f"SerpAPI error: {data['error']}")
-                return YouTubeSearchResult(videos=[], search_query=search_query)
-            
-            # Parse response
-            result = self._parse_search_response(data, search_query, include_shorts)
-            
-            # Calculate response time
-            result.response_time = (datetime.now() - start_time).total_seconds()
-            result.search_parameters = params
-            
-            logger.info(f"YouTube search completed: {len(result.videos)} videos found for '{search_query}'")
-            return result
-            
-        except requests.exceptions.RequestException as e:
-            logger.error(f"Error making SerpApi request: {e}")
-            return YouTubeSearchResult(videos=[], search_query=search_query)
         except Exception as e:
-            logger.error(f"Unexpected error in YouTube search: {e}")
-            return YouTubeSearchResult(videos=[], search_query=search_query)
+            logger.error(f"Error getting video details: {e}")
+            return []
     
     async def get_video_details(self, video_id: str) -> Optional[YouTubeVideo]:
         """
@@ -241,25 +424,12 @@ class YouTubeSearchService:
             YouTubeVideo with detailed information or None if error
         """
         if not self.api_key:
-            logger.error("SerpApi API key not configured")
+            logger.error("YouTube API key not configured")
             return None
         
         try:
-            params = {
-                'engine': 'youtube_video',
-                'v': video_id,
-                'api_key': self.api_key,
-                'gl': 'jp',
-                'hl': 'ja'
-            }
-            
-            response = requests.get(self.base_url, params=params, timeout=10)
-            response.raise_for_status()
-            
-            data = response.json()
-            
-            # Parse video details
-            return self._parse_video_details(data)
+            videos = await self._get_videos_details([video_id])
+            return videos[0] if videos else None
             
         except Exception as e:
             logger.error(f"Error getting video details for {video_id}: {e}")
@@ -268,19 +438,34 @@ class YouTubeSearchService:
     async def search_live_disaster_streams(self, location: str = "Japan") -> YouTubeSearchResult:
         """Enhanced search for live disaster-related streams"""
         
+        # Check if quota exceeded flag should be reset (daily reset)
+        if self._quota_exceeded and self._quota_exceeded_time:
+            hours_since_exceeded = (datetime.now() - self._quota_exceeded_time).total_seconds() / 3600
+            if hours_since_exceeded >= 24:
+                logger.info("Resetting quota exceeded flag (24 hours passed)")
+                self._quota_exceeded = False
+                self._quota_exceeded_time = None
+        
+        # Early exit if quota exceeded
+        if self._quota_exceeded:
+            logger.debug("Skipping live stream search - quota exceeded")
+            return YouTubeSearchResult(videos=[], search_query=f"Live disaster streams - {location}")
+        
+        # Check cache
+        cache_key = self._get_cache_key('search_live_disaster_streams', location)
+        cached_result = self._get_cached_result(cache_key, 'live')
+        if cached_result:
+            return cached_result
+        
+        # Reduce to single most relevant query to save quota
         live_queries = [
             f"災害 ライブ配信 {location}",
-            f"地震 ライブ {location}",
-            f"津波 ライブ配信",
-            f"台風 ライブ情報 {location}",
-            f"emergency broadcast {location}",
-            f"disaster live stream {location}"
         ]
         
         all_videos = []
         all_channels = []
         
-        for query in live_queries[:3]:  # Limit to avoid API quota issues
+        for query in live_queries[:1]:  # Reduced from 3 to 1 to save quota
             try:
                 result = await self.search_disaster_videos(
                     query=query,
@@ -301,52 +486,79 @@ class YouTubeSearchService:
         unique_videos = self._deduplicate_videos(all_videos)
         unique_channels = self._deduplicate_channels(all_channels)
         
-        return YouTubeSearchResult(
+        result = YouTubeSearchResult(
             videos=unique_videos,
             channels=unique_channels,
             total_results=len(unique_videos),
             search_query=f"Live disaster streams - {location}"
         )
+        
+        # Cache the result
+        self._cache_result(cache_key, result, 'live')
+        
+        return result
     
     async def get_trending_disaster_topics(self, region: str = "JP") -> List[Dict]:
-        """Get trending disaster-related topics from YouTube"""
+        """Get trending disaster-related topics from YouTube using YouTube Data API v3"""
+        
+        # Check if quota exceeded flag should be reset (daily reset)
+        if self._quota_exceeded and self._quota_exceeded_time:
+            hours_since_exceeded = (datetime.now() - self._quota_exceeded_time).total_seconds() / 3600
+            if hours_since_exceeded >= 24:
+                logger.info("Resetting quota exceeded flag (24 hours passed)")
+                self._quota_exceeded = False
+                self._quota_exceeded_time = None
+        
+        # Early exit if quota exceeded
+        if self._quota_exceeded:
+            logger.debug("Skipping trending topics search - quota exceeded")
+            return []
         
         trending_topics = []
+        
+        # Skip if API key is known to be invalid
+        if self._api_key_invalid:
+            logger.debug("Skipping trending topics search - API key invalid")
+            return []
+        
+        # Check cache (trending topics returns List[Dict], not YouTubeSearchResult)
+        cache_key = self._get_cache_key('get_trending_disaster_topics', region)
+        if cache_key in self._cache:
+            result, expiry_time = self._cache[cache_key]
+            if datetime.now() <= expiry_time:
+                logger.debug("Using cached trending topics")
+                return result
+            else:
+                del self._cache[cache_key]
         
         try:
             # Search for recent disaster content to identify trends
             recent_query = "災害 OR 地震 OR 津波 OR 台風"
             
             params = {
-                'engine': 'youtube',
-                'search_query': recent_query,
-                'api_key': self.api_key,
-                'sp': self.search_filters['today'],  # Today's uploads
-                'num': 50,
-                'gl': region.lower(),
-                'hl': 'ja'
+                'part': 'snippet',
+                'q': recent_query,
+                'key': self.api_key,
+                'maxResults': 20,  # Reduced from 50 to 20 to save quota
+                'order': 'date',  # Recent videos
+                'publishedAfter': self.time_filters['today'],
+                'regionCode': region,
+                'relevanceLanguage': 'ja',
+                'type': 'video'
             }
             
-            response = requests.get(self.base_url, params=params, timeout=10)
+            search_url = f"{self.base_url}/search"
+            response = requests.get(search_url, params=params, timeout=10)
             response.raise_for_status()
             
             data = response.json()
             
-            # Extract trending topics from titles and related searches
-            video_results = data.get('video_results', [])
-            related_searches = data.get('related_searches', [])
+            # Extract trending topics from titles
+            items = data.get('items', [])
+            titles = [item.get('snippet', {}).get('title', '') for item in items]
             
             # Analyze video titles for trending keywords
-            title_keywords = self._extract_trending_keywords(video_results)
-            
-            # Add related searches
-            for search in related_searches:
-                trending_topics.append({
-                    'query': search.get('query', ''),
-                    'link': search.get('link', ''),
-                    'thumbnail': search.get('thumbnail', ''),
-                    'type': 'related_search'
-                })
+            title_keywords = self._extract_trending_keywords_from_titles(titles)
             
             # Add trending keywords
             for keyword, count in title_keywords.items():
@@ -356,49 +568,93 @@ class YouTubeSearchService:
                     'type': 'trending_keyword'
                 })
             
-            return trending_topics[:20]  # Return top 20 trending topics
+            result = trending_topics[:10]  # Reduced from 20 to 10 trending topics
             
+            # Cache the result (trending topics is List[Dict], not YouTubeSearchResult)
+            ttl = self._cache_ttl.get('trending', 3600)
+            expiry_time = datetime.now() + timedelta(seconds=ttl)
+            self._cache[cache_key] = (result, expiry_time)
+            
+            return result
+            
+        except requests.exceptions.RequestException as e:
+            error_msg = str(e)
+            if "403" in error_msg or "Forbidden" in error_msg:
+                # Use same error handling as main search method
+                current_time = datetime.now()
+                should_log_details = (
+                    not self._api_key_invalid or 
+                    not self._last_error_time or
+                    (current_time - self._last_error_time).total_seconds() > 300
+                )
+                if should_log_details:
+                    logger.error(f"YouTube API returned 403 Forbidden in trending topics search")
+                    self._api_key_invalid = True
+                    self._last_error_time = current_time
+            else:
+                logger.debug(f"Error getting trending topics: {e}")
+            return []
         except Exception as e:
-            logger.error(f"Error getting trending topics: {e}")
+            logger.debug(f"Unexpected error getting trending topics: {e}")
             return []
     
     async def search_disaster_channels(self, limit: int = 10) -> YouTubeSearchResult:
-        """Search for disaster information and news channels"""
+        """Search for disaster information and news channels using YouTube Data API v3"""
         
+        # Check if quota exceeded flag should be reset (daily reset)
+        if self._quota_exceeded and self._quota_exceeded_time:
+            hours_since_exceeded = (datetime.now() - self._quota_exceeded_time).total_seconds() / 3600
+            if hours_since_exceeded >= 24:
+                logger.info("Resetting quota exceeded flag (24 hours passed)")
+                self._quota_exceeded = False
+                self._quota_exceeded_time = None
+        
+        # Early exit if quota exceeded
+        if self._quota_exceeded:
+            logger.debug("Skipping channel search - quota exceeded")
+            return YouTubeSearchResult(videos=[], channels=[], search_query="Disaster information channels")
+        
+        # Check cache
+        cache_key = self._get_cache_key('search_disaster_channels', limit)
+        cached_result = self._get_cached_result(cache_key, 'channels')
+        if cached_result:
+            return cached_result
+        
+        # Reduced to single most relevant query to save quota
         channel_queries = [
             "災害情報 チャンネル",
-            "地震情報 チャンネル", 
-            "防災 チャンネル",
-            "緊急放送 チャンネル",
-            "disaster information channel",
-            "emergency broadcast channel"
         ]
         
         all_channels = []
         
-        for query in channel_queries:
+        for query in channel_queries[:1]:  # Reduced from 3 to 1 to save quota
             try:
                 params = {
-                    'engine': 'youtube',
-                    'search_query': query,
-                    'api_key': self.api_key,
-                    'sp': self.search_filters['channel'],
-                    'num': 20,
-                    'gl': 'jp',
-                    'hl': 'ja'
+                    'part': 'snippet',
+                    'q': query,
+                    'key': self.api_key,
+                    'type': 'channel',
+                    'maxResults': 10,
+                    'regionCode': 'JP',
+                    'relevanceLanguage': 'ja'
                 }
                 
-                response = requests.get(self.base_url, params=params, timeout=10)
+                search_url = f"{self.base_url}/search"
+                response = requests.get(search_url, params=params, timeout=10)
                 response.raise_for_status()
                 
                 data = response.json()
                 
-                # Parse channel results
-                channel_results = data.get('channel_results', [])
-                for channel_data in channel_results:
-                    channel = self._parse_channel_data(channel_data)
-                    if channel:
-                        all_channels.append(channel)
+                # Extract channel IDs
+                channel_ids = []
+                for item in data.get('items', []):
+                    if item['id'].get('kind') == 'youtube#channel':
+                        channel_ids.append(item['id']['channelId'])
+                
+                # Get detailed channel information
+                if channel_ids:
+                    channels = await self._get_channels_details(channel_ids)
+                    all_channels.extend(channels)
                 
                 await asyncio.sleep(0.5)  # Rate limiting
                 
@@ -410,22 +666,47 @@ class YouTubeSearchService:
         unique_channels = self._deduplicate_channels(all_channels)
         unique_channels.sort(key=lambda x: self._parse_subscriber_count(x.subscriber_count), reverse=True)
         
-        return YouTubeSearchResult(
+        result = YouTubeSearchResult(
             videos=[],
             channels=unique_channels[:limit],
             total_results=len(unique_channels),
             search_query="Disaster information channels"
         )
+        
+        # Cache the result
+        self._cache_result(cache_key, result, 'channels')
+        
+        return result
     
     async def search_by_location(self, location: str, disaster_type: str = None, limit: int = 20) -> YouTubeSearchResult:
         """Search for disaster content specific to a location"""
+        
+        # Check if quota exceeded flag should be reset (daily reset)
+        if self._quota_exceeded and self._quota_exceeded_time:
+            hours_since_exceeded = (datetime.now() - self._quota_exceeded_time).total_seconds() / 3600
+            if hours_since_exceeded >= 24:
+                logger.info("Resetting quota exceeded flag (24 hours passed)")
+                self._quota_exceeded = False
+                self._quota_exceeded_time = None
+        
+        # Early exit if quota exceeded
+        if self._quota_exceeded:
+            logger.debug(f"Skipping location search - quota exceeded")
+            return YouTubeSearchResult(videos=[], search_query=f"Disaster content for {location}")
+        
+        # Check cache
+        cache_key = self._get_cache_key('search_by_location', location, disaster_type, limit)
+        cached_result = self._get_cached_result(cache_key, 'search')
+        if cached_result:
+            return cached_result
         
         if disaster_type and disaster_type in self.disaster_search_terms:
             base_terms = self.disaster_search_terms[disaster_type]
         else:
             base_terms = ["災害", "緊急情報", "disaster", "emergency"]
         
-        location_queries = [f"{term} {location}" for term in base_terms[:5]]
+        # Reduced from 5 to 2 queries to save quota
+        location_queries = [f"{term} {location}" for term in base_terms[:2]]
         
         all_videos = []
         
@@ -446,183 +727,206 @@ class YouTubeSearchService:
         
         unique_videos = self._deduplicate_videos(all_videos)
         
-        return YouTubeSearchResult(
+        result = YouTubeSearchResult(
             videos=unique_videos[:limit],
             total_results=len(unique_videos),
             search_query=f"Disaster content for {location}"
         )
+        
+        # Cache the result
+        self._cache_result(cache_key, result, 'search')
+        
+        return result
     
-    def _parse_search_response(self, data: Dict, search_query: str, include_shorts: bool = True) -> YouTubeSearchResult:
-        """Parse SerpApi search response into YouTubeSearchResult"""
+    async def _get_channels_details(self, channel_ids: List[str]) -> List[YouTubeChannel]:
+        """
+        Get detailed information for multiple channels using YouTube Data API v3
         
-        videos = []
-        channels = []
-        
-        # Parse video results - check multiple possible keys based on SerpAPI documentation
-        video_results = data.get('video_results', [])
-        if not video_results:
-            # Try alternative keys based on SerpAPI documentation
-            video_results = data.get('videos', [])
-        
-        logger.info(f"Found {len(video_results)} video results to parse")
-        
-        for video_data in video_results:
-            try:
-                video = self._parse_video_data(video_data)
-                if video:
-                    # Filter out shorts if requested
-                    if not include_shorts and self._is_youtube_short(video):
-                        continue
-                    videos.append(video)
-            except Exception as e:
-                logger.warning(f"Error parsing video data: {e}")
-                continue
-        
-        # Parse channel results if present
-        channel_results = data.get('channel_results', [])
-        logger.info(f"Found {len(channel_results)} channel results to parse")
-        
-        for channel_data in channel_results:
-            try:
-                channel = self._parse_channel_data(channel_data)
-                if channel:
-                    channels.append(channel)
-            except Exception as e:
-                logger.warning(f"Error parsing channel data: {e}")
-                continue
-        
-        # Extract related searches - handle the actual SerpAPI structure
-        related_searches = []
-        
-        # Check for searches_related_to_star_wars (this is the actual key from SerpAPI)
-        searches_related = data.get('searches_related_to_star_wars', {})
-        if searches_related and 'searches' in searches_related:
-            for search in searches_related['searches']:
-                if 'query' in search:
-                    related_searches.append(search['query'])
-        
-        # Also check for general related_searches
-        if not related_searches:
-            for search in data.get('related_searches', []):
-                if isinstance(search, dict) and 'query' in search:
-                    related_searches.append(search['query'])
-        
-        # Get total results from search information
-        search_info = data.get('search_information', {})
-        total_results = search_info.get('total_results', len(videos) + len(channels))
-        
-        # Get pagination info
-        pagination = data.get('serpapi_pagination', {})
-        next_page_token = pagination.get('next_page_token')
-        
-        logger.info(f"Parsed {len(videos)} videos and {len(channels)} channels from SerpAPI response")
-        logger.info(f"Total results: {total_results}, Related searches: {len(related_searches)}")
-        
-        return YouTubeSearchResult(
-            videos=videos,
-            channels=channels,
-            total_results=total_results,
-            search_query=search_query,
-            next_page_token=next_page_token,
-            related_searches=related_searches
-        )
-    
-    def _parse_video_data(self, video_data: Dict) -> Optional[YouTubeVideo]:
-        """Parse individual video data from SerpApi response"""
+        Args:
+            channel_ids: List of YouTube channel IDs
+            
+        Returns:
+            List of YouTubeChannel objects with detailed information
+        """
+        if not channel_ids:
+            return []
         
         try:
-            link = video_data.get('link', '')
-            video_id = self._extract_video_id(link)
+            params = {
+                'part': 'snippet,statistics',
+                'id': ','.join(channel_ids),
+                'key': self.api_key
+            }
             
-            # Extract channel information - handle both object and string formats
-            channel_info = video_data.get('channel', {})
-            if isinstance(channel_info, dict):
-                channel_name = channel_info.get('name', '')
-                channel_id = channel_info.get('id', '')
-                channel_url = channel_info.get('link', '')
-                subscriber_count = channel_info.get('subscribers', '')
-                verified = channel_info.get('verified', False)
-            else:
-                channel_name = str(channel_info) if channel_info else ''
-                channel_id = ''
-                channel_url = ''
-                subscriber_count = ''
-                verified = False
+            channels_url = f"{self.base_url}/channels"
+            response = requests.get(channels_url, params=params, timeout=10)
+            response.raise_for_status()
             
-            # Handle thumbnail - could be string or object
-            thumbnail = video_data.get('thumbnail', '')
-            if isinstance(thumbnail, dict):
-                thumbnail = thumbnail.get('static', '') or thumbnail.get('rich', '')
+            data = response.json()
+            
+            channels = []
+            for item in data.get('items', []):
+                channel = self._parse_channel_data_youtube_api(item)
+                if channel:
+                    channels.append(channel)
+            
+            return channels
+            
+        except Exception as e:
+            logger.error(f"Error getting channel details: {e}")
+            return []
+    
+    def _parse_video_data_youtube_api(self, video_data: Dict) -> Optional[YouTubeVideo]:
+        """Parse video data from YouTube Data API v3 response"""
+        
+        try:
+            video_id = video_data.get('id', '')
+            snippet = video_data.get('snippet', {})
+            content_details = video_data.get('contentDetails', {})
+            statistics = video_data.get('statistics', {})
+            live_details = video_data.get('liveStreamingDetails', {})
+            
+            # Extract channel information
+            channel_id = snippet.get('channelId', '')
+            channel_name = snippet.get('channelTitle', '')
+            channel_url = f"https://www.youtube.com/channel/{channel_id}" if channel_id else ''
+            
+            # Extract thumbnail (prefer high quality)
+            thumbnails = snippet.get('thumbnails', {})
+            thumbnail = (thumbnails.get('high', {}).get('url', '') or
+                        thumbnails.get('medium', {}).get('url', '') or
+                        thumbnails.get('default', {}).get('url', ''))
+            
+            # Parse duration from ISO 8601 format (e.g., PT1H2M10S)
+            duration_iso = content_details.get('duration', 'PT0S')
+            try:
+                duration_seconds = isodate.parse_duration(duration_iso).total_seconds()
+                hours = int(duration_seconds // 3600)
+                minutes = int((duration_seconds % 3600) // 60)
+                seconds = int(duration_seconds % 60)
+                if hours > 0:
+                    duration = f"{hours}:{minutes:02d}:{seconds:02d}"
+                else:
+                    duration = f"{minutes}:{seconds:02d}"
+            except:
+                duration = "Unknown"
+            
+            # Format view count
+            view_count = int(statistics.get('viewCount', 0))
+            views = self._format_number(view_count)
+            
+            # Parse published time
+            published_at = snippet.get('publishedAt', '')
+            try:
+                pub_date = datetime.fromisoformat(published_at.replace('Z', '+00:00'))
+                published_time = self._format_time_ago(pub_date)
+            except:
+                published_time = published_at
             
             # Determine video type
-            video_type = self._determine_video_type(video_data)
+            video_type = 'video'
+            if live_details:
+                if live_details.get('actualStartTime') and not live_details.get('actualEndTime'):
+                    video_type = 'live'
+            elif duration_seconds <= 60:
+                video_type = 'short'
+            
+            # Build video link
+            link = f"https://www.youtube.com/watch?v={video_id}"
             
             return YouTubeVideo(
                 video_id=video_id,
-                title=video_data.get('title', ''),
+                title=snippet.get('title', ''),
                 channel=channel_name,
-                description=video_data.get('description', ''),
+                description=snippet.get('description', ''),
                 thumbnail=thumbnail,
-                duration=video_data.get('length', ''),  # SerpAPI uses 'length' instead of 'duration'
-                views=video_data.get('views', ''),
-                published_time=video_data.get('published_date', ''),  # SerpAPI uses 'published_date'
+                duration=duration,
+                views=views,
+                published_time=published_time,
                 link=link,
                 channel_id=channel_id,
                 channel_url=channel_url,
-                subscriber_count=subscriber_count,
-                verified_channel=verified,
-                video_type=video_type
+                subscriber_count='',  # Not available in video endpoint
+                verified_channel=False,  # Would need separate channel lookup
+                video_type=video_type,
+                category=snippet.get('categoryId', ''),
+                tags=snippet.get('tags', [])
             )
             
         except Exception as e:
             logger.error(f"Error parsing video data: {e}")
+            import traceback
+            logger.error(traceback.format_exc())
             return None
     
-    def _parse_channel_data(self, channel_data: Dict) -> Optional[YouTubeChannel]:
-        """Parse channel data from SerpApi response"""
+    def _parse_channel_data_youtube_api(self, channel_data: Dict) -> Optional[YouTubeChannel]:
+        """Parse channel data from YouTube Data API v3 response"""
         
         try:
+            channel_id = channel_data.get('id', '')
+            snippet = channel_data.get('snippet', {})
+            statistics = channel_data.get('statistics', {})
+            
+            # Extract thumbnail
+            thumbnails = snippet.get('thumbnails', {})
+            thumbnail = (thumbnails.get('high', {}).get('url', '') or
+                        thumbnails.get('medium', {}).get('url', '') or
+                        thumbnails.get('default', {}).get('url', ''))
+            
+            # Format subscriber count
+            subscriber_count_raw = int(statistics.get('subscriberCount', 0))
+            subscriber_count = self._format_number(subscriber_count_raw) + ' subscribers'
+            
             return YouTubeChannel(
-                channel_id=channel_data.get('id', ''),
-                name=channel_data.get('title', ''),
-                url=channel_data.get('link', ''),
-                thumbnail=channel_data.get('thumbnail', ''),
-                subscriber_count=channel_data.get('subscribers', ''),
-                verified=channel_data.get('verified', False),
-                description=channel_data.get('description', '')
+                channel_id=channel_id,
+                name=snippet.get('title', ''),
+                url=f"https://www.youtube.com/channel/{channel_id}",
+                thumbnail=thumbnail,
+                subscriber_count=subscriber_count,
+                verified=False,  # Not directly available in API response
+                description=snippet.get('description', '')
             )
         except Exception as e:
             logger.error(f"Error parsing channel data: {e}")
             return None
     
-    def _parse_video_details(self, data: Dict) -> Optional[YouTubeVideo]:
-        """Parse detailed video information from YouTube Video API"""
+    def _format_number(self, num: int) -> str:
+        """Format large numbers with K, M, B suffixes"""
+        if num >= 1_000_000_000:
+            return f"{num / 1_000_000_000:.1f}B"
+        elif num >= 1_000_000:
+            return f"{num / 1_000_000:.1f}M"
+        elif num >= 1_000:
+            return f"{num / 1_000:.1f}K"
+        else:
+            return str(num)
+    
+    def _format_time_ago(self, pub_date: datetime) -> str:
+        """Format datetime to 'X hours/days/weeks ago' format"""
+        now = datetime.now(pub_date.tzinfo)
+        diff = now - pub_date
         
-        try:
-            video_info = data.get('video_info', {})
-            channel_info = data.get('channel_info', {})
-            
-            return YouTubeVideo(
-                video_id=video_info.get('id', ''),
-                title=video_info.get('title', ''),
-                channel=channel_info.get('name', ''),
-                description=video_info.get('description', ''),
-                thumbnail=video_info.get('thumbnail', ''),
-                duration=video_info.get('duration', ''),
-                views=video_info.get('views', ''),
-                published_time=video_info.get('published_date', ''),
-                link=video_info.get('url', ''),
-                channel_id=channel_info.get('id', ''),
-                channel_url=channel_info.get('url', ''),
-                subscriber_count=channel_info.get('subscribers', ''),
-                verified_channel=channel_info.get('verified', False),
-                category=video_info.get('category', ''),
-                tags=video_info.get('tags', [])
-            )
-            
-        except Exception as e:
-            logger.error(f"Error parsing video details: {e}")
-            return None
+        seconds = diff.total_seconds()
+        if seconds < 60:
+            return "just now"
+        elif seconds < 3600:
+            minutes = int(seconds / 60)
+            return f"{minutes} minute{'s' if minutes > 1 else ''} ago"
+        elif seconds < 86400:
+            hours = int(seconds / 3600)
+            return f"{hours} hour{'s' if hours > 1 else ''} ago"
+        elif seconds < 604800:
+            days = int(seconds / 86400)
+            return f"{days} day{'s' if days > 1 else ''} ago"
+        elif seconds < 2592000:
+            weeks = int(seconds / 604800)
+            return f"{weeks} week{'s' if weeks > 1 else ''} ago"
+        elif seconds < 31536000:
+            months = int(seconds / 2592000)
+            return f"{months} month{'s' if months > 1 else ''} ago"
+        else:
+            years = int(seconds / 31536000)
+            return f"{years} year{'s' if years > 1 else ''} ago"
     
     def _get_default_disaster_query(self, search_type: str) -> str:
         """Get default search query based on search type"""
@@ -650,18 +954,6 @@ class YouTubeSearchService:
         except Exception:
             return ''
     
-    def _determine_video_type(self, video_data: Dict) -> str:
-        """Determine video type (video, short, live)"""
-        
-        link = video_data.get('link', '')
-        duration = video_data.get('duration', '')
-        
-        if '/shorts/' in link:
-            return 'short'
-        elif duration and ('LIVE' in duration.upper() or 'ライブ' in duration):
-            return 'live'
-        else:
-            return 'video'
     
     def _is_youtube_short(self, video: YouTubeVideo) -> bool:
         """Check if video is a YouTube Short"""
@@ -707,7 +999,7 @@ class YouTubeSearchService:
         
         return unique_channels
     
-    def _extract_trending_keywords(self, video_results: List[Dict]) -> Dict[str, int]:
+    def _extract_trending_keywords_from_titles(self, titles: List[str]) -> Dict[str, int]:
         """Extract trending keywords from video titles"""
         
         keyword_count = {}
@@ -716,10 +1008,10 @@ class YouTubeSearchService:
             'earthquake', 'tsunami', 'typhoon', 'disaster', 'emergency'
         ]
         
-        for video in video_results:
-            title = video.get('title', '').lower()
+        for title in titles:
+            title_lower = title.lower()
             for keyword in disaster_keywords:
-                if keyword in title:
+                if keyword.lower() in title_lower:
                     keyword_count[keyword] = keyword_count.get(keyword, 0) + 1
         
         # Sort by frequency

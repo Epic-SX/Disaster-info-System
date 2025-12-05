@@ -2,18 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import DigitalClock from './DigitalClock';
-import ScrollingEarthquakeList from './ScrollingEarthquakeList';
 import DetailedEarthquakePanel from './DetailedEarthquakePanel';
-import WindSpeedPanel from './WindSpeedPanel';
+import YouTubeLiveNewsList from './YouTubeLiveNewsList';
+import AMeDASInteractiveMapWithJapan from './AMeDASInteractiveMapWithJapan';
 import { apiClient, API_ENDPOINTS } from '@/lib/api-config';
 
 // Dynamically import components to avoid SSR issues
-const SeismicWaveformDisplay = dynamic(() => import('./SeismicWaveformDisplay'), {
-  ssr: false,
-  loading: () => <div className="h-full bg-black flex items-center justify-center text-white">Loading waveforms...</div>
-});
-
 const SeismicStationMapComponent = dynamic(() => import('./SeismicStationMapComponent'), {
   ssr: false,
   loading: () => <div className="h-full bg-[#0a1929] flex items-center justify-center text-white">Loading map...</div>
@@ -22,6 +16,11 @@ const SeismicStationMapComponent = dynamic(() => import('./SeismicStationMapComp
 const DetailedEarthquakeMap = dynamic(() => import('./DetailedEarthquakeMap'), {
   ssr: false,
   loading: () => <div className="h-full bg-[#0a1929] flex items-center justify-center text-white">Loading map...</div>
+});
+
+const CoastGuardCameraPanel = dynamic(() => import('./CoastGuardCameraPanel'), {
+  ssr: false,
+  loading: () => <div className="h-full bg-black flex items-center justify-center text-white">Loading live cameras...</div>
 });
 
 interface EarthquakeData {
@@ -50,7 +49,6 @@ const TechnicalMonitorDashboard: React.FC = () => {
   const [earthquakes, setEarthquakes] = useState<EarthquakeData[]>([]);
   const [pgaData, setPGAData] = useState<PGADataPoint[]>([]);
   const [currentTime, setCurrentTime] = useState<string>('');
-  const [vibrationLevel, setVibrationLevel] = useState<number>(0);
 
   useEffect(() => {
     // Only run on client side
@@ -142,108 +140,71 @@ const TechnicalMonitorDashboard: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Simulate vibration level changes
-  useEffect(() => {
-    const updateVibration = () => {
-      const newLevel = Math.floor(Math.random() * 3); // 0-2
-      setVibrationLevel(newLevel);
-    };
-
-    const interval = setInterval(updateVibration, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
   const handleEarthquakeSelect = (earthquake: EarthquakeData) => {
     setSelectedEarthquake(earthquake);
   };
 
   return (
-    <div className="h-screen w-screen bg-[#0a0e1a] text-white overflow-hidden flex flex-col">
+    <div className="h-full w-full bg-[#050914] text-white overflow-hidden flex flex-col">
       {/* Main Content Grid */}
-      <div className="flex-1 grid grid-cols-12 gap-0.5 bg-gray-900">
+      <div className="grid grid-cols-12 gap-0.5 bg-gray-900 min-h-0" style={{ flex: '0 0 55%' }}>
         {/* Left Column - Seismic Station Map */}
-        <div className="col-span-3 bg-[#0a1929] flex flex-col">
-          <div className="bg-[#1a2942] p-3 border-b border-gray-700">
+        <div className="col-span-4 bg-[#0a1929] flex flex-col min-h-0 overflow-hidden">
+          <div className="bg-[#1a2942] p-3 border-b border-gray-700 flex-shrink-0">
             <div className="text-lg font-bold text-white">地中 NEW teeFive</div>
             <div className="text-xs text-gray-400">{currentTime}</div>
           </div>
-          <div className="flex-1 relative">
+          <div className="flex-1 relative min-h-0 overflow-hidden">
             <SeismicStationMapComponent />
           </div>
         </div>
 
-        {/* Middle Column - Seismic Waveforms */}
-        <div className="col-span-6 bg-black flex flex-col">
-          <div className="bg-[#1a2942] p-3 border-b border-gray-700">
-            <div className="text-lg font-bold text-white">地震波形モニター</div>
-            <div className="text-xs text-gray-400">リアルタイム波形表示</div>
-          </div>
-          <div className="flex-1">
-            <SeismicWaveformDisplay />
-          </div>
-        </div>
-
-        {/* Right Column - Clock & Local Map */}
-        <div className="col-span-3 bg-[#0a1929] flex flex-col">
-          {/* Digital Clock */}
-          <div className="bg-[#1a2942] p-6 text-center border-b border-gray-700">
-            <DigitalClock className="text-6xl text-green-400" />
-            <div className="mt-4">
-              <div className="text-sm text-gray-400">振動</div>
-              <div className="text-2xl font-bold text-white">
-                レベル {vibrationLevel}
-              </div>
-            </div>
-            <div className="mt-4 bg-yellow-500/20 border border-yellow-500 rounded p-2">
-              <div className="text-xs text-yellow-300 font-bold">
-                ⭐ 防災ブランド Bunker
-              </div>
-            </div>
-            <div className="mt-2 text-sm text-gray-300">
-              この地震による津波の心配はなし
-            </div>
-          </div>
-
-          {/* Detailed Earthquake Map */}
-          <div className="flex-1 bg-[#0a1929] flex flex-col">
-            <div className="bg-[#1a2942] p-3 border-b border-gray-700">
-              <div className="text-sm font-bold text-white">震源詳細マップ</div>
-              <div className="text-xs text-gray-400">Epicenter Detail Map</div>
-            </div>
-            <div className="flex-1">
-              <DetailedEarthquakeMap earthquake={selectedEarthquake || undefined} />
-            </div>
-          </div>
+        {/* Middle Column - Coastal Camera & Tsunami Monitor */}
+        <div className="col-span-8 bg-[#0a1929] flex flex-col min-h-0 overflow-hidden">
+          <CoastGuardCameraPanel />
         </div>
       </div>
 
       {/* Bottom Section */}
-      <div className="h-[40vh] grid grid-cols-12 gap-0.5 bg-gray-900">
-        {/* Earthquake List */}
+      <div className="grid grid-cols-12 gap-0.5 bg-gray-900 min-h-0" style={{ flex: '0 0 45%' }}>
+        {/* Disaster News Articles */}
         <div className="col-span-3 bg-[#0a1929] flex flex-col min-h-0 overflow-hidden">
-          <div className="bg-[#1a2942] p-3 border-b border-gray-700">
-            <div className="text-base font-bold text-white">最近の地震活動</div>
+          <YouTubeLiveNewsList className="h-full rounded-none border-0" />
+        </div>
+
+        {/* Detailed Earthquake Info */}
+        <div className="col-span-3 bg-[#0a1929] flex flex-col min-h-0 overflow-hidden">
+          <div className="bg-[#1a2942] p-3 border-b border-gray-700 flex-shrink-0">
+            <div className="text-base font-bold text-white">最大震度 / 詳細情報</div>
+            <div className="text-xs text-gray-400">Detailed earthquake status</div>
           </div>
-          <div className="flex-1 min-h-0">
-            <ScrollingEarthquakeList 
-              earthquakes={earthquakes}
-              maxItems={20}
-              onSelect={handleEarthquakeSelect}
-              showTestData={false}
+          <div className="flex-1 overflow-hidden min-h-0">
+            <DetailedEarthquakePanel 
+              earthquake={selectedEarthquake || undefined}
             />
           </div>
         </div>
 
-        {/* Detailed Earthquake Info */}
-        <div className="col-span-7 bg-[#0a1929] flex flex-col min-h-0 overflow-hidden">
-          <DetailedEarthquakePanel 
-            earthquake={selectedEarthquake || undefined}
-          />
+        {/* Epicenter Detail Map */}
+        <div className="col-span-2 bg-[#0a1929] flex flex-col min-h-0 overflow-hidden">
+          <div className="bg-[#1a2942] p-3 border-b border-gray-700 flex-shrink-0">
+            <div className="text-base font-bold text-white">震源詳細マップ</div>
+            <div className="text-xs text-gray-400">Epicenter Detail Map</div>
+          </div>
+          <div className="flex-1 min-h-0 overflow-hidden">
+            <DetailedEarthquakeMap earthquake={selectedEarthquake || undefined} />
+          </div>
         </div>
 
-        {/* Wind Speed Panel */}
-        <div className="col-span-2 bg-[#0a1929] flex flex-col min-h-0 overflow-hidden">
-          <WindSpeedPanel />
+        {/* Wind Map */}
+        <div className="col-span-4 bg-[#0a1929] flex flex-col min-h-0 overflow-hidden">
+          <div className="bg-[#1a2942] p-3 border-b border-gray-700 flex-shrink-0">
+            <div className="text-base font-bold text-white">風況マップ</div>
+            <div className="text-xs text-gray-400">リアルタイム風向・風速</div>
+          </div>
+          <div className="flex-1 overflow-hidden min-h-0">
+            <AMeDASInteractiveMapWithJapan showDetails={false} mapHeight="100%" className="h-full bg-transparent border-none" />
+          </div>
         </div>
       </div>
     </div>

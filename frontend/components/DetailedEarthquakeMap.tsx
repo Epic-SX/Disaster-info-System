@@ -144,7 +144,7 @@ const DetailedEarthquakeMap: React.FC<DetailedEarthquakeMapProps> = ({ earthquak
         >
           <TileLayer
             attribution='&copy; OpenStreetMap'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           
           {/* Auto-center on earthquake */}

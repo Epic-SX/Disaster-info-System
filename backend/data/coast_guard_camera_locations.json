@@ -1,0 +1,277 @@
+[
+  {
+    "name": "宗谷岬灯台",
+    "slug": "soyamisaki_lt",
+    "path": "/camstream/soyamisaki_lt",
+    "latitude": 45.521446,
+    "longitude": 141.9365104,
+    "location": "宗谷岬灯台, 国道238号, 宗谷岬, 稚内市, 宗谷総合振興局, 北海道, 日本"
+  },
+  {
+    "name": "元地灯台",
+    "slug": "motochi_lt",
+    "path": "/camstream/motochi_lt",
+    "latitude": 45.2839658,
+    "longitude": 141.0197759,
+    "location": "元地灯台, 礼文島線, シレトコマナイ, 香深村, 礼文町, 礼文郡, 宗谷総合振興局, 北海道, 097-1201, 日本"
+  },
+  {
+    "name": "チキウ岬灯台",
+    "slug": "chikiumisaki_lt",
+    "path": "/camstream/chikiumisaki_lt",
+    "latitude": 42.3021376,
+    "longitude": 141.0011886,
+    "location": "チキウ岬灯台, 中央東線, 母恋南町四丁目, 室蘭市, 胆振総合振興局, 北海道, 北海道地方, 051-0003, 日本"
+  },
+  {
+    "name": "襟裳岬灯台",
+    "slug": "erimomisaki_lt",
+    "path": "/camstream/erimomisaki_lt",
+    "latitude": 41.9258234,
+    "longitude": 143.2439925,
+    "location": "襟裳岬灯台, 襟裳公園線, えりも町, 幌泉郡, 日高振興局, 北海道, 058-0342, 日本"
+  },
+  {
+    "name": "鴎島灯台",
+    "slug": "kamomeshima_lt",
+    "path": "/camstream/kamomeshima_lt",
+    "latitude": 41.8681884,
+    "longitude": 140.1139617,
+    "location": "鴎島灯台, 国道228号, 姥神町, 津花町, 江差町, 檜山郡, 檜山振興局, 北海道, 北海道地方, 043-0063, 日本"
+  },
+  {
+    "name": "葛登支岬灯台",
+    "slug": "kattoshimisaki_lt",
+    "path": "/camstream/kattoshimisaki_lt",
+    "latitude": 41.7419578,
+    "longitude": 140.5996019,
+    "location": "葛登支岬灯台, 国道228号, 当別三丁目, 北斗市, 渡島総合振興局, 北海道, 049-0282, 日本"
+  },
+  {
+    "name": "日和山灯台",
+    "slug": "hiyoriyama_lt",
+    "path": "/camstream/hiyoriyama_lt",
+    "latitude": 43.2383653,
+    "longitude": 141.0157056,
+    "location": "日和山燈台, 3･6･38海岸高島線, 祝津一丁目, 小樽市, 後志総合振興局, 北海道, 047-0047, 日本"
+  },
+  {
+    "name": "増毛灯台",
+    "slug": "mashike_lt",
+    "path": "/camstream/mashike_lt",
+    "latitude": 43.8353243,
+    "longitude": 141.4770056,
+    "location": "別苅港北防波堤灯台, 国道231号, 増毛町, 増毛郡, 留萌振興局, 北海道, 077-0225, 日本"
+  },
+  {
+    "name": "サロマ湖口灯台",
+    "slug": "saromako_entrance_lt",
+    "path": "/camstream/saromako_entrance_lt",
+    "latitude": 44.0954741,
+    "longitude": 143.9578287,
+    "location": "北海道 北見市 サロマ湖口"
+  },
+  {
+    "name": "釧路埼灯台",
+    "slug": "kushirosaki_lt",
+    "path": "/camstream/kushirosaki_lt",
+    "latitude": 43.0772985,
+    "longitude": 145.1677969,
+    "location": "北海道 浜中町 湯沸岬付近"
+  },
+  {
+    "name": "納沙布岬灯台",
+    "slug": "nosappumisaki_lt",
+    "path": "/camstream/nosappumisaki_lt",
+    "latitude": 43.3851607,
+    "longitude": 145.8165569,
+    "location": "納沙布岬灯台, 根室半島線, 珸瑤瑁三丁目, 根室市, 根室振興局, 北海道, 日本"
+  },
+  {
+    "name": "龍飛埼灯台",
+    "slug": "tappisaki_lt",
+    "path": "/camstream/tappisaki_lt",
+    "latitude": 41.2584925,
+    "longitude": 140.3424107,
+    "location": "龍飛埼灯台, 階段村道, 三厩龍浜, 外ヶ浜町, 東津軽郡, 青森県, 030-1711, 日本"
+  },
+  {
+    "name": "尻屋埼灯台",
+    "slug": "shiriyasaki_lt",
+    "path": "/camstream/shiriyasaki_lt",
+    "latitude": 41.4303703,
+    "longitude": 141.4621416,
+    "location": "尻屋埼灯台, むつ尻屋崎線, 東通村, 下北郡, 青森県, 035-0112, 日本"
+  },
+  {
+    "name": "八戸信号所",
+    "slug": "hachinohe_ss",
+    "path": "/camstream/hachinohe_ss",
+    "latitude": 40.54875,
+    "longitude": 141.5069649,
+    "location": "青森県 八戸港"
+  },
+  {
+    "name": "秋田海上保安部庁舎",
+    "slug": "akita_cgo",
+    "path": "/camstream/akita_cgo",
+    "latitude": 39.7556097,
+    "longitude": 140.0609539,
+    "location": "秋田県 秋田港"
+  },
+  {
+    "name": "大船渡港指向灯",
+    "slug": "ofunatoko_dl",
+    "path": "/camstream/ofunatoko_dl",
+    "latitude": 39.0817727,
+    "longitude": 141.7084037,
+    "location": "岩手県 大船渡市"
+  },
+  {
+    "name": "金華山灯台",
+    "slug": "kinkasan_lt",
+    "path": "/camstream/kinkasan_lt",
+    "latitude": 38.276594,
+    "longitude": 141.584055,
+    "location": "金華山灯台, 石巻市, 宮城県, 日本"
+  },
+  {
+    "name": "塩屋埼灯台",
+    "slug": "shioyasaki_lt",
+    "path": "/camstream/shioyasaki_lt",
+    "latitude": 36.9950756,
+    "longitude": 140.9817531,
+    "location": "塩屋埼灯台, 豊間四倉線, 薄磯一丁目, いわき市, 福島県, 970-0224, 日本"
+  },
+  {
+    "name": "酒田灯台",
+    "slug": "sakata_lt",
+    "path": "/camstream/sakata_lt",
+    "latitude": 38.914423,
+    "longitude": 139.83637,
+    "location": "山形県 酒田市"
+  },
+  {
+    "name": "磯埼灯台",
+    "slug": "isozaki_lt",
+    "path": "/camstream/isozaki_lt",
+    "latitude": 36.3807212,
+    "longitude": 140.6257427,
+    "location": "磯埼灯台, 水戸那珂湊線, 磯崎町, ひたちなか市, 茨城県, 311-1201, 日本"
+  },
+  {
+    "name": "野島埼灯台",
+    "slug": "nojimasaki_lt",
+    "path": "/camstream/nojimasaki_lt",
+    "latitude": 34.9017295,
+    "longitude": 139.8883852,
+    "location": "野島埼灯台, 国道410号, 西横渚, 南房総市, 千葉県, 295-0102, 日本"
+  },
+  {
+    "name": "本牧信号所",
+    "slug": "honmoku_vtss",
+    "path": "/camstream/honmoku_vtss",
+    "latitude": 35.4393309,
+    "longitude": 139.6768974,
+    "location": "神奈川県 横浜市 本牧ふ頭"
+  },
+  {
+    "name": "剱埼灯台",
+    "slug": "tsurugisaki_lt",
+    "path": "/camstream/tsurugisaki_lt",
+    "latitude": 35.1413097,
+    "longitude": 139.6771169,
+    "location": "剱埼灯台, 県道215号線, 南下浦町松輪, 三浦市, 神奈川県, 238-0298, 日本"
+  },
+  {
+    "name": "犬吠埼灯台",
+    "slug": "inubosaki_lt",
+    "path": "/camstream/inubosaki_lt",
+    "latitude": 35.7079127,
+    "longitude": 140.8685261,
+    "location": "犬吠埼燈台, 銚子公園線, 犬吠埼, 銚子市, 千葉県, 288-0012, 日本"
+  },
+  {
+    "name": "御前埼灯台",
+    "slug": "omaesaki_lt",
+    "path": "/camstream/omaesaki_lt",
+    "latitude": 34.5958265,
+    "longitude": 138.2257124,
+    "location": "御前埼灯台, 佐倉御前崎港線, 御前崎, 御前崎市, 静岡県, 日本"
+  },
+  {
+    "name": "石廊埼灯台",
+    "slug": "irosaki_lt",
+    "path": "/camstream/irosaki_lt",
+    "latitude": 34.602733,
+    "longitude": 138.8451931,
+    "location": "石廊崎灯台, 125, 石廊崎, 南伊豆町, 賀茂郡, 静岡県, 415-0156, 日本"
+  },
+  {
+    "name": "八丈島灯台",
+    "slug": "hachijosima_lt",
+    "path": "/camstream/hachijosima_lt",
+    "latitude": 33.0791689,
+    "longitude": 139.8550022,
+    "location": "八丈島灯台, 汐間洞輪沢港線, 神子尾, 八丈町, 八丈支庁, 東京都, 日本"
+  },
+  {
+    "name": "観音埼レーダー施設",
+    "slug": "kannonsaki_radar",
+    "path": "/camstream/kannonsaki_radar",
+    "latitude": 35.2562939,
+    "longitude": 139.7462172,
+    "location": "神奈川県 横須賀市 観音埼"
+  },
+  {
+    "name": "橋田鼻灯台",
+    "slug": "hashidahana_lt",
+    "path": "/camstream/hashidahana_lt",
+    "latitude": 36.8978758,
+    "longitude": 137.4106869,
+    "location": "生地鼻灯台, 生地中橋, 生地山新, 黒部市, 富山県, 938-0042, 日本"
+  },
+  {
+    "name": "尾鷲海上保安部庁舎",
+    "slug": "owase_cgo",
+    "path": "/camstream/owase_cgo",
+    "latitude": 34.0747359,
+    "longitude": 136.1901497,
+    "location": "三重県 尾鷲港"
+  },
+  {
+    "name": "四日市防波堤信号所",
+    "slug": "yokkaichiko_bkw_lt",
+    "path": "/camstream/yokkaichiko_bkw_lt",
+    "latitude": 34.8293759,
+    "longitude": 136.5972656,
+    "location": "三重県 四日市港 防波堤"
+  },
+  {
+    "name": "大王埼灯台",
+    "slug": "daiosaki_lt",
+    "path": "/camstream/daiosaki_lt",
+    "latitude": 34.2761539,
+    "longitude": 136.8995292,
+    "location": "大王崎灯台, 波切港線, 大王町波切, 志摩市, 三重県, 517-0603, 日本"
+  },
+  {
+    "name": "鳥羽海上保安部庁舎",
+    "slug": "toba_cgo",
+    "path": "/camstream/toba_cgo",
+    "latitude": 34.489542,
+    "longitude": 136.707107,
+    "location": "三重県 鳥羽港"
+  },
+  {
+    "name": "伊勢湾海上交通センター(北西)",
+    "slug": "isewan_martis_no2",
+    "path": "/camstream/isewan_martis_no2",
+    "latitude": 35.034882,
+    "longitude": 136.8462286,
+    "location": "愛知県 名古屋港 海上交通センター"
+  }
+]
+
+
+

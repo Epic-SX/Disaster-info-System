@@ -25,6 +25,20 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Import JMA tsunami scraper
+try:
+    from jma_tsunami_scraper import get_jma_tsunami_status, TsunamiStatus
+    JMA_TSUNAMI_AVAILABLE = True
+    logger.info("JMA tsunami scraper imported successfully")
+except ImportError as e:
+    logger.warning(f"JMA tsunami scraper not available: {e}")
+    JMA_TSUNAMI_AVAILABLE = False
+    TsunamiStatus = None
+except Exception as e:
+    logger.error(f"Error importing JMA tsunami scraper: {e}")
+    JMA_TSUNAMI_AVAILABLE = False
+    TsunamiStatus = None
+
 class DisasterType(Enum):
     EARTHQUAKE = "earthquake"
     TSUNAMI = "tsunami"
@@ -399,8 +413,76 @@ class DisasterAPIService:
     
     async def get_tsunami_alerts(self) -> List[TsunamiInfo]:
         """Get tsunami alerts from all sources"""
-        tsunami_alerts = await self.p2p_api.get_tsunami_info()
-        return tsunami_alerts
+        all_alerts = []
+        
+        # Get data from P2P API
+        p2p_alerts = await self.p2p_api.get_tsunami_info()
+        all_alerts.extend(p2p_alerts)
+        
+        # Get data from JMA website scraper
+        if JMA_TSUNAMI_AVAILABLE:
+            try:
+                jma_status = await get_jma_tsunami_status(headless=True)
+                if jma_status and jma_status.has_warning:
+                    # Convert JMA TsunamiStatus to TsunamiInfo
+                    jma_alert = self._convert_jma_status_to_tsunami_info(jma_status)
+                    if jma_alert:
+                        all_alerts.append(jma_alert)
+            except Exception as e:
+                logger.error(f"Error fetching JMA tsunami status: {e}")
+        
+        return all_alerts
+    
+    async def get_jma_tsunami_status(self) -> Optional['TsunamiStatus']:
+        """Get raw JMA tsunami status message"""
+        if not JMA_TSUNAMI_AVAILABLE:
+            logger.warning("JMA tsunami scraper is not available")
+            return None
+        
+        try:
+            logger.info("Attempting to fetch JMA tsunami status...")
+            jma_status = await get_jma_tsunami_status(headless=True)
+            if jma_status:
+                logger.info(f"Successfully fetched JMA tsunami status: {jma_status.message[:50]}...")
+            else:
+                logger.warning("JMA tsunami scraper returned None")
+            return jma_status
+        except Exception as e:
+            logger.error(f"Error fetching JMA tsunami status: {e}", exc_info=True)
+            return None
+    
+    def _convert_jma_status_to_tsunami_info(self, jma_status: 'TsunamiStatus') -> Optional[TsunamiInfo]:
+        """Convert JMA TsunamiStatus to TsunamiInfo format"""
+        try:
+            # Map warning types to alert levels
+            alert_level_map = {
+                "大津波警報": AlertLevel.CRITICAL,
+                "津波警報": AlertLevel.WARNING,
+                "津波注意報": AlertLevel.ADVISORY,
+                "津波予報": AlertLevel.INFO
+            }
+            
+            alert_level = alert_level_map.get(jma_status.warning_type, AlertLevel.INFO)
+            
+            # Extract area from message or use affected areas
+            area = ", ".join(jma_status.affected_areas) if jma_status.affected_areas else "全国"
+            
+            # Create TsunamiInfo
+            tsunami_info = TsunamiInfo(
+                id=f"jma_{jma_status.timestamp.strftime('%Y%m%d%H%M%S')}",
+                area=area,
+                height_prediction=0.0,  # JMA message doesn't always include height
+                arrival_time=None,  # JMA message doesn't always include arrival time
+                alert_level=alert_level,
+                timestamp=jma_status.timestamp,
+                source="JMA"
+            )
+            
+            return tsunami_info
+            
+        except Exception as e:
+            logger.error(f"Error converting JMA status to TsunamiInfo: {e}")
+            return None
     
     async def start_realtime_monitoring(self):
         """Start real-time monitoring via WebSocket"""

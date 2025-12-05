@@ -113,7 +113,17 @@ const createWindArrowDivIcon = async (direction: string, speed: string, color: s
   })
 }
 
-const AMeDASInteractiveMapWithJapan: React.FC = () => {
+interface AMeDASInteractiveMapWithJapanProps {
+  showDetails?: boolean;
+  mapHeight?: number | string;
+  className?: string;
+}
+
+const AMeDASInteractiveMapWithJapan: React.FC<AMeDASInteractiveMapWithJapanProps> = ({
+  showDetails = true,
+  mapHeight = 600,
+  className = '',
+}) => {
   const [windData, setWindData] = useState<WindDataPoint[]>([])
   const [selectedStation, setSelectedStation] = useState<WindDataPoint | null>(null)
   const [loading, setLoading] = useState(true)
@@ -204,14 +214,17 @@ const AMeDASInteractiveMapWithJapan: React.FC = () => {
     return directionMap[direction] || 0
   }
 
+  const resolvedMapHeight =
+    typeof mapHeight === 'number' ? `${mapHeight}px` : mapHeight || '600px';
+
   if (!isMounted) {
     return (
-      <Card className="bg-gradient-to-br from-slate-900 to-blue-900 text-white border-blue-700">
+      <Card className={`bg-gradient-to-br from-slate-900 to-blue-900 text-white border-blue-700 ${className}`}>
         <CardHeader>
           <CardTitle>Loading map...</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-[600px] flex items-center justify-center">
+          <div className="flex items-center justify-center" style={{ minHeight: resolvedMapHeight }}>
             <div className="animate-spin text-4xl">🌪️</div>
           </div>
         </CardContent>
@@ -220,42 +233,47 @@ const AMeDASInteractiveMapWithJapan: React.FC = () => {
   }
 
   return (
-    <Card className="bg-gradient-to-br from-slate-900 to-blue-900 text-white border-blue-700">
-      <CardHeader className="bg-gradient-to-r from-green-600 to-emerald-600">
-        <CardTitle className="text-xl font-bold flex items-center justify-between">
-          <span className="flex items-center gap-2">
-            <Wind className="h-6 w-6" />
-            🗾 AMeDAS気象観測システム - 日本地図表示
-          </span>
-          <div className="flex items-center gap-3">
-            <Badge className="bg-white text-green-600 text-xs font-bold animate-pulse">
-              <span className="w-2 h-2 bg-green-600 rounded-full mr-1"></span>
-              LIVE配信
-            </Badge>
-            {lastUpdate && (
-              <span className="text-xs text-green-100">
-                更新: {lastUpdate}
-              </span>
-            )}
-            <button
-              onClick={fetchWindData}
-              className="p-2 hover:bg-green-700 rounded-lg transition-colors"
-              title="データを更新"
-            >
-              <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-            </button>
+    <Card className={`bg-gradient-to-br from-slate-900 to-blue-900 text-white border-blue-700 ${className}`}>
+      {showDetails && (
+        <CardHeader className="bg-gradient-to-r from-green-600 to-emerald-600">
+          <CardTitle className="text-xl font-bold flex items-center justify-between">
+            <span className="flex items-center gap-2">
+              <Wind className="h-6 w-6" />
+              🗾 AMeDAS気象観測システム - 日本地図表示
+            </span>
+            <div className="flex items-center gap-3">
+              <Badge className="bg-white text-green-600 text-xs font-bold animate-pulse">
+                <span className="w-2 h-2 bg-green-600 rounded-full mr-1"></span>
+                LIVE配信
+              </Badge>
+              {lastUpdate && (
+                <span className="text-xs text-green-100">
+                  更新: {lastUpdate}
+                </span>
+              )}
+              <button
+                onClick={fetchWindData}
+                className="p-2 hover:bg-green-700 rounded-lg transition-colors"
+                title="データを更新"
+              >
+                <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+              </button>
+            </div>
+          </CardTitle>
+          <div className="text-sm mt-1 text-green-100">
+            📡 毎時更新（JMAからスクレイピング） • 全国{windData.length}観測所データ表示中
           </div>
-        </CardTitle>
-        <div className="text-sm mt-1 text-green-100">
-          📡 毎時更新（JMAからスクレイピング） • 全国{windData.length}観測所データ表示中
-        </div>
-      </CardHeader>
+        </CardHeader>
+      )}
 
-      <CardContent className="p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <CardContent className={`${showDetails ? 'p-6' : 'p-3 h-full flex flex-col'}`}>
+        <div className={showDetails ? "grid grid-cols-1 lg:grid-cols-3 gap-6" : "flex-1 flex flex-col"}>
           {/* Map Area */}
-          <div className="lg:col-span-2">
-            <div className="relative rounded-lg border-2 border-blue-700 overflow-hidden" style={{ height: '600px' }}>
+          <div className={showDetails ? "lg:col-span-2" : "flex-1 flex flex-col"}>
+            <div
+              className={`relative rounded-lg border-2 border-blue-700 overflow-hidden ${showDetails ? '' : 'flex-1'}`}
+              style={showDetails ? { height: resolvedMapHeight } : { height: '100%', minHeight: 0 }}
+            >
               <MapContainer
                 center={[37.5, 138.0]}
                 zoom={5}
@@ -264,7 +282,7 @@ const AMeDASInteractiveMapWithJapan: React.FC = () => {
               >
                 <TileLayer
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 
                 {windData.map((station, index) => {
@@ -327,6 +345,7 @@ const AMeDASInteractiveMapWithJapan: React.FC = () => {
           </div>
 
           {/* Station Detail Panel */}
+          {showDetails && (
           <div className="lg:col-span-1">
             {selectedStation ? (
               <div className="bg-gradient-to-br from-slate-800 to-slate-700 border-2 border-cyan-500 rounded-lg p-4 sticky top-4">
@@ -420,33 +439,36 @@ const AMeDASInteractiveMapWithJapan: React.FC = () => {
               </div>
             )}
           </div>
+          )}
         </div>
 
         {/* Statistics */}
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-white">{windData.length}</div>
-            <div className="text-blue-100 text-sm">監視地点数</div>
-          </div>
-          <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-white">
-              {windData.length > 0 ? Math.max(...windData.map(d => parseFloat(d.speed.replace(/[^\d.]/g, '')) || 0)).toFixed(1) : '0'}
+        {showDetails && (
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-white">{windData.length}</div>
+              <div className="text-blue-100 text-sm">監視地点数</div>
             </div>
-            <div className="text-green-100 text-sm">最大風速 (m/s)</div>
-          </div>
-          <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-white">
-              {windData.filter(d => parseFloat(d.speed.replace(/[^\d.]/g, '')) > 15).length}
+            <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-white">
+                {windData.length > 0 ? Math.max(...windData.map(d => parseFloat(d.speed.replace(/[^\d.]/g, '')) || 0)).toFixed(1) : '0'}
+              </div>
+              <div className="text-green-100 text-sm">最大風速 (m/s)</div>
             </div>
-            <div className="text-orange-100 text-sm">強風警戒地点</div>
-          </div>
-          <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-white">
-              {windData.filter(d => d.status === 'normal').length}
+            <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-white">
+                {windData.filter(d => parseFloat(d.speed.replace(/[^\d.]/g, '')) > 15).length}
+              </div>
+              <div className="text-orange-100 text-sm">強風警戒地点</div>
             </div>
-            <div className="text-purple-100 text-sm">正常稼働地点</div>
+            <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-white">
+                {windData.filter(d => d.status === 'normal').length}
+              </div>
+              <div className="text-purple-100 text-sm">正常稼働地点</div>
+            </div>
           </div>
-        </div>
+        )}
       </CardContent>
 
       <style jsx global>{`

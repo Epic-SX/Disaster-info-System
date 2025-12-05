@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { YouTubePlayerHybrid } from './YouTubePlayer';
 import { apiClient, API_ENDPOINTS } from '@/lib/api-config';
+import Image from 'next/image';
 import { 
   Camera, 
   Radio, 
@@ -80,11 +81,33 @@ export function YouTubeLiveStreams() {
     setError('');
 
     try {
-      // Use default streams directly without searching YouTube
-      // Commented out backend API call to avoid searching for videos
-      // const response = await apiClient.get<{streams?: BackendLiveStream[], videos?: BackendLiveStream[]}>(API_ENDPOINTS.youtube.liveStreams);
+      // Load live disaster streams from backend API
+      const response = await apiClient.get<{streams?: BackendLiveStream[], videos?: BackendLiveStream[]}>(
+        `${API_ENDPOINTS.youtube.liveStreams}?location=Japan`
+      );
       
-      setLiveStreams(DEFAULT_STREAMS);
+      // Convert backend format to frontend format
+      const backendStreams = response.videos || response.streams || [];
+      
+      if (backendStreams.length > 0) {
+        const convertedStreams: LiveStream[] = backendStreams.map((stream, index) => ({
+          id: stream.video_id || `stream-${index}`,
+          videoId: stream.video_id,
+          title: stream.title,
+          channel: stream.channel,
+          description: stream.description || '',
+          category: determineCategoryFromTitle(stream.title, stream.channel),
+          isLive: stream.video_type === 'live',
+          thumbnail: stream.thumbnail,
+          link: stream.link,
+          verified_channel: stream.verified_channel
+        }));
+        
+        setLiveStreams([...DEFAULT_STREAMS, ...convertedStreams]);
+      } else {
+        // Fallback to default streams if no results
+        setLiveStreams(DEFAULT_STREAMS);
+      }
     } catch (err) {
       console.error('Error loading live streams:', err);
       setError('ライブ配信の読み込みに失敗しました');
@@ -95,10 +118,13 @@ export function YouTubeLiveStreams() {
   }, []);
 
   useEffect(() => {
-    // Initialize with default streams on mount
+    // Initialize with default streams on mount, then load live streams
     setLiveStreams(DEFAULT_STREAMS);
     setSelectedStream(DEFAULT_STREAMS[0].videoId);
-  }, []);
+    
+    // Load live streams from API after initial render
+    loadLiveStreams();
+  }, [loadLiveStreams]);
 
   const determineCategoryFromTitle = (title: string, channel: string): LiveStream['category'] => {
     const titleLower = title.toLowerCase();
@@ -144,6 +170,15 @@ export function YouTubeLiveStreams() {
       default:
         return 'bg-gray-500';
     }
+  };
+
+  // Helper function to get YouTube thumbnail URL
+  const getThumbnailUrl = (videoId: string, thumbnail?: string): string => {
+    if (thumbnail) {
+      return thumbnail;
+    }
+    // Fallback to YouTube's thumbnail API
+    return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
   };
 
   return (
@@ -249,29 +284,71 @@ export function YouTubeLiveStreams() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {liveStreams.map((stream) => (
-              <div
-                key={stream.id}
-                className={`p-3 rounded-lg border cursor-pointer transition-all ${
-                  selectedStream === stream.videoId
-                    ? 'border-red-500 bg-red-500/20'
-                    : 'border-white/20 bg-white/5 hover:bg-white/10'
-                }`}
-                onClick={() => setSelectedStream(stream.videoId)}
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  {getCategoryIcon(stream.category)}
-                  <span className="text-white text-sm font-medium">{stream.channel}</span>
-                  {stream.isLive && (
-                    <Badge className="bg-red-500 text-white text-xs animate-pulse">
-                      LIVE
-                    </Badge>
-                  )}
+            {liveStreams.map((stream) => {
+              const handleCardClick = () => {
+                // Set selected stream to play in the player above
+                setSelectedStream(stream.videoId);
+                
+                // Open the video link in a new tab
+                const videoUrl = stream.link || `https://www.youtube.com/watch?v=${stream.videoId}`;
+                window.open(videoUrl, '_blank', 'noopener,noreferrer');
+              };
+
+              const thumbnailUrl = getThumbnailUrl(stream.videoId, stream.thumbnail);
+
+              return (
+                <div
+                  key={stream.id}
+                  className={`rounded-lg border cursor-pointer transition-all overflow-hidden ${
+                    selectedStream === stream.videoId
+                      ? 'border-red-500 bg-red-500/20'
+                      : 'border-white/20 bg-white/5 hover:bg-white/10'
+                  }`}
+                  onClick={handleCardClick}
+                >
+                  {/* Thumbnail Image */}
+                  <div className="relative w-full aspect-video bg-gray-800">
+                    <Image
+                      src={thumbnailUrl}
+                      alt={stream.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      onError={(e) => {
+                        // Fallback to hqdefault if maxresdefault fails
+                        const target = e.target as HTMLImageElement;
+                        if (target.src.includes('maxresdefault')) {
+                          target.src = `https://img.youtube.com/vi/${stream.videoId}/hqdefault.jpg`;
+                        }
+                      }}
+                    />
+                    {/* Live badge overlay */}
+                    {stream.isLive && (
+                      <div className="absolute top-2 right-2">
+                        <Badge className="bg-red-500 text-white text-xs animate-pulse">
+                          LIVE
+                        </Badge>
+                      </div>
+                    )}
+                    {/* Category icon overlay */}
+                    <div className="absolute top-2 left-2">
+                      <div className={`${getCategoryColor(stream.category)} text-white p-1.5 rounded`}>
+                        {getCategoryIcon(stream.category)}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Card Content */}
+                  <div className="p-3">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-white text-sm font-medium line-clamp-1">{stream.channel}</span>
+                    </div>
+                    <p className="text-gray-300 text-xs line-clamp-2 mb-1">{stream.title}</p>
+                    <p className="text-gray-400 text-xs line-clamp-1">{stream.description}</p>
+                  </div>
                 </div>
-                <p className="text-gray-300 text-xs">{stream.title}</p>
-                <p className="text-gray-400 text-xs mt-1">{stream.description}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </CardContent>
       </Card>

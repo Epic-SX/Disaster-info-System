@@ -42,3 +42,4 @@ echo "To view logs: ls -lh /home/ubuntu/Disaster-info-System/backend/logs/"
 echo "To remove cron job: crontab -e (then delete the line)"
 echo "To test manually: /home/ubuntu/Disaster-info-System/backend/run_amedas_scraper.sh"
 
+

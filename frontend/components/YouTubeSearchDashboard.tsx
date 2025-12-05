@@ -21,6 +21,7 @@ import {
   Filter,
   VideoIcon,
   Radio,
+  RefreshCw,
   ChevronRight,
   ExternalLink,
   CheckCircle2
@@ -80,6 +81,9 @@ const YouTubeSearchDashboard: React.FC = () => {
   const [channels, setChannels] = useState<YouTubeChannel[]>([]);
   const [liveStreams, setLiveStreams] = useState<YouTubeVideo[]>([]);
   const [trendingTopics, setTrendingTopics] = useState<TrendingTopic[]>([]);
+  const [selectedTrendingTopic, setSelectedTrendingTopic] = useState<TrendingTopic | null>(null);
+  const [trendingTopicVideos, setTrendingTopicVideos] = useState<YouTubeVideo[]>([]);
+  const [trendingTopicLoading, setTrendingTopicLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
@@ -99,25 +103,51 @@ const YouTubeSearchDashboard: React.FC = () => {
 
   const loadInitialData = async () => {
     try {
-      // Disabled API calls to avoid searching for YouTube videos
-      // Data will remain empty or can be populated with default/hardcoded values
+      // Load live streams, channels, and trending topics for disaster information
+      const liveResponse = await apiClient.get<SearchResult>(`${API_ENDPOINTS.youtube.liveStreams}?location=Japan`);
+      if (liveResponse.videos) {
+        setLiveStreams(liveResponse.videos);
+      }
       
-      // Original implementation (commented out):
-      // const liveResponse = await apiClient.get<SearchResult>(API_ENDPOINTS.youtube.liveStreams);
-      // if (liveResponse.videos) {
-      //   setLiveStreams(liveResponse.videos);
-      // }
-      // const channelResponse = await apiClient.get<SearchResult>(`${API_ENDPOINTS.youtube.channels}?limit=10`);
-      // if (channelResponse.channels) {
-      //   setChannels(channelResponse.channels);
-      // }
-      // const trendingResponse = await apiClient.get<{trending_topics: TrendingTopic[]}>(API_ENDPOINTS.youtube.trending);
-      // if (trendingResponse.trending_topics) {
-      //   setTrendingTopics(trendingResponse.trending_topics);
-      // }
+      const channelResponse = await apiClient.get<SearchResult>(`${API_ENDPOINTS.youtube.channels}?limit=10`);
+      if (channelResponse.channels) {
+        setChannels(channelResponse.channels);
+      }
+      
+      const trendingResponse = await apiClient.get<{trending_topics: TrendingTopic[]}>(API_ENDPOINTS.youtube.trending);
+      if (trendingResponse.trending_topics) {
+        setTrendingTopics(trendingResponse.trending_topics);
+      }
     } catch (err) {
       console.error('Error loading initial data:', err);
       setError('初期データの読み込みに失敗しました');
+    }
+  };
+
+  const handleTrendingTopicClick = async (topic: TrendingTopic) => {
+    setActiveTab('trending');
+    setSelectedTrendingTopic(topic);
+    setTrendingTopicVideos([]);
+    setError('');
+    setTrendingTopicLoading(true);
+    setSearchQuery(topic.query);
+    
+    try {
+      const params = new URLSearchParams({
+        query: topic.query,
+        limit: '12',
+        time_filter: 'today',
+      });
+      
+      const response = await apiClient.get<{ videos: YouTubeVideo[] }>(`${API_ENDPOINTS.youtube.trendingDetails}?${params}`);
+      if (response.videos) {
+        setTrendingTopicVideos(response.videos);
+      }
+    } catch (err) {
+      console.error('Trending topic details error:', err);
+      setError('トレンドトピックの詳細取得に失敗しました');
+    } finally {
+      setTrendingTopicLoading(false);
     }
   };
 
@@ -128,21 +158,19 @@ const YouTubeSearchDashboard: React.FC = () => {
     setError('');
     
     try {
-      // Disabled YouTube search to avoid API calls
-      setError('YouTube検索は現在無効になっています');
-      setSearchResults(null);
+      // Search for disaster-related YouTube videos
+      const params = new URLSearchParams({
+        query: searchQuery,
+        limit: '20',
+        search_type: searchType,
+        include_shorts: includeShorts.toString()
+      });
       
-      // Original implementation (commented out):
-      // const params = new URLSearchParams({
-      //   query: searchQuery,
-      //   limit: '20',
-      //   search_type: searchType,
-      //   include_shorts: includeShorts.toString()
-      // });
-      // if (timeFilter && timeFilter !== 'all') params.append('time_filter', timeFilter);
-      // if (qualityFilter && qualityFilter !== 'all') params.append('quality_filter', qualityFilter);
-      // const response = await apiClient.get<SearchResult>(`${API_ENDPOINTS.youtube.search}?${params}`);
-      // setSearchResults(response);
+      if (timeFilter && timeFilter !== 'all') params.append('time_filter', timeFilter);
+      if (qualityFilter && qualityFilter !== 'all') params.append('quality_filter', qualityFilter);
+      
+      const response = await apiClient.get<SearchResult>(`${API_ENDPOINTS.youtube.search}?${params}`);
+      setSearchResults(response);
     } catch (err) {
       console.error('Search error:', err);
       setError('検索に失敗しました');
@@ -156,25 +184,25 @@ const YouTubeSearchDashboard: React.FC = () => {
     setError('');
     
     try {
-      // Disabled advanced YouTube search to avoid API calls
-      setError('YouTube検索は現在無効になっています');
+      // Advanced search with multiple filters and results
+      const params = new URLSearchParams({
+        limit: '30',
+        search_type: searchType,
+        include_shorts: includeShorts.toString(),
+        include_channels: 'true'
+      });
       
-      // Original implementation (commented out):
-      // const params = new URLSearchParams({
-      //   limit: '30',
-      //   search_type: searchType,
-      //   include_shorts: includeShorts.toString(),
-      //   include_channels: 'true'
-      // });
-      // if (searchQuery) params.append('query', searchQuery);
-      // if (timeFilter && timeFilter !== 'all') params.append('time_filter', timeFilter);
-      // if (qualityFilter && qualityFilter !== 'all') params.append('quality_filter', qualityFilter);
-      // if (location) params.append('location', location);
-      // const response = await apiClient.get<any>(`${API_ENDPOINTS.youtube.advanced}?${params}`);
-      // if (response.videos) setSearchResults({ ...response, videos: response.videos });
-      // if (response.channels) setChannels(response.channels);
-      // if (response.live_streams) setLiveStreams(response.live_streams);
-      // if (response.trending_topics) setTrendingTopics(response.trending_topics);
+      if (searchQuery) params.append('query', searchQuery);
+      if (timeFilter && timeFilter !== 'all') params.append('time_filter', timeFilter);
+      if (qualityFilter && qualityFilter !== 'all') params.append('quality_filter', qualityFilter);
+      if (location) params.append('location', location);
+      
+      const response = await apiClient.get<any>(`${API_ENDPOINTS.youtube.advanced}?${params}`);
+      
+      if (response.videos) setSearchResults({ ...response, videos: response.videos });
+      if (response.channels) setChannels(response.channels);
+      if (response.live_streams) setLiveStreams(response.live_streams);
+      if (response.trending_topics) setTrendingTopics(response.trending_topics);
       
     } catch (err) {
       console.error('Advanced search error:', err);
@@ -443,8 +471,11 @@ const YouTubeSearchDashboard: React.FC = () => {
           <ScrollArea className="h-[600px]">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {trendingTopics.map((topic, index) => (
-                <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer"
-                      onClick={() => setSearchQuery(topic.query)}>
+                <Card 
+                  key={index} 
+                  className="hover:shadow-md transition-shadow cursor-pointer"
+                  onClick={() => handleTrendingTopicClick(topic)}
+                >
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <span className="font-medium">{topic.query}</span>
@@ -467,6 +498,48 @@ const YouTubeSearchDashboard: React.FC = () => {
               ))}
             </div>
           </ScrollArea>
+          
+          {selectedTrendingTopic && (
+            <Card>
+              <CardHeader className="flex flex-col gap-1">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-base font-semibold flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4" />
+                    {selectedTrendingTopic.query} の最新動画
+                  </CardTitle>
+                  <Button variant="ghost" size="sm" onClick={() => {
+                    setSelectedTrendingTopic(null);
+                    setTrendingTopicVideos([]);
+                  }}>
+                    閉じる
+                  </Button>
+                </div>
+                {selectedTrendingTopic.count && (
+                  <p className="text-xs text-muted-foreground">
+                    YouTube上で{selectedTrendingTopic.count}件の関連トレンドを検出
+                  </p>
+                )}
+              </CardHeader>
+              <CardContent>
+                {trendingTopicLoading ? (
+                  <div className="py-6 text-center text-muted-foreground">
+                    <RefreshCw className="w-4 h-4 mx-auto mb-2 animate-spin" />
+                    読み込み中...
+                  </div>
+                ) : trendingTopicVideos.length > 0 ? (
+                  <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+                    {trendingTopicVideos.map((video) => (
+                      <VideoCard key={`trend-${video.video_id}`} video={video} />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    関連動画が見つかりませんでした。他のトピックを選択してください。
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          )}
         </TabsContent>
       </Tabs>
     </div>

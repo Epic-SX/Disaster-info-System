@@ -11,8 +11,6 @@ import logging
 import json
 from pathlib import Path
 
-from amedas_scheduler import get_scheduler
-
 logger = logging.getLogger(__name__)
 
 # JSON file path

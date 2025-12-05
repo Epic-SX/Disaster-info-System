@@ -68,6 +68,7 @@ export const API_ENDPOINTS = {
   // Tsunami endpoints
   tsunami: {
     alerts: '/api/tsunami/alerts',
+    jmaStatus: '/api/disasters/tsunami/jma-status',
   },
   
   // Weather endpoints
@@ -83,11 +84,15 @@ export const API_ENDPOINTS = {
     channels: '/api/youtube/channels',
     location: '/api/youtube/location',
     trending: '/api/youtube/trending',
+    trendingDetails: '/api/youtube/trending/details',
     advanced: '/api/youtube/search/advanced',
   },
   
   // News endpoints
   news: '/api/news',
+  
+  // Camera feeds
+  cameras: '/api/camera-feeds',
   
   // Debug endpoints
   debug: {

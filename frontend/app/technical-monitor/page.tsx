@@ -37,7 +37,7 @@ function ClientOnlyComponent({ children }: { children: React.ReactNode }) {
 
 export default function TechnicalMonitorPage() {
   return (
-    <div className="h-screen w-screen overflow-hidden">
+    <div className="fixed inset-0 overflow-hidden bg-[#050914]">
       <ClientOnlyComponent>
         <Suspense fallback={<LoadingScreen />}>
           <TechnicalMonitorDashboard />

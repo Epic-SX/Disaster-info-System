@@ -16,3 +16,4 @@ echo "  cd /home/ubuntu/Disaster-info-System/backend"
 echo "  source venv/bin/activate"
 echo "  python3 jma_amedas_scraper.py"
 
+

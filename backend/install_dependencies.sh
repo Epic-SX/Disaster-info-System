@@ -51,3 +51,4 @@ echo "You can now test the scraper with:"
 echo "  python jma_amedas_scraper.py --selenium"
 echo ""
 
+

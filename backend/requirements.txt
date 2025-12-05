@@ -65,6 +65,7 @@ facebook-sdk==3.1.0  # Facebook API
 python-dateutil==2.8.2
 pytz==2023.4
 cachetools==5.3.2
+isodate==0.6.1  # For parsing YouTube ISO 8601 duration format
 
 # Development and testing
 pytest==7.4.4

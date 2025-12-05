@@ -99,10 +99,10 @@ const MapComponent: React.FC<MapComponentProps> = ({ earthquakes, tsunamis, onMa
       className="h-full w-full"
       style={{ height: '100%', width: '100%' }}
     >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
       
       {/* Earthquake markers */}
       {earthquakes.map((earthquake) => (
