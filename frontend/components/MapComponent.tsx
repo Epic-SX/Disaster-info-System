@@ -139,9 +139,9 @@ const MapComponent: React.FC<MapComponentProps> = ({ earthquakes, tsunamis, onMa
       ))}
 
       {/* Tsunami markers */}
-      {tsunamis.map((tsunami) => (
+      {tsunamis.map((tsunami, index) => (
         <Marker
-          key={tsunami.id}
+          key={`tsunami-${tsunami.id}-${tsunami.latitude}-${tsunami.longitude}-${index}`}
           position={[tsunami.latitude, tsunami.longitude]}
         >
           <Popup>

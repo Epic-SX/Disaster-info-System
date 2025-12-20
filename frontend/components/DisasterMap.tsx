@@ -88,7 +88,19 @@ const DisasterMap: React.FC = () => {
 
         if (tsunamiResponse.status === 'fulfilled') {
           const tsunamiData = tsunamiResponse.value;
-          setTsunamis(tsunamiData.slice(0, 20)); // Limit to 20 tsunami alerts
+          // Deduplicate tsunamis by creating a unique key from id, location, and coordinates
+          const seen = new Set<string>();
+          const uniqueTsunamis = tsunamiData
+            .slice(0, 20)
+            .filter((tsunami: TsunamiInfo) => {
+              const uniqueKey = `${tsunami.id}-${tsunami.location}-${tsunami.latitude}-${tsunami.longitude}`;
+              if (seen.has(uniqueKey)) {
+                return false;
+              }
+              seen.add(uniqueKey);
+              return true;
+            });
+          setTsunamis(uniqueTsunamis);
         }
 
         setLastUpdate(new Date());
@@ -227,7 +239,19 @@ const DisasterMap: React.FC = () => {
 
       if (tsunamiResponse.status === 'fulfilled') {
         const tsunamiData = tsunamiResponse.value;
-        setTsunamis(tsunamiData.slice(0, 20)); // Limit to 20 tsunami alerts
+        // Deduplicate tsunamis by creating a unique key from id, location, and coordinates
+        const seen = new Set<string>();
+        const uniqueTsunamis = tsunamiData
+          .slice(0, 20)
+          .filter((tsunami: TsunamiInfo) => {
+            const uniqueKey = `${tsunami.id}-${tsunami.location}-${tsunami.latitude}-${tsunami.longitude}`;
+            if (seen.has(uniqueKey)) {
+              return false;
+            }
+            seen.add(uniqueKey);
+            return true;
+          });
+        setTsunamis(uniqueTsunamis);
       }
 
       setLastUpdate(new Date());

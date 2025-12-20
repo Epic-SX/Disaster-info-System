@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { YouTubePlayerHybrid } from './YouTubePlayer';
 import { apiClient, API_ENDPOINTS } from '@/lib/api-config';
 import Image from 'next/image';
@@ -18,7 +17,8 @@ import {
   Users,
   Volume2,
   VolumeX,
-  RefreshCw
+  RefreshCw,
+  Info
 } from 'lucide-react';
 
 interface LiveStream {
@@ -33,6 +33,7 @@ interface LiveStream {
   thumbnail?: string;
   link?: string;
   verified_channel?: boolean;
+  priority?: 'high' | 'medium' | 'low';
 }
 
 interface BackendLiveStream {
@@ -52,11 +53,12 @@ const DEFAULT_STREAMS: LiveStream[] = [
   {
     id: 'nhk-news',
     videoId: 'jfKfPfyJRdk',
-    title: 'NHKニュース ライブ配信',
+    title: 'NHK 災害・気象情報',
     channel: 'NHK',
-    description: 'NHKの24時間ライブニュース配信',
-    category: 'news',
-    isLive: true
+    description: '災害時の最新情報と避難指示をお伝えします',
+    category: 'emergency',
+    isLive: true,
+    priority: 'high'
   },
   {
     id: 'weather-news',
@@ -65,7 +67,8 @@ const DEFAULT_STREAMS: LiveStream[] = [
     channel: 'Weather News',
     description: '24時間天気予報・災害情報',
     category: 'weather',
-    isLive: true
+    isLive: true,
+    priority: 'high'
   }
 ];
 
@@ -82,8 +85,9 @@ export function YouTubeLiveStreams() {
 
     try {
       // Load live disaster streams from backend API
+      // Using location=Japan and focusing on disaster/community keywords like Community feature
       const response = await apiClient.get<{streams?: BackendLiveStream[], videos?: BackendLiveStream[]}>(
-        `${API_ENDPOINTS.youtube.liveStreams}?location=Japan`
+        `${API_ENDPOINTS.youtube.liveStreams}?location=Japan&query=災害情報,避難情報,コミュニティ`
       );
       
       // Convert backend format to frontend format
@@ -96,14 +100,37 @@ export function YouTubeLiveStreams() {
           title: stream.title,
           channel: stream.channel,
           description: stream.description || '',
-          category: determineCategoryFromTitle(stream.title, stream.channel),
+          category: determineCategoryFromContent(stream.title, stream.channel, stream.description || ''),
           isLive: stream.video_type === 'live',
           thumbnail: stream.thumbnail,
           link: stream.link,
-          verified_channel: stream.verified_channel
+          verified_channel: stream.verified_channel,
+          priority: determinePriority(stream.title, stream.channel)
         }));
         
-        setLiveStreams([...DEFAULT_STREAMS, ...convertedStreams]);
+        // Filter out duplicates by videoId and combine with default streams
+        const defaultVideoIds = new Set(DEFAULT_STREAMS.map(s => s.videoId));
+        const uniqueBackendStreams = convertedStreams.filter(
+          stream => !defaultVideoIds.has(stream.videoId)
+        );
+        
+        // Remove duplicates within backend streams by videoId
+        const seenVideoIds = new Set<string>();
+        const deduplicatedBackendStreams = uniqueBackendStreams.filter(stream => {
+          if (seenVideoIds.has(stream.videoId)) {
+            return false;
+          }
+          seenVideoIds.add(stream.videoId);
+          return true;
+        });
+        
+        // Sort by priority (high first) and merge with defaults
+        const sortedStreams = [...DEFAULT_STREAMS, ...deduplicatedBackendStreams].sort((a, b) => {
+          const priorityOrder = { high: 0, medium: 1, low: 2 };
+          return priorityOrder[a.priority || 'low'] - priorityOrder[b.priority || 'low'];
+        });
+        
+        setLiveStreams(sortedStreams);
       } else {
         // Fallback to default streams if no results
         setLiveStreams(DEFAULT_STREAMS);
@@ -124,22 +151,44 @@ export function YouTubeLiveStreams() {
     
     // Load live streams from API after initial render
     loadLiveStreams();
+    
+    // Auto-refresh every 5 minutes to get latest live streams
+    const refreshInterval = setInterval(() => {
+      loadLiveStreams();
+    }, 5 * 60 * 1000); // 5 minutes
+
+    return () => clearInterval(refreshInterval);
   }, [loadLiveStreams]);
 
-  const determineCategoryFromTitle = (title: string, channel: string): LiveStream['category'] => {
-    const titleLower = title.toLowerCase();
-    const channelLower = channel.toLowerCase();
+  const determineCategoryFromContent = (
+    title: string, 
+    channel: string, 
+    description: string
+  ): LiveStream['category'] => {
+    const content = `${title} ${channel} ${description}`.toLowerCase();
     
-    if (titleLower.includes('weather') || titleLower.includes('ウェザー') || titleLower.includes('天気')) {
+    if (content.includes('weather') || content.includes('ウェザー') || content.includes('天気')) {
       return 'weather';
     }
-    if (titleLower.includes('emergency') || titleLower.includes('災害') || titleLower.includes('緊急')) {
+    if (content.includes('emergency') || content.includes('災害') || content.includes('緊急') || content.includes('避難')) {
       return 'emergency';
     }
-    if (titleLower.includes('camera') || titleLower.includes('カメラ') || titleLower.includes('ライブカメラ')) {
+    if (content.includes('camera') || content.includes('カメラ') || content.includes('ライブカメラ')) {
       return 'camera';
     }
     return 'news';
+  };
+
+  const determinePriority = (title: string, channel: string): LiveStream['priority'] => {
+    const content = `${title} ${channel}`.toLowerCase();
+    
+    if (content.includes('緊急') || content.includes('emergency') || content.includes('nhk') || content.includes('気象庁')) {
+      return 'high';
+    }
+    if (content.includes('重要') || content.includes('important')) {
+      return 'medium';
+    }
+    return 'low';
   };
 
   const getCategoryIcon = (category: string) => {
@@ -172,27 +221,81 @@ export function YouTubeLiveStreams() {
     }
   };
 
+  const getCategoryLabel = (category: string) => {
+    switch (category) {
+      case 'news':
+        return 'ニュース';
+      case 'weather':
+        return '天気';
+      case 'emergency':
+        return '緊急';
+      case 'camera':
+        return 'カメラ';
+      default:
+        return 'その他';
+    }
+  };
+
+  const getPriorityColor = (priority?: string) => {
+    switch (priority) {
+      case 'high':
+        return 'bg-red-600';
+      case 'medium':
+        return 'bg-yellow-600';
+      case 'low':
+        return 'bg-gray-600';
+      default:
+        return 'bg-gray-600';
+    }
+  };
+
   // Helper function to get YouTube thumbnail URL
   const getThumbnailUrl = (videoId: string, thumbnail?: string): string => {
     if (thumbnail) {
       return thumbnail;
     }
-    // Fallback to YouTube's thumbnail API
-    return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    // Use i.ytimg.com which is more reliable than img.youtube.com
+    // Try hqdefault first as maxresdefault might not exist for all videos
+    return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
   };
+
+  const selectedStreamData = liveStreams.find(stream => stream.videoId === selectedStream);
 
   return (
     <div className="space-y-6">
+      {/* Information Banner */}
+      <Card className="bg-blue-500/20 border-blue-500/50">
+        <CardContent className="p-4">
+          <div className="flex items-start gap-3">
+            <Info className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+            <div className="flex-1">
+              <h3 className="text-white font-semibold text-sm mb-1">YouTube Live機能について</h3>
+              <p className="text-gray-200 text-xs leading-relaxed">
+                災害時の同時アクセス増加に対応するため、YouTube Liveのインフラを活用して有益な災害情報を配信します。
+                サーバー負荷を分散し、安定した情報提供を実現します。複数のメンバーがYouTubeを活用してコミュニティを運営しています。
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Main Stream Player */}
       <Card className="bg-white/10 backdrop-blur-md border-white/20">
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between">
             <CardTitle className="text-white flex items-center gap-2 text-sm">
               <Camera className="h-4 w-4 text-red-500" />
-              {liveStreams.find(stream => stream.videoId === selectedStream)?.title}
-              <Badge className="bg-red-500 text-white text-xs ml-2 animate-pulse">
-                LIVE
-              </Badge>
+              {selectedStreamData?.title || '配信を選択してください'}
+              {selectedStreamData?.isLive && (
+                <Badge className="bg-red-500 text-white text-xs ml-2 animate-pulse">
+                  LIVE
+                </Badge>
+              )}
+              {selectedStreamData?.priority === 'high' && (
+                <Badge className="bg-red-600 text-white text-xs ml-1">
+                  重要
+                </Badge>
+              )}
             </CardTitle>
             <div className="flex items-center gap-2">
               <Button
@@ -205,18 +308,18 @@ export function YouTubeLiveStreams() {
               </Button>
               <Badge variant="outline" className="text-white border-white/30 text-xs">
                 <Users className="h-3 w-3 mr-1" />
-                {liveStreams.find(stream => stream.videoId === selectedStream)?.viewerCount?.toLocaleString() || '--'}
+                {selectedStreamData?.viewerCount?.toLocaleString() || '--'}
               </Badge>
             </div>
           </div>
-          <p className="text-gray-300 text-xs">{liveStreams.find(stream => stream.videoId === selectedStream)?.description}</p>
+          <p className="text-gray-300 text-xs">{selectedStreamData?.description}</p>
         </CardHeader>
         <CardContent className="p-4">
           {selectedStream ? (
             <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden">
               <YouTubePlayerHybrid
                 videoId={selectedStream}
-                title={liveStreams.find(stream => stream.videoId === selectedStream)?.title || ''}
+                title={selectedStreamData?.title || ''}
                 autoplay={true}
                 muted={muted}
                 controls={true}
@@ -234,26 +337,33 @@ export function YouTubeLiveStreams() {
           )}
           
           {/* Stream Info */}
-          {selectedStream && (
+          {selectedStream && selectedStreamData && (
             <div className="mt-4 flex flex-wrap gap-2">
               <Badge variant="outline" className="text-white border-white/30">
                 🔴 リアルタイム配信
               </Badge>
               <Badge variant="outline" className="text-white border-white/30">
-                📺 {liveStreams.find(stream => stream.videoId === selectedStream)?.channel || ''}
+                📺 {selectedStreamData.channel}
               </Badge>
               <Badge 
                 variant="outline" 
-                className={`text-white border-white/30 ${getCategoryColor(liveStreams.find(stream => stream.videoId === selectedStream)?.category || 'news')}`}
+                className={`text-white border-white/30 ${getCategoryColor(selectedStreamData.category)}`}
               >
-                {getCategoryIcon(liveStreams.find(stream => stream.videoId === selectedStream)?.category || 'news')}
+                {getCategoryIcon(selectedStreamData.category)}
                 <span className="ml-1">
-                  {liveStreams.find(stream => stream.videoId === selectedStream)?.category === 'news' && 'ニュース'}
-                  {liveStreams.find(stream => stream.videoId === selectedStream)?.category === 'weather' && '天気'}
-                  {liveStreams.find(stream => stream.videoId === selectedStream)?.category === 'emergency' && '緊急'}
-                  {liveStreams.find(stream => stream.videoId === selectedStream)?.category === 'camera' && 'カメラ'}
+                  {getCategoryLabel(selectedStreamData.category)}
                 </span>
               </Badge>
+              {selectedStreamData.priority && (
+                <Badge 
+                  variant="outline" 
+                  className={`text-white border-white/30 ${getPriorityColor(selectedStreamData.priority)}`}
+                >
+                  {selectedStreamData.priority === 'high' && '🔴 重要'}
+                  {selectedStreamData.priority === 'medium' && '🟡 中'}
+                  {selectedStreamData.priority === 'low' && '⚪ 低'}
+                </Badge>
+              )}
               <Badge variant="outline" className="text-white border-white/30">
                 <Clock className="h-3 w-3 mr-1" />
                 更新: {new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
@@ -267,7 +377,10 @@ export function YouTubeLiveStreams() {
       <Card className="bg-white/10 backdrop-blur-md border-white/20">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-white text-sm">配信チャンネル選択</CardTitle>
+            <CardTitle className="text-white text-sm flex items-center gap-2">
+              <Camera className="h-4 w-4" />
+              YouTube Live災害情報配信
+            </CardTitle>
             <Button
               size="sm"
               variant="ghost"
@@ -281,6 +394,9 @@ export function YouTubeLiveStreams() {
           {error && (
             <div className="text-red-400 text-xs mt-2">{error}</div>
           )}
+          <p className="text-gray-300 text-xs mt-2">
+            災害時の有益な情報をYouTube Liveで配信しています。サーバー負荷を分散し、安定した情報提供を実現します。
+          </p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -298,7 +414,7 @@ export function YouTubeLiveStreams() {
 
               return (
                 <div
-                  key={stream.id}
+                  key={stream.videoId}
                   className={`rounded-lg border cursor-pointer transition-all overflow-hidden ${
                     selectedStream === stream.videoId
                       ? 'border-red-500 bg-red-500/20'
@@ -314,11 +430,12 @@ export function YouTubeLiveStreams() {
                       fill
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      unoptimized={true}
                       onError={(e) => {
-                        // Fallback to hqdefault if maxresdefault fails
+                        // Fallback to default quality if hqdefault fails
                         const target = e.target as HTMLImageElement;
-                        if (target.src.includes('maxresdefault')) {
-                          target.src = `https://img.youtube.com/vi/${stream.videoId}/hqdefault.jpg`;
+                        if (!target.src.includes('default.jpg')) {
+                          target.src = `https://i.ytimg.com/vi/${stream.videoId}/default.jpg`;
                         }
                       }}
                     />
@@ -330,8 +447,16 @@ export function YouTubeLiveStreams() {
                         </Badge>
                       </div>
                     )}
+                    {/* Priority badge */}
+                    {stream.priority === 'high' && (
+                      <div className="absolute top-2 left-2">
+                        <Badge className="bg-red-600 text-white text-xs">
+                          重要
+                        </Badge>
+                      </div>
+                    )}
                     {/* Category icon overlay */}
-                    <div className="absolute top-2 left-2">
+                    <div className={`absolute bottom-2 left-2 ${stream.priority === 'high' ? 'top-12' : 'top-2'}`}>
                       <div className={`${getCategoryColor(stream.category)} text-white p-1.5 rounded`}>
                         {getCategoryIcon(stream.category)}
                       </div>
@@ -342,8 +467,19 @@ export function YouTubeLiveStreams() {
                   <div className="p-3">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-white text-sm font-medium line-clamp-1">{stream.channel}</span>
+                      {stream.verified_channel && (
+                        <Badge className="bg-blue-500 text-white text-xs px-1">✓</Badge>
+                      )}
                     </div>
                     <p className="text-gray-300 text-xs line-clamp-2 mb-1">{stream.title}</p>
+                    <div className="flex items-center gap-1 mb-1">
+                      <Badge 
+                        variant="outline" 
+                        className={`text-xs border-white/30 ${getCategoryColor(stream.category)} text-white`}
+                      >
+                        {getCategoryLabel(stream.category)}
+                      </Badge>
+                    </div>
                     <p className="text-gray-400 text-xs line-clamp-1">{stream.description}</p>
                   </div>
                 </div>
@@ -353,23 +489,21 @@ export function YouTubeLiveStreams() {
         </CardContent>
       </Card>
 
-      {/* Emergency Alert Stream (if active) */}
-      <Card className="bg-red-500/20 border-red-500/50">
+      {/* YouTube Live Support Information */}
+      <Card className="bg-green-500/20 border-green-500/50">
         <CardHeader className="pb-2">
           <CardTitle className="text-white flex items-center gap-2 text-sm">
-            <AlertTriangle className="h-4 w-4 text-red-500" />
-            緊急災害情報配信
-            <Badge className="bg-red-600 text-white text-xs">
-              待機中
-            </Badge>
+            <Info className="h-4 w-4 text-green-400" />
+            YouTube Live活用情報
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4">
-          <div className="text-center py-8">
-            <AlertTriangle className="h-8 w-8 text-red-400 mx-auto mb-2" />
-            <p className="text-white text-sm">現在、緊急災害情報の配信はありません</p>
-            <p className="text-gray-300 text-xs mt-1">
-              災害発生時には自動的に緊急配信に切り替わります
+          <div className="text-center py-4">
+            <p className="text-white text-sm mb-2">
+              YouTube Liveを活用した災害情報配信により、サーバー負荷を分散しています
+            </p>
+            <p className="text-gray-300 text-xs">
+              災害発生時でも安定した情報提供が可能です。複数のメンバーがYouTubeを活用してコミュニティを運営しています。最新の避難情報や安全ガイドを確認してください。
             </p>
           </div>
         </CardContent>

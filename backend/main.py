@@ -766,16 +766,49 @@ async def websocket_endpoint(websocket: WebSocket):
     
     try:
         # Send initial connection confirmation
-        await websocket.send_json({
-            "type": "connection_established",
-            "message": "Connected to disaster information system",
-            "timestamp": datetime.now().isoformat()
-        })
+        try:
+            await websocket.send_json({
+                "type": "connection_established",
+                "message": "Connected to disaster information system",
+                "timestamp": datetime.now().isoformat()
+            })
+        except (WebSocketDisconnect, RuntimeError) as e:
+            # Client disconnected immediately or connection error
+            logger.debug(f"WebSocket disconnected during initial connection message: {e}")
+            return
+        except Exception as e:
+            logger.warning(f"Error sending initial WebSocket message: {e}")
+            # Continue anyway - connection might still be valid
+        
+        # Helper function to safely send WebSocket messages
+        async def safe_send_json(data: dict):
+            """Safely send JSON data via WebSocket, checking connection state first"""
+            try:
+                # Check if WebSocket is still connected
+                client_state_name = getattr(websocket.client_state, 'name', None) if hasattr(websocket, 'client_state') else None
+                app_state_name = getattr(websocket.application_state, 'name', None) if hasattr(websocket, 'application_state') else None
+                
+                if client_state_name != "CONNECTED" or app_state_name != "CONNECTED":
+                    logger.debug("WebSocket not connected, skipping send")
+                    return False
+                await websocket.send_json(data)
+                return True
+            except WebSocketDisconnect:
+                logger.debug("WebSocket disconnected during send")
+                return False
+            except RuntimeError as e:
+                if "no close frame received or sent" in str(e) or "connection closed" in str(e).lower():
+                    logger.debug(f"WebSocket connection closed: {e}")
+                    return False
+                raise
+            except Exception as e:
+                logger.error(f"Error sending WebSocket message: {e}")
+                return False
         
         # Send initial wind data
         try:
             initial_wind_data = await get_current_wind_data_helper()
-            await websocket.send_json({
+            await safe_send_json({
                 "type": "wind_data_update",
                 "wind_data": initial_wind_data,
                 "timestamp": datetime.now().isoformat()
@@ -786,7 +819,7 @@ async def websocket_endpoint(websocket: WebSocket):
         # Send initial news data
         try:
             initial_news_data = await fetch_real_time_news()
-            await websocket.send_json({
+            await safe_send_json({
                 "type": "news_update",
                 "news": [article.model_dump(mode='json') for article in initial_news_data],
                 "timestamp": datetime.now().isoformat()
@@ -797,7 +830,7 @@ async def websocket_endpoint(websocket: WebSocket):
         # Send initial camera feeds data
         try:
             initial_camera_data = await fetch_real_time_camera_feeds()
-            await websocket.send_json({
+            await safe_send_json({
                 "type": "camera_feeds_update",
                 "camera_feeds": [feed.model_dump(mode='json') for feed in initial_camera_data],
                 "timestamp": datetime.now().isoformat()
@@ -848,7 +881,24 @@ async def broadcast_to_websockets(data: dict):
     disconnected = []
     for ws in connected_websockets:
         try:
+            # Check if WebSocket is still connected before sending
+            client_state_name = getattr(ws.client_state, 'name', None) if hasattr(ws, 'client_state') else None
+            app_state_name = getattr(ws.application_state, 'name', None) if hasattr(ws, 'application_state') else None
+            
+            if client_state_name != "CONNECTED" or app_state_name != "CONNECTED":
+                disconnected.append(ws)
+                continue
             await ws.send_json(data)
+        except WebSocketDisconnect:
+            logger.debug("WebSocket disconnected during broadcast")
+            disconnected.append(ws)
+        except RuntimeError as e:
+            if "no close frame received or sent" in str(e) or "connection closed" in str(e).lower():
+                logger.debug(f"WebSocket connection closed during broadcast: {e}")
+                disconnected.append(ws)
+            else:
+                logger.debug(f"Failed to send to WebSocket client: {e}")
+                disconnected.append(ws)
         except Exception as e:
             logger.debug(f"Failed to send to WebSocket client: {e}")
             disconnected.append(ws)
@@ -1115,7 +1165,7 @@ async def fetch_real_time_news() -> List[NewsArticle]:
     
     try:
         # Fetch from NHK News API
-        async with httpx.AsyncClient() as client:
+        async with httpx.AsyncClient(follow_redirects=True) as client:
             try:
                 response = await client.get(settings.nhk_news_api, timeout=10.0)
                 if response.status_code == 200:
@@ -1133,30 +1183,49 @@ async def fetch_real_time_news() -> List[NewsArticle]:
                                 source="NHK",
                                 time_ago=f"{random.randint(1, 6)}時間前"
                             ))
+                elif response.status_code == 301:
+                    logger.warning(f"NHK news API redirected: {response.headers.get('Location', 'unknown')}")
+            except httpx.HTTPStatusError as e:
+                logger.warning(f"Failed to fetch NHK news (HTTP {e.response.status_code}): {e}")
             except Exception as e:
                 logger.warning(f"Failed to fetch NHK news: {e}")
         
         # Fetch from JMA (Japan Meteorological Agency) - Weather warnings
         try:
-            async with httpx.AsyncClient() as client:
-                # JMA weather warnings API
-                jma_url = "https://www.jma.go.jp/bosai/warning/data/warning_info.json"
-                response = await client.get(jma_url, timeout=10.0)
-                if response.status_code == 200:
-                    jma_data = response.json()
-                    # Parse JMA warnings
-                    if 'items' in jma_data:
-                        for item in jma_data['items'][:3]:  # Limit to 3 items
-                            articles.append(NewsArticle(
-                                id=f"jma_{item.get('id', '')}",
-                                title=f"気象警報: {item.get('name', '気象警報')}",
-                                summary=item.get('description', '気象庁からの警報情報'),
-                                url="https://www.jma.go.jp/bosai/warning/",
-                                published_at=datetime.now() - timedelta(hours=random.randint(1, 4)),
-                                category="weather",
-                                source="気象庁",
-                                time_ago=f"{random.randint(1, 4)}時間前"
-                            ))
+            async with httpx.AsyncClient(follow_redirects=True) as client:
+                # JMA weather warnings API - try multiple possible endpoints
+                jma_urls = [
+                    "https://www.jma.go.jp/bosai/warning/data/warning_info.json",
+                    "https://www.jma.go.jp/bosai/common/const/warning_info.json",
+                ]
+                jma_data = None
+                for jma_url in jma_urls:
+                    try:
+                        response = await client.get(jma_url, timeout=10.0)
+                        if response.status_code == 200:
+                            jma_data = response.json()
+                            logger.debug(f"Successfully fetched JMA warnings from {jma_url}")
+                            break
+                        elif response.status_code == 404:
+                            logger.debug(f"JMA endpoint not found: {jma_url}")
+                            continue
+                    except httpx.HTTPStatusError:
+                        continue
+                
+                if jma_data and 'items' in jma_data:
+                    for item in jma_data['items'][:3]:  # Limit to 3 items
+                        articles.append(NewsArticle(
+                            id=f"jma_{item.get('id', '')}",
+                            title=f"気象警報: {item.get('name', '気象警報')}",
+                            summary=item.get('description', '気象庁からの警報情報'),
+                            url="https://www.jma.go.jp/bosai/warning/",
+                            published_at=datetime.now() - timedelta(hours=random.randint(1, 4)),
+                            category="weather",
+                            source="気象庁",
+                            time_ago=f"{random.randint(1, 4)}時間前"
+                        ))
+                else:
+                    logger.debug("JMA warnings data not available or empty")
         except Exception as e:
             logger.warning(f"Failed to fetch JMA warnings: {e}")
         
@@ -1612,6 +1681,158 @@ async def send_chat_response(request: dict):
         raise HTTPException(status_code=500, detail="Failed to send response")
 
 
+# In-memory storage for community group chat messages
+# Store messages per channel/server (channel_id -> list of messages)
+community_chat_messages: Dict[str, List[Dict[str, Any]]] = {}
+community_chat_max_messages = 500  # Keep last 500 messages
+
+class CommunityChatMessage(BaseModel):
+    """Community chat message model"""
+    id: Optional[str] = None
+    author: str
+    message: str
+    timestamp: Optional[str] = None
+    author_image: Optional[str] = None
+    author_badge: Optional[str] = None
+    channel_id: Optional[str] = None  # Channel/server ID
+
+@app.post("/api/community/chat/messages")
+async def send_community_message(message_data: CommunityChatMessage):
+    """Send a message to a specific community channel/server"""
+    try:
+        # Use a default channel if channel_id is not provided (for backward compatibility)
+        channel_id = message_data.channel_id or "default"
+        
+        # Generate ID if not provided
+        message_id = message_data.id or f"community_{datetime.now().timestamp()}_{random.randint(1000, 9999)}"
+        timestamp = message_data.timestamp or datetime.now().isoformat()
+        
+        # Create message object
+        chat_message = {
+            "id": message_id,
+            "message_id": message_id,
+            "author": message_data.author,
+            "message": message_data.message,
+            "timestamp": timestamp,
+            "message_type": "text",
+            "author_image": message_data.author_image,
+            "author_badge": message_data.author_badge,
+            "platform": "community",
+            "category": "community_chat",
+            "channel_id": channel_id
+        }
+        
+        # Initialize channel if it doesn't exist
+        if channel_id not in community_chat_messages:
+            community_chat_messages[channel_id] = []
+        
+        # Add to channel-specific storage
+        community_chat_messages[channel_id].append(chat_message)
+        
+        # Keep only last N messages per channel
+        if len(community_chat_messages[channel_id]) > community_chat_max_messages:
+            community_chat_messages[channel_id].pop(0)
+        
+        # Broadcast to WebSocket clients
+        await broadcast_community_message(chat_message)
+        
+        return {"status": "success", "message_id": message_id, "timestamp": timestamp, "channel_id": channel_id}
+    except HTTPException:
+        # Re-raise HTTP exceptions (like 400 for missing channel_id)
+        raise
+    except Exception as e:
+        logger.error(f"Error sending community message: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to send message: {str(e)}")
+
+@app.get("/api/community/chat/messages")
+async def get_community_messages(limit: int = 50, channel_id: Optional[str] = None):
+    """Get community chat messages for a specific channel/server"""
+    try:
+        # Ensure limit is positive
+        limit = max(1, min(limit, 500))  # Between 1 and 500
+        
+        # If channel_id is provided, return messages for that channel
+        if channel_id:
+            # Use default channel if channel_id is empty string
+            if not channel_id.strip():
+                channel_id = "default"
+            
+            if channel_id not in community_chat_messages:
+                return []
+            
+            messages = community_chat_messages[channel_id]
+            # Return last N messages (most recent first)
+            if len(messages) > limit:
+                return messages[-limit:]
+            return messages
+        
+        # If no channel_id, return all messages from all channels (for backward compatibility)
+        all_messages = []
+        for channel_msgs in community_chat_messages.values():
+            if isinstance(channel_msgs, list):
+                all_messages.extend(channel_msgs)
+        
+        # Sort by timestamp and return last N
+        if all_messages:
+            all_messages.sort(key=lambda x: x.get('timestamp', ''), reverse=False)  # Oldest first
+            return all_messages[-limit:] if len(all_messages) > limit else all_messages
+        
+        return []
+    except Exception as e:
+        logger.error(f"Error getting community messages: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to get messages: {str(e)}")
+
+async def broadcast_community_message(message: Dict[str, Any]):
+    """Broadcast community message to all connected WebSocket clients"""
+    if not connected_websockets:
+        return
+    
+    broadcast_data = {
+        "type": "community_message",
+        "data": message,
+        "timestamp": datetime.now().isoformat()
+    }
+    
+    disconnected = []
+    for websocket in connected_websockets:
+        try:
+            # Check WebSocket state before sending
+            client_state_name = getattr(websocket.client_state, 'name', None) if hasattr(websocket, 'client_state') else None
+            app_state_name = getattr(websocket.application_state, 'name', None) if hasattr(websocket, 'application_state') else None
+            
+            if client_state_name != "CONNECTED" or app_state_name != "CONNECTED":
+                disconnected.append(websocket)
+                continue
+            
+            await websocket.send_json(broadcast_data)
+        except WebSocketDisconnect:
+            # Client disconnected normally
+            disconnected.append(websocket)
+        except RuntimeError as e:
+            # Handle "no close frame received or sent" and similar connection errors
+            error_msg = str(e).lower()
+            if "no close frame received or sent" in error_msg or "connection closed" in error_msg:
+                disconnected.append(websocket)
+            else:
+                # Re-raise unexpected RuntimeErrors
+                logger.warning(f"Unexpected RuntimeError broadcasting to WebSocket: {e}")
+                disconnected.append(websocket)
+        except Exception as e:
+            # Log other errors but don't spam logs for common connection issues
+            error_msg = str(e).lower()
+            if "connection" in error_msg or "closed" in error_msg or "disconnect" in error_msg:
+                disconnected.append(websocket)
+            else:
+                logger.warning(f"Error broadcasting to WebSocket: {e}")
+                disconnected.append(websocket)
+    
+    # Remove disconnected clients
+    if disconnected:
+        for ws in disconnected:
+            if ws in connected_websockets:
+                connected_websockets.remove(ws)
+        logger.debug(f"Removed {len(disconnected)} disconnected WebSocket client(s). Remaining: {len(connected_websockets)}")
+
 @app.get("/api/chat/responses", response_model=List[AutoResponse])
 async def get_auto_responses():
     """Get configured auto-responses from the enhanced system"""
@@ -1801,13 +2022,18 @@ async def get_youtube_video_details(video_id: str):
 
 
 @app.get("/api/youtube/live-streams")
-async def get_live_disaster_streams(location: str = "Japan"):
-    """Get live disaster-related YouTube streams for a specific location"""
+async def get_live_disaster_streams(location: str = "Japan", query: str = None):
+    """Get live disaster-related YouTube streams for a specific location
+    
+    Args:
+        location: Location to search for (default: "Japan")
+        query: Optional query string for custom search (e.g., "災害情報,避難情報,コミュニティ")
+    """
     if not youtube_search_service:
         raise HTTPException(status_code=503, detail="YouTube search service not available")
     
     try:
-        result = await youtube_search_service.search_live_disaster_streams(location)
+        result = await youtube_search_service.search_live_disaster_streams(location, query)
         return {
             "streams": [
                 {
@@ -1845,13 +2071,29 @@ async def get_live_disaster_streams(location: str = "Japan"):
 
 
 @app.get("/api/youtube/channels")
-async def get_disaster_channels(limit: int = 10):
-    """Get disaster information and news channels"""
+async def get_disaster_channels(limit: int = 10, query: str = None):
+    """Get disaster information and news channels
+    
+    Args:
+        limit: Maximum number of channels to return (default: 10)
+        query: Optional channel name or search query to filter channels
+    """
     if not youtube_search_service:
         raise HTTPException(status_code=503, detail="YouTube search service not available")
     
     try:
         result = await youtube_search_service.search_disaster_channels(limit)
+        
+        # Filter channels by query if provided
+        filtered_channels = result.channels
+        if query:
+            query_lower = query.lower()
+            filtered_channels = [
+                channel for channel in result.channels
+                if query_lower in channel.name.lower() or 
+                   (channel.description and query_lower in channel.description.lower())
+            ]
+        
         return {
             "channels": [
                 {
@@ -1863,10 +2105,11 @@ async def get_disaster_channels(limit: int = 10):
                     "verified": channel.verified,
                     "description": channel.description
                 }
-                for channel in result.channels
+                for channel in filtered_channels
             ],
-            "total_results": result.total_results,
-            "search_query": result.search_query
+            "total_results": len(filtered_channels),
+            "search_query": result.search_query,
+            "query_filter": query
         }
     except Exception as e:
         logger.error(f"Error fetching disaster channels: {e}")
@@ -2638,6 +2881,18 @@ async def start_youtube_streaming(stream_key: str = Query(..., description="YouT
         else:
             raise HTTPException(status_code=500, detail="Failed to start streaming")
     
+    except RuntimeError as e:
+        # Handle missing dependencies error specifically
+        error_msg = str(e)
+        logger.error(f"Streaming dependencies error: {error_msg}")
+        raise HTTPException(
+            status_code=503,
+            detail={
+                "error": "missing_dependencies",
+                "message": error_msg,
+                "solution": "Install required dependencies: sudo apt-get install -y ffmpeg xvfb"
+            }
+        )
     except Exception as e:
         logger.error(f"Error starting YouTube streaming: {e}")
         raise HTTPException(status_code=500, detail=str(e))

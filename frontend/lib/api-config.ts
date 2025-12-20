@@ -31,6 +31,13 @@ export const API_ENDPOINTS = {
     test: '/api/chat/test',
   },
   
+  // Community group chat endpoints
+  community: {
+    chat: {
+      messages: '/api/community/chat/messages',
+    },
+  },
+  
   // Disaster data endpoints
   disasters: {
     alerts: '/api/disasters',

@@ -1,8 +1,5 @@
 "use client";
 
-// Force dynamic rendering to avoid static generation issues
-export const dynamic = 'force-dynamic';
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AlertTriangle, Camera, Clock, MapPin, Play, Zap, Wind, Droplets, Map } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -28,6 +25,7 @@ import SocialMediaDashboard from "@/components/SocialMediaDashboard"
 import YouTubeLiveStreams from '@/components/YouTubeLiveStreams'
 import YouTubeStreamingConfig from '@/components/YouTubeStreamingConfig'
 import P2PEarthquakeMonitor from '@/components/P2PEarthquakeMonitor'
+import CommunityStreams from '@/components/CommunityStreams'
 import dynamicImport from 'next/dynamic'
 
 // Dynamically import map component to avoid SSR issues
@@ -91,10 +89,11 @@ export default function Home() {
 
       <NoSSR fallback={<LoadingCard />}>
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-7">
+          <TabsList className="grid w-full grid-cols-8">
             <TabsTrigger value="overview">概要</TabsTrigger>
             <TabsTrigger value="p2p">P2P地震情報</TabsTrigger>
             <TabsTrigger value="youtube">YouTube Live</TabsTrigger>
+            <TabsTrigger value="community">コミュニティ</TabsTrigger>
             <TabsTrigger value="chat">チャット監視</TabsTrigger>
             <TabsTrigger value="news">ニュース・データ</TabsTrigger>
             <TabsTrigger value="monitoring">監視システム</TabsTrigger>
@@ -137,6 +136,12 @@ export default function Home() {
           </ClientOnlyComponent>
           <ClientOnlyComponent>
             <YouTubeLiveStreams />
+          </ClientOnlyComponent>
+        </TabsContent>
+
+        <TabsContent value="community" className="space-y-6">
+          <ClientOnlyComponent>
+            <CommunityStreams />
           </ClientOnlyComponent>
         </TabsContent>
 

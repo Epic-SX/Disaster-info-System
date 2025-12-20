@@ -435,8 +435,14 @@ class YouTubeSearchService:
             logger.error(f"Error getting video details for {video_id}: {e}")
             return None
     
-    async def search_live_disaster_streams(self, location: str = "Japan") -> YouTubeSearchResult:
-        """Enhanced search for live disaster-related streams"""
+    async def search_live_disaster_streams(self, location: str = "Japan", query: str = None) -> YouTubeSearchResult:
+        """Enhanced search for live disaster-related streams
+        
+        Args:
+            location: Location to search for (default: "Japan")
+            query: Optional query string for custom search (e.g., "災害情報,避難情報,コミュニティ")
+                   If provided, will be used instead of default query
+        """
         
         # Check if quota exceeded flag should be reset (daily reset)
         if self._quota_exceeded and self._quota_exceeded_time:
@@ -449,26 +455,38 @@ class YouTubeSearchService:
         # Early exit if quota exceeded
         if self._quota_exceeded:
             logger.debug("Skipping live stream search - quota exceeded")
-            return YouTubeSearchResult(videos=[], search_query=f"Live disaster streams - {location}")
+            search_query_str = query if query else f"Live disaster streams - {location}"
+            return YouTubeSearchResult(videos=[], search_query=search_query_str)
         
-        # Check cache
-        cache_key = self._get_cache_key('search_live_disaster_streams', location)
+        # Check cache - include query in cache key if provided
+        cache_key_params = location
+        if query:
+            cache_key_params = f"{location}_{query}"
+        cache_key = self._get_cache_key('search_live_disaster_streams', cache_key_params)
         cached_result = self._get_cached_result(cache_key, 'live')
         if cached_result:
             return cached_result
         
-        # Reduce to single most relevant query to save quota
-        live_queries = [
-            f"災害 ライブ配信 {location}",
-        ]
+        # Build search queries
+        if query:
+            # Use custom query - split by comma and create queries
+            query_terms = [term.strip() for term in query.split(',')]
+            live_queries = [
+                f"{term} ライブ配信 {location}" for term in query_terms[:3]  # Limit to 3 queries
+            ]
+        else:
+            # Default query
+            live_queries = [
+                f"災害 ライブ配信 {location}",
+            ]
         
         all_videos = []
         all_channels = []
         
-        for query in live_queries[:1]:  # Reduced from 3 to 1 to save quota
+        for search_query in live_queries[:1]:  # Reduced from 3 to 1 to save quota
             try:
                 result = await self.search_disaster_videos(
-                    query=query,
+                    query=search_query,
                     limit=10,
                     search_type='live'
                 )
@@ -479,18 +497,24 @@ class YouTubeSearchService:
                 await asyncio.sleep(0.5)
                 
             except Exception as e:
-                logger.warning(f"Error searching live streams with query '{query}': {e}")
+                logger.warning(f"Error searching live streams with query '{search_query}': {e}")
                 continue
             
         # Remove duplicates
         unique_videos = self._deduplicate_videos(all_videos)
         unique_channels = self._deduplicate_channels(all_channels)
         
+        # Build search query string for result
+        if query:
+            search_query_str = f"Community disaster streams - {location} ({query})"
+        else:
+            search_query_str = f"Live disaster streams - {location}"
+        
         result = YouTubeSearchResult(
             videos=unique_videos,
             channels=unique_channels,
             total_results=len(unique_videos),
-            search_query=f"Live disaster streams - {location}"
+            search_query=search_query_str
         )
         
         # Cache the result

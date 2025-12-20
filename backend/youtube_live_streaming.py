@@ -10,11 +10,32 @@ import subprocess
 import logging
 import json
 import asyncio
+import shutil
 from datetime import datetime
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, Tuple
 import httpx
 
 logger = logging.getLogger(__name__)
+
+
+def check_streaming_dependencies() -> Tuple[bool, list]:
+    """
+    Check if required dependencies for streaming are installed
+    
+    Returns:
+        Tuple of (all_installed: bool, missing: list of missing dependencies)
+    """
+    dependencies = {
+        'ffmpeg': 'FFmpeg (video encoding)',
+        'Xvfb': 'Xvfb (virtual display)',
+    }
+    
+    missing = []
+    for cmd, description in dependencies.items():
+        if not shutil.which(cmd):
+            missing.append(f"{cmd} - {description}")
+    
+    return len(missing) == 0, missing
 
 
 class YouTubeLiveStreamer:
@@ -53,6 +74,13 @@ class YouTubeLiveStreamer:
         Returns:
             True if streaming started successfully, False otherwise
         """
+        # Check dependencies first
+        deps_ok, missing = check_streaming_dependencies()
+        if not deps_ok:
+            error_msg = f"Missing required dependencies: {', '.join(missing)}"
+            logger.error(error_msg)
+            raise RuntimeError(error_msg)
+        
         if self.is_streaming:
             logger.warning("Streaming is already active")
             return False
@@ -116,6 +144,13 @@ class YouTubeLiveStreamer:
         Returns:
             True if streaming started successfully
         """
+        # Check dependencies first
+        deps_ok, missing = check_streaming_dependencies()
+        if not deps_ok:
+            error_msg = f"Missing required dependencies for streaming: {', '.join(missing)}. Please run: sudo apt-get install ffmpeg xvfb"
+            logger.error(error_msg)
+            raise RuntimeError(error_msg)
+        
         if self.is_streaming:
             logger.warning("Streaming is already active")
             return False
@@ -135,9 +170,21 @@ class YouTubeLiveStreamer:
             import time
             time.sleep(2)
             
+            # Find available browser
+            browser_binary = None
+            for browser in ['google-chrome', 'chromium-browser', 'chromium']:
+                if shutil.which(browser):
+                    browser_binary = browser
+                    break
+            
+            if not browser_binary:
+                raise RuntimeError("No supported browser found. Please install Google Chrome or Chromium.")
+            
+            logger.info(f"Using browser: {browser_binary}")
+            
             # Open browser in virtual display
             browser_cmd = [
-                'google-chrome',
+                browser_binary,
                 '--display=:99',
                 '--kiosk',
                 '--no-sandbox',

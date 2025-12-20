@@ -124,7 +124,17 @@ const P2PEarthquakeMonitor: React.FC = () => {
       }
 
       if (tsunamisRes.status === 'fulfilled' && tsunamisRes.value.tsunamis) {
-        setTsunamis(tsunamisRes.value.tsunamis);
+        // Deduplicate tsunamis by creating a unique key from id, time, and source
+        const seen = new Set<string>();
+        const uniqueTsunamis = tsunamisRes.value.tsunamis.filter((tsunami: P2PTsunami) => {
+          const uniqueKey = `${tsunami.id}-${tsunami.time}-${tsunami.source}`;
+          if (seen.has(uniqueKey)) {
+            return false;
+          }
+          seen.add(uniqueKey);
+          return true;
+        });
+        setTsunamis(uniqueTsunamis);
       }
 
       if (eewRes.status === 'fulfilled' && eewRes.value.eew) {
@@ -328,9 +338,9 @@ const P2PEarthquakeMonitor: React.FC = () => {
               <ScrollArea className="h-[400px]">
                 <div className="space-y-3">
                   {tsunamis.length > 0 ? (
-                    tsunamis.map((tsunami) => (
+                    tsunamis.map((tsunami, index) => (
                       <div
-                        key={tsunami.id}
+                        key={`tsunami-${tsunami.id}-${tsunami.time}-${index}`}
                         className={`p-4 border rounded-lg space-y-2 ${
                           tsunami.cancelled ? 'bg-gray-50' : 'bg-blue-50'
                         }`}

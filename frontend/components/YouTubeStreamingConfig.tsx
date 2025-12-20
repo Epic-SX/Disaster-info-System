@@ -11,7 +11,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { apiClient } from '@/lib/api-config';
 import { 
   Radio, 
-  RadioOff, 
+  Circle,
   Settings,
   Youtube,
   PlayCircle,
@@ -107,9 +107,9 @@ export function YouTubeStreamingConfig() {
     setSuccess('');
 
     try {
-      const response = await apiClient.post('/api/streaming/start', null, {
-        params: { stream_key: streamKey }
-      });
+      const response = await apiClient.post(
+        `/api/streaming/start?stream_key=${encodeURIComponent(streamKey)}`
+      );
       
       setSuccess('YouTube Liveへの配信を開始しました！');
       await loadStreamingStatus();
@@ -118,7 +118,24 @@ export function YouTubeStreamingConfig() {
       saveConfig();
     } catch (err: any) {
       console.error('Error starting stream:', err);
-      setError(err.response?.data?.detail || 'ストリーミングの開始に失敗しました');
+      
+      // Handle detailed error messages from backend
+      let errorMessage = 'ストリーミングの開始に失敗しました';
+      
+      if (err.message && err.message.includes('503')) {
+        errorMessage = '必要な依存関係が不足しています。サーバーにFFmpegとXvfbをインストールしてください。\n\nインストール方法:\nsudo apt-get install -y ffmpeg xvfb\n\nインストール後、バックエンドを再起動してください:\npm2 restart disaster-backend';
+      } else if (err.response?.data?.detail) {
+        // Handle detailed error from backend
+        if (typeof err.response.data.detail === 'object') {
+          errorMessage = err.response.data.detail.message || err.response.data.detail.solution || errorMessage;
+        } else {
+          errorMessage = err.response.data.detail;
+        }
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -169,7 +186,7 @@ export function YouTubeStreamingConfig() {
     } else {
       return (
         <Badge variant="secondary">
-          <RadioOff className="h-3 w-3 mr-1" />
+          <Circle className="h-3 w-3 mr-1" />
           停止中
         </Badge>
       );
@@ -208,7 +225,7 @@ export function YouTubeStreamingConfig() {
             <Alert variant="destructive">
               <AlertTriangle className="h-4 w-4" />
               <AlertTitle>エラー</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
+              <AlertDescription className="whitespace-pre-wrap">{error}</AlertDescription>
             </Alert>
           )}
 

@@ -113,7 +113,7 @@ const nextConfig: NextConfig = {
     ];
   },
   
-  // Allow YouTube domains for images and content
+  // Allow YouTube domains and camera feeds for images and content
   images: {
     remotePatterns: [
       {
@@ -127,6 +127,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'yt3.ggpht.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'camera.mics.kaiho.mlit.go.jp',
       },
     ],
   },
