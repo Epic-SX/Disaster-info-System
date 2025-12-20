@@ -33,3 +33,4 @@ yarn-error.log*
 logs
 backend/logs/*.log
 frontend/logs/*.log
+frontend/logs/frontend-error.log
